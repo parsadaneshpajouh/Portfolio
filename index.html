@@ -25,7 +25,6 @@
      A missing file just shows a labelled empty slot.
   4. Colours and font: the :root block at the top of the style tag.
   5. Videos: add captions with a .vtt file (see "captions" in CONFIG).
-  The "Accessibility" button lets visitors change text size, contrast, motion and background.
 -->
 <html lang="en">
 <head>
@@ -155,23 +154,9 @@ html.calm .nav:hover{scale:1}
 html.calm .nav a{transform:none}
 html.calm .nav .hl{transition:opacity .2s}
 
-/* accessibility button and panel */
-.a11y-btn{position:fixed;right:14px;bottom:14px;z-index:7;display:inline-flex;align-items:center;gap:.55rem;min-height:48px;padding:.4rem 1.1rem .4rem .9rem;--r:999px;
-  font:700 1rem var(--font);color:var(--paper);border:0;cursor:pointer;animation:rise .9s .9s backwards}
-.a11y-btn svg{flex:none}
-.a11y{position:fixed;right:14px;bottom:74px;z-index:7;width:min(25rem,calc(100vw - 28px));max-height:calc(100vh - 100px);overflow:auto;padding:1.2rem 1.3rem 1.3rem;--r:28px}
-.a11y > *{position:relative;z-index:1}
-.a11y-h{font:700 1.5rem/1.2 var(--font);margin:0 0 .3rem}
-.a11y-sub{margin:0 0 1rem;color:var(--soft);font-size:1rem;line-height:1.5}
-.opt{margin:0 0 .9rem}
-.opt > p{margin:0 0 .35rem;font:700 1rem var(--font)}
-.opt .seg{width:100%}
-.opt .seg > button{flex:1 1 0;justify-content:center;padding-inline:.5rem}
-.a11y .btn{width:100%}
-
 @keyframes rise{from{opacity:0;transform:translateY(.8rem)}}
 
-html.calm h1,html.calm .hero-photo,html.calm .eyebrow,html.calm .sub,html.calm .hero-cta,html.calm .nav,html.calm .a11y-btn{animation:none}
+html.calm h1,html.calm .hero-photo,html.calm .eyebrow,html.calm .sub,html.calm .hero-cta,html.calm .nav{animation:none}
 
 /* ---------- TYPE SCALE & HIERARCHY: eyebrow > h1 (Parsa > Danesh Pajouh) > sub > cta > about card ---------- */
 h1{font:700 clamp(3.5rem,8vw,6.5rem)/.94 var(--font);letter-spacing:-.045em;margin:0 0 1.15rem;animation:rise .8s .18s backwards}
@@ -386,8 +371,6 @@ html[data-contrast="high"] a:not(.btn):not(.brand):not(.skip){text-decoration:un
   html[data-size="xl"] .nav a{font-size:.78rem;padding-inline:.3rem}
   .gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem}
   .steps{grid-template-columns:1fr}
-  .a11y-btn .label{display:none}
-  .a11y-btn{padding:.4rem .9rem}
   .case-foot .btn{flex:1}
 }
 </style>
@@ -410,39 +393,6 @@ html[data-contrast="high"] a:not(.btn):not(.brand):not(.skip){text-decoration:un
   <a href="#process">Process</a>
   <a href="#contact">Contact</a>
 </nav>
-
-<button class="a11y-btn glass pill" id="a11yBtn" type="button" aria-expanded="false" aria-controls="a11y" aria-label="Accessibility settings" data-refract="14" data-bezel="16" data-blur="12">
-  <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="7.2" r="1.6" fill="currentColor"/><path d="M6.4 10.2c3.7 1 7.5 1 11.2 0M12 10.6v4.1m0 0-2.7 4.7m2.7-4.7 2.7 4.7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-  <span class="label">Accessibility</span>
-</button>
-
-<div class="a11y glass" id="a11y" role="region" aria-labelledby="a11yTitle" hidden>
-  <p class="a11y-h" id="a11yTitle">Accessibility</p>
-  <p class="a11y-sub">Change how this site looks and moves. Your choices are saved on this device.</p>
-  <div class="opt"><p id="o-size">Text size</p>
-    <div class="seg glass" role="group" aria-labelledby="o-size"><span class="thumb" aria-hidden="true"></span>
-      <button type="button" data-set="size" data-val="std">Standard</button>
-      <button type="button" data-set="size" data-val="lg">Large</button>
-      <button type="button" data-set="size" data-val="xl">Larger</button>
-    </div></div>
-  <div class="opt"><p id="o-contrast">Contrast</p>
-    <div class="seg glass" role="group" aria-labelledby="o-contrast"><span class="thumb" aria-hidden="true"></span>
-      <button type="button" data-set="contrast" data-val="std">Standard</button>
-      <button type="button" data-set="contrast" data-val="high">High</button>
-    </div></div>
-  <div class="opt"><p id="o-motion">Motion</p>
-    <div class="seg glass" role="group" aria-labelledby="o-motion"><span class="thumb" aria-hidden="true"></span>
-      <button type="button" data-set="motion" data-val="std">Standard</button>
-      <button type="button" data-set="motion" data-val="reduce">Reduced</button>
-    </div></div>
-  <div class="opt"><p id="o-bg">Background</p>
-    <div class="seg glass" role="group" aria-labelledby="o-bg"><span class="thumb" aria-hidden="true"></span>
-      <button type="button" data-set="bg" data-val="full">Full</button>
-      <button type="button" data-set="bg" data-val="dim">Dim</button>
-      <button type="button" data-set="bg" data-val="off">Off</button>
-    </div></div>
-  <button class="btn glass small" type="button" id="a11yReset">Reset to defaults</button>
-</div>
 
 <main id="main" tabindex="-1">
   <header class="stage hero" id="top">
@@ -560,7 +510,7 @@ html[data-contrast="high"] a:not(.btn):not(.brand):not(.skip){text-decoration:un
 const root = document.documentElement;
 root.classList.add('js');
 const mq = q => matchMedia(q).matches;
-let reduce = mq('(prefers-reduced-motion: reduce)');
+let reduce = false;   /* animations always on */
 const small = matchMedia('(max-width: 800px)');
 const $ = (s, r = document) => r.querySelector(s);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -1080,35 +1030,7 @@ new ResizeObserver(measure).observe(document.body);
 document.fonts && document.fonts.ready.then(() => { measure(); refractAll(); });
 measure(); refractAll();
 
-/* ------------------------------------------------------------------
-   ACCESSIBILITY SETTINGS (remembered on this device)
-------------------------------------------------------------------- */
-const DEFAULTS = { size: 'std', contrast: mq('(prefers-contrast: more)') ? 'high' : 'std', motion: mq('(prefers-reduced-motion: reduce)') ? 'reduce' : 'std', bg: 'full' };
-let settings = { ...DEFAULTS };
-try { settings = { ...DEFAULTS, ...JSON.parse(localStorage.getItem('portfolio-settings') || '{}') }; } catch (e) { /* storage unavailable: use defaults */ }
-const a11yBtn = $('#a11yBtn'), a11yPanel = $('#a11y');
-function applySettings(announce) {
-  root.dataset.size = settings.size; root.dataset.contrast = settings.contrast; root.dataset.bg = settings.bg;
-  reduce = settings.motion === 'reduce';
-  root.classList.toggle('calm', reduce);
-  a11yPanel.querySelectorAll('[data-set]').forEach(b => b.setAttribute('aria-pressed', String(settings[b.dataset.set] === b.dataset.val)));
-  try { localStorage.setItem('portfolio-settings', JSON.stringify(settings)); } catch (e) { /* ignore */ }
-  placeAll(true); refractAll();
-  if (announce) say('Settings updated');
-}
-function togglePanel(open) {
-  a11yPanel.hidden = !open; a11yBtn.setAttribute('aria-expanded', String(open));
-  if (open) { placeAll(true); const first = a11yPanel.querySelector('button'); first && first.focus(); }
-}
-a11yBtn.addEventListener('click', () => togglePanel(a11yPanel.hidden));
-a11yPanel.addEventListener('click', e => {
-  const b = e.target.closest('[data-set]'); if (!b) return;
-  settings[b.dataset.set] = b.dataset.val; applySettings(true);
-});
-$('#a11yReset').addEventListener('click', () => { settings = { ...DEFAULTS }; applySettings(true); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && !a11yPanel.hidden) { togglePanel(false); a11yBtn.focus(); } });
-document.addEventListener('pointerdown', e => { if (!a11yPanel.hidden && !a11yPanel.contains(e.target) && !a11yBtn.contains(e.target)) togglePanel(false); });
-applySettings(false);
+placeAll(true); refractAll();
 
 /* ------------------------------------------------------------------
    THE LIGHT. Soft studio haze, rays from the top right, drifting dust and film grain.
