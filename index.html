@@ -188,7 +188,7 @@ html.calm .hero .wrap{transform:none;opacity:1}
 .card.refilter{animation:rise .7s cubic-bezier(.16,1,.3,1) backwards}
 html.calm .card.refilter{animation:none}
 .card .slot{position:absolute;inset:0;z-index:0}
-.card .slot img,.card .slot video{transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}
+.card .slot img,.card .slot video{transition:transform 1.4s cubic-bezier(.2,.7,.2,1);pointer-events:none}
 .card:hover .slot img,.card:hover .slot video{transform:scale(1.03)}
 html.calm .card .slot img,html.calm .card .slot video{transition:none}
 html.calm .card:hover .slot img,html.calm .card:hover .slot video{transform:none}
@@ -196,43 +196,23 @@ html.calm .card:hover .slot img,html.calm .card:hover .slot video{transform:none
 .card .shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.85) 0%,rgba(0,0,0,.55) 38%,rgba(0,0,0,0) 74%)}
 .card-text{position:relative;z-index:2;padding:clamp(1.4rem,3vw,2.2rem);max-width:36rem}
 
-/* Featured first card: seamless multi-stop alpha-masked fade with zero hard seams or black bars */
+/* Featured first card: exact video background match + dithered shadow fade (zero banding lines) */
 .card.wide{
   grid-column:1 / -1;
   min-height:clamp(25rem,35vw,31rem);
   display:flex;
   align-items:center;
-  background:radial-gradient(110% 120% at 78% 50%,#2b2c30 0%,#16181d 54%,#101216 100%);
+  background:var(--vid-bg,#393939);
 }
 .card.wide .slot{
   position:absolute;
   top:0;
   right:0;
   bottom:0;
-  left:18%;
+  left:24%;
   width:auto;
   height:100%;
-  background:transparent;
-  -webkit-mask-image:linear-gradient(90deg,
-    transparent 0%,
-    rgba(0,0,0,.03) 7%,
-    rgba(0,0,0,.12) 15%,
-    rgba(0,0,0,.28) 24%,
-    rgba(0,0,0,.52) 34%,
-    rgba(0,0,0,.78) 44%,
-    rgba(0,0,0,.94) 53%,
-    #000 62%
-  );
-  mask-image:linear-gradient(90deg,
-    transparent 0%,
-    rgba(0,0,0,.03) 7%,
-    rgba(0,0,0,.12) 15%,
-    rgba(0,0,0,.28) 24%,
-    rgba(0,0,0,.52) 34%,
-    rgba(0,0,0,.78) 44%,
-    rgba(0,0,0,.94) 53%,
-    #000 62%
-  );
+  background:var(--vid-bg,#393939);
 }
 .card.wide .slot video,
 .card.wide .slot img{
@@ -241,15 +221,22 @@ html.calm .card:hover .slot img,html.calm .card:hover .slot video{transform:none
   width:100%;
   height:100%;
   object-fit:cover;
-  object-position:66% center;
+  object-position:center;
 }
-.card.wide .shade{display:none!important}
+/* Dithered soft shadow fade on the left side + subtle edge vignette */
+.card.wide .shade{
+  display:block;
+  background-size:100% 100%;
+  background-repeat:no-repeat;
+  box-shadow:inset 0 0 70px rgba(0,0,0,.42);
+}
 .card.wide .card-text{
   position:relative;
   z-index:2;
   width:52%;
   max-width:34rem;
   padding:clamp(2rem,4vw,3.2rem);
+  text-shadow:0 4px 24px rgba(0,0,0,.65);
 }
 
 .card .kicker{margin:0 0 .5rem;font:600 1rem var(--font);color:var(--accent)}
@@ -356,8 +343,8 @@ footer{margin-top:2.5rem;padding-bottom:5.5rem;text-align:center;color:var(--mut
   .cards{grid-template-columns:1fr}
   .card{min-height:28rem}
   .card.wide{min-height:0;display:block;background:#14161b}
-  .card.wide .slot{position:relative;left:0;width:100%;height:auto;aspect-ratio:16/9;-webkit-mask-image:none;mask-image:none}
-  .card.wide .slot video,.card.wide .slot img{object-position:center}
+  .card.wide .slot{position:relative;left:0;width:100%;height:auto;aspect-ratio:16/9}
+  .card.wide .shade{display:none}
   .card.wide .card-text{width:100%;max-width:none;padding:1.4rem 1.4rem 4.5rem}
   .card .empty{right:10rem}
   .case-grid{grid-template-columns:1fr}
@@ -710,6 +697,39 @@ function getVideoSources(m) {
   return m.src ? [m.src] : [];
 }
 
+/* Generates a dithered 2D shadow-fade texture so 8-bit monitors never show vertical banding lines */
+function makeDitheredShadowURL() {
+  const w = 512, h = 256;
+  const c = document.createElement('canvas');
+  c.width = w; c.height = h;
+  const ctx = c.getContext('2d');
+  const img = ctx.createImageData(w, h);
+  const d = img.data;
+  for (let y = 0; y < h; y++) {
+    const ny = (y / (h - 1)) - 0.5;
+    for (let x = 0; x < w; x++) {
+      const nx = x / (w - 1);
+      const horiz = Math.max(0, 1 - nx / 0.62);
+      const easeH = horiz * horiz * (3 - 2 * horiz);
+      const dist = Math.hypot(nx * 1.15, ny * 0.9);
+      const rad = Math.max(0, 1 - dist / 0.72);
+      const easeR = rad * rad * (3 - 2 * rad);
+      const edgeY = Math.pow(Math.abs(ny) * 2, 3.2) * 0.22;
+      let alpha = Math.min(1, easeH * 0.84 + easeR * 0.14 + edgeY);
+      const dither = (Math.random() - Math.random()) * 2.2;
+      const aByte = Math.max(0, Math.min(255, Math.round(alpha * 255 + dither)));
+      const i = (y * w + x) * 4;
+      d[i] = 10;
+      d[i + 1] = 12;
+      d[i + 2] = 15;
+      d[i + 3] = aByte;
+    }
+  }
+  ctx.putImageData(img, 0, 0);
+  return c.toDataURL('image/png');
+}
+const DITHERED_SHADOW_URL = makeDitheredShadowURL();
+
 function fillSlot(el, src, alt, onLoad) {
   if (!el || !src) return;
   const img = new Image(); img.alt = alt || ''; img.decoding = 'async';
@@ -722,6 +742,8 @@ function fillVideoSlot(el, sources, poster, onLoad) {
   const v = document.createElement('video');
   if (poster) v.poster = poster;
   v.muted = true; v.loop = true; v.playsInline = true; v.autoplay = true; v.preload = 'metadata';
+  v.disablePictureInPicture = true;
+  v.setAttribute('controlsList', 'nodownload nofullscreen noremoteplayback');
   v.setAttribute('aria-hidden', 'true');
   sources.forEach(src => {
     const s = document.createElement('source');
@@ -729,6 +751,17 @@ function fillVideoSlot(el, sources, poster, onLoad) {
     v.appendChild(s);
   });
   v.addEventListener('loadeddata', () => {
+    try {
+      const sc = document.createElement('canvas');
+      sc.width = 4; sc.height = 4;
+      const sctx = sc.getContext('2d');
+      sctx.drawImage(v, 0, 0, 4, 4);
+      const p = sctx.getImageData(1, 1, 1, 1).data;
+      if (p[3] > 200) {
+        const card = el.closest('.card');
+        if (card) card.style.setProperty('--vid-bg', `rgb(${p[0]},${p[1]},${p[2]})`);
+      }
+    } catch (e) {}
     el.appendChild(v); el.classList.add('has');
     v.play().catch(() => {});
     onLoad && onLoad(v);
@@ -805,7 +838,12 @@ function applyFilter(tag, announce) {
   projectsEl.querySelectorAll('.card').forEach(card => {
     const show = tag === 'All' || card.dataset.tag === tag;
     card.hidden = !show;
-    card.classList.toggle('wide', show && first);
+    const isWide = show && first;
+    card.classList.toggle('wide', isWide);
+    const shade = card.querySelector('.shade');
+    if (shade) {
+      shade.style.backgroundImage = isWide ? `url("${DITHERED_SHADOW_URL}")` : '';
+    }
     if (!show) return;
     first = false; n++;
     if (announce) { card.classList.remove('refilter'); void card.offsetWidth; card.classList.add('refilter'); }
@@ -1064,73 +1102,13 @@ nav.addEventListener('pointerleave', navReset);
 nav.addEventListener('focusin', e => { const a = e.target.closest('a'); if (a) hlTo(a); });
 nav.addEventListener('focusout', () => { if (!navHover) hlTo(null); });
 
-const pointer = { x: .65, y: .35, tx: .65, ty: .35 };
 document.addEventListener('pointermove', e => {
-  pointer.tx = e.clientX / Math.max(innerWidth, 1);
-  pointer.ty = 1 - e.clientY / Math.max(innerHeight, 1);
   const g = e.target.closest && e.target.closest('.glass');
   if (!g) return;
   const r = g.getBoundingClientRect();
   g.style.setProperty('--mx', (e.clientX - r.left) + 'px');
   g.style.setProperty('--my', (e.clientY - r.top) + 'px');
 }, { passive: true });
-
-const isChromium = !!(navigator.userAgentData && navigator.userAgentData.brands.some(b => /Chromium/i.test(b.brand)));
-const wantRefract = isChromium && !small.matches && !mq('(prefers-reduced-transparency: reduce)');
-const NS = 'http://www.w3.org/2000/svg', defs = $('#lg-defs defs');
-const mk = (n, a) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); return e; };
-let lgCount = 0;
-
-function bendMap(w, h, radius, bezel) {
-  const sc = .5, cw = Math.max(2, Math.round(w * sc)), ch = Math.max(2, Math.round(h * sc));
-  const c = document.createElement('canvas'); c.width = cw; c.height = ch;
-  const ctx = c.getContext('2d'), img = ctx.createImageData(cw, ch), d = img.data;
-  const hw = cw / 2, hh = ch / 2, rr = Math.min(radius * sc, hw, hh), bz = bezel * sc;
-  for (let y = 0; y < ch; y++) for (let x = 0; x < cw; x++) {
-    const px = x + .5 - hw, py = y + .5 - hh;
-    const qx = Math.abs(px) - (hw - rr), qy = Math.abs(py) - (hh - rr);
-    const ox = Math.max(qx, 0), oy = Math.max(qy, 0), len = Math.hypot(ox, oy);
-    const depth = -(len + Math.min(Math.max(qx, qy), 0) - rr);
-    let dx = 0, dy = 0;
-    if (depth < bz) {
-      const s = Math.pow(1 - Math.max(depth, 0) / bz, 2.2);
-      let gx, gy;
-      if (len > 0) { gx = ox / len * Math.sign(px); gy = oy / len * Math.sign(py); }
-      else if (qx > qy) { gx = Math.sign(px); gy = 0; } else { gx = 0; gy = Math.sign(py); }
-      dx = -gx * s; dy = -gy * s;
-    }
-    const i = (y * cw + x) * 4;
-    d[i] = 128 + dx * 127; d[i + 1] = 128 + dy * 127; d[i + 2] = 128; d[i + 3] = 255;
-  }
-  ctx.putImageData(img, 0, 0);
-  return c.toDataURL();
-}
-function refract(el) {
-  const r = el.getBoundingClientRect(), w = Math.round(r.width), h = Math.round(r.height);
-  if (w < 8 || h < 8) return;
-  const radius = Math.min(parseFloat(getComputedStyle(el).borderTopLeftRadius) || 24, h / 2, w / 2);
-  const bezel = Math.min(+el.dataset.bezel || 22, Math.min(w, h) / 2.2);
-  const maxShift = +el.dataset.refract || 18, blur = +el.dataset.blur || 14;
-  const id = 'lg' + (++lgCount);
-  const f = mk('filter', { id, x: 0, y: 0, width: 1, height: 1, filterUnits: 'objectBoundingBox', 'color-interpolation-filters': 'sRGB' });
-  f.appendChild(mk('feImage', { href: bendMap(w, h, radius, bezel), x: 0, y: 0, width: w, height: h, preserveAspectRatio: 'none', result: 'map' }));
-  f.appendChild(mk('feDisplacementMap', { in: 'SourceGraphic', in2: 'map', scale: maxShift * 2, xChannelSelector: 'R', yChannelSelector: 'G' }));
-  defs.appendChild(f);
-  const v = `url(#${id}) blur(${blur}px) saturate(1.5) brightness(1.04)`;
-  el.style.backdropFilter = v; el.style.webkitBackdropFilter = v;
-  if (el.__lg) el.__lg.remove();
-  el.__lg = f; el.__sig = w + 'x' + h;
-}
-let rTimer;
-function refractAll() {
-  if (!wantRefract) return;
-  clearTimeout(rTimer);
-  rTimer = setTimeout(() => document.querySelectorAll('.glass[data-refract]').forEach(el => {
-    const r = el.getBoundingClientRect();
-    if (el.__sig !== Math.round(r.width) + 'x' + Math.round(r.height)) refract(el);
-  }), 160);
-}
-if (wantRefract) new ResizeObserver(refractAll).observe(document.body);
 
 /* ---------- SCROLL & WORD REVEAL ---------- */
 const quoteEl = $('[data-word-reveal]');
@@ -1173,14 +1151,13 @@ function onScroll() {
   }
 }
 addEventListener('scroll', onScroll, { passive: true });
-addEventListener('resize', () => { measure(); refractAll(); });
+addEventListener('resize', measure);
 new ResizeObserver(measure).observe(document.body);
-document.fonts && document.fonts.ready.then(() => { measure(); refractAll(); });
-measure(); refractAll();
+document.fonts && document.fonts.ready.then(measure);
+measure();
 placeAll(true);
 
-/* ---------- WEBGL BACKGROUND SHADER ---------- */
-const DIALS = { grain: 1, vignette: 1, motion: 1, glow: 1, rays: 1 };
+/* ---------- FLICKER-FREE WEBGL BACKGROUND SHADER ---------- */
 const sm = (a, b, x) => { const t = Math.min(Math.max((x - a) / (b - a), 0), 1); return t * t * (3 - 2 * t); };
 const level = (arr, m) => { let v = arr[0]; for (let k = 1; k < arr.length; k++) v += (arr[k] - arr[k - 1]) * sm(k - .35, k + .35, m); return v; };
 const level3 = (arr, m) => [0, 1, 2].map(c => level(arr.map(v => v[c]), m));
@@ -1189,7 +1166,7 @@ const BASE    = [[.018,.026,.042], [.016,.032,.046], [.022,.030,.044], [.028,.02
 const LIGHT_A = [[.26,.44,.68],    [.18,.56,.66],    [.30,.48,.62],    [.74,.48,.28],    [.94,.52,.18]];
 const LIGHT_B = [[.10,.22,.42],    [.28,.20,.46],    [.20,.30,.48],    [.16,.44,.52],    [.16,.42,.50]];
 const LIGHT_C = [[.32,.46,.62],    [.28,.50,.56],    [.30,.48,.58],    [.84,.44,.20],    [.70,.28,.12]];
-const POWER   = [.50, .54, .52, .62, .72];
+const POWER   = [.48, .52, .50, .58, .66];
 
 const VS = 'attribute vec2 p; void main(){ gl_Position = vec4(p, 0., 1.); }';
 const FS = `
@@ -1198,76 +1175,53 @@ precision highp float;
 #else
 precision mediump float;
 #endif
-uniform vec2 res, mouse;
-uniform float t, m, grain, vig, power, rays;
+uniform vec2 res;
+uniform float m, vig, power;
 uniform vec3 base, ca, cb, cc;
 
-float hash(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
-float noise(vec2 p){
-  vec2 i = floor(p), f = fract(p);
-  f = f * f * (3.0 - 2.0 * f);
-  float a = hash(i), b = hash(i + vec2(1.0, 0.0));
-  float c = hash(i + vec2(0.0, 1.0)), d = hash(i + vec2(1.0, 1.0));
-  return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+/* Static spatial hash for banding-free dither (never changes over time = zero flicker) */
+float hash(vec2 p){
+  vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+  p3 += dot(p3, p3.yzx + 33.33);
+  return fract((p3.x + p3.y) * p3.z);
 }
-float fbm(vec2 p){
-  float v = 0.0, a = 0.5;
-  mat2 rot = mat2(0.8, -0.6, 0.6, 0.8);
-  for(int i = 0; i < 4; i++){
-    v += a * noise(p);
-    p = rot * p * 2.02 + vec2(t * 0.04, -t * 0.03);
-    a *= 0.5;
-  }
-  return v;
-}
-float blob(vec2 p, vec2 c, vec2 r){ vec2 d = (p - c) / r; return exp(-dot(d, d)); }
-float bokeh(vec2 p, float scale, float speed, float seed){
-  vec2 uv = p * scale + vec2(sin(t * 0.12 + seed) * 0.3, -t * speed);
-  vec2 id = floor(uv), gv = fract(uv) - 0.5;
-  float h = hash(id + seed);
-  if(h < 0.72) return 0.0;
-  vec2 offset = vec2(fract(h * 13.7) - 0.5, fract(h * 29.3) - 0.5) * 0.5;
-  float rad = mix(0.06, 0.22, fract(h * 43.1));
-  float d = length(gv - offset);
-  float disc = smoothstep(rad, rad * 0.25, d) * (0.65 + 0.35 * smoothstep(rad * 0.4, rad * 0.9, d));
-  float twinkle = 0.6 + 0.4 * sin(t * 1.4 + h * 40.0);
-  return disc * twinkle * (h - 0.72) * 3.5;
+float blob(vec2 p, vec2 c, vec2 r){
+  vec2 d = (p - c) / r;
+  return exp(-dot(d, d));
 }
 void main(){
   float asp = res.x / res.y;
   vec2 uv = gl_FragCoord.xy / res;
   vec2 p = vec2(uv.x * asp, uv.y);
-  float s = m * 0.28;
-  vec2 mp = (mouse - 0.5) * 0.14;
-  vec2 c1 = vec2((0.82 + 0.06 * sin(t * 0.08 + s * 1.8) + mp.x) * asp, 0.68 + 0.10 * sin(t * 0.06 + 1.0) - s * 0.08 + mp.y);
-  vec2 c2 = vec2((0.16 + 0.07 * cos(t * 0.07 + s) - mp.x * 0.6) * asp, 0.22 + 0.10 * cos(t * 0.05) + s * 0.05);
-  vec2 c3 = vec2((0.52 + 0.12 * sin(t * 0.05 + 2.0 - s)) * asp, 0.95 + 0.06 * sin(t * 0.09));
-  float fog = fbm(p * 1.65 + vec2(s * 0.4, -t * 0.025));
-  float fogDetail = fbm(p * 3.4 - vec2(t * 0.04, s * 0.3));
+  float s = m * 0.22;
+
+  /* Steady studio light positions that glide smoothly only when scrolling */
+  vec2 c1 = vec2(0.82 * asp, 0.72 - s * 0.06);
+  vec2 c2 = vec2(0.16 * asp, 0.22 + s * 0.04);
+  vec2 c3 = vec2(0.52 * asp, 0.94);
+
   vec3 col = base;
-  float keyBlob = blob(p, c1, vec2(0.72, 0.56)) * (0.75 + 0.45 * fog);
-  float rimBlob = blob(p, c2, vec2(0.76, 0.48)) * (0.78 + 0.35 * fogDetail);
-  float topBlob = blob(p, c3, vec2(0.85, 0.35)) * 0.55;
+  float keyBlob = blob(p, c1, vec2(0.85, 0.65));
+  float rimBlob = blob(p, c2, vec2(0.85, 0.55));
+  float topBlob = blob(p, c3, vec2(0.95, 0.42)) * 0.5;
+
   col += ca * keyBlob * power;
   col += cb * rimBlob * power * 0.85;
   col += cc * topBlob * power;
-  vec2 toLight = p - vec2(0.92 * asp + mp.x * 0.8, 1.08 + mp.y * 0.5);
+
+  /* Soft, steady top-right ambient cone without high-frequency ray noise */
+  vec2 toLight = p - vec2(0.94 * asp, 1.08);
   float dist = length(toLight);
-  float ang = atan(toLight.y, toLight.x);
-  float rayPattern = noise(vec2(ang * 7.5 + t * 0.05, dist * 1.2 - t * 0.08)) * noise(vec2(ang * 14.0 - t * 0.03, dist * 0.8));
-  float cone = smoothstep(2.1, 0.15, dist) * smoothstep(-3.05, -2.05, ang) * smoothstep(-1.15, -1.85, ang);
-  float godRays = pow(rayPattern, 1.4) * cone * (0.55 + 0.65 * fog);
-  col += mix(ca, cc, 0.35) * godRays * power * rays * 1.2;
-  float streak = exp(-abs(uv.y - (c1.y * 0.85)) * 11.0) * exp(-abs(uv.x - 0.72) * 2.2);
-  col += mix(ca, vec3(1.0, 0.95, 0.88), 0.3) * streak * power * 0.12;
-  float dustNear = bokeh(p, 4.2, 0.035, 1.7);
-  float dustFar  = bokeh(p, 8.5, 0.020, 9.3) * 0.55;
-  float lightMask = 0.25 + 1.25 * (keyBlob + godRays * 0.8);
-  col += mix(ca, vec3(1.0, 0.96, 0.90), 0.45) * (dustNear + dustFar) * lightMask * power * 0.5;
+  float cone = smoothstep(2.0, 0.1, dist) * 0.35;
+  col += mix(ca, cc, 0.35) * cone * power;
+
+  /* Tone map, vignette, and static sub-pixel dither (prevents banding without flickering) */
   col = col / (1.0 + col * 0.18);
   vec2 vUv = (uv - 0.5) * vec2(1.15, 1.45);
   col *= 1.0 - vig * smoothstep(0.22, 1.05, length(vUv));
-  col += (hash(gl_FragCoord.xy + fract(t) * 173.0) - 0.5) * grain;
+  float dither = (hash(gl_FragCoord.xy) + hash(gl_FragCoord.xy + 5.23) - 1.0) * (1.5 / 255.0);
+  col += dither;
+
   gl_FragColor = vec4(max(col, 0.0), 1.0);
 }`;
 
@@ -1291,33 +1245,39 @@ try {
   const loc = gl.getAttribLocation(prog, 'p');
   gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
   const U = n => gl.getUniformLocation(prog, n);
-  const u = { res: U('res'), mouse: U('mouse'), t: U('t'), m: U('m'), grain: U('grain'), vig: U('vig'), power: U('power'), rays: U('rays'),
+  const u = { res: U('res'), m: U('m'), vig: U('vig'), power: U('power'),
               base: U('base'), ca: U('ca'), cb: U('cb'), cc: U('cc') };
 
+  let cur = state.m, last = performance.now(), needsDraw = true;
+  function drawShader() {
+    gl.uniform2f(u.res, canvas.width, canvas.height);
+    gl.uniform1f(u.m, cur);
+    gl.uniform1f(u.vig, 0.5);
+    gl.uniform1f(u.power, level(POWER, cur));
+    gl.uniform3fv(u.base, level3(BASE, cur));
+    gl.uniform3fv(u.ca, level3(LIGHT_A, cur));
+    gl.uniform3fv(u.cb, level3(LIGHT_B, cur));
+    gl.uniform3fv(u.cc, level3(LIGHT_C, cur));
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+  }
   function resize() {
     const dpr = Math.min(devicePixelRatio || 1, 1.25);
     canvas.width = Math.round(innerWidth * dpr); canvas.height = Math.round(innerHeight * dpr);
     gl.viewport(0, 0, canvas.width, canvas.height);
+    needsDraw = true;
   }
   resize(); addEventListener('resize', resize);
 
-  let cur = state.m, last = performance.now(), t = 0;
   function frame(now) {
     requestAnimationFrame(frame);
     const dt = Math.min((now - last) / 1000, .05); last = now;
     if (root.dataset.bg === 'off' || root.dataset.contrast === 'high') return;
-    if (!reduce) t += dt * DIALS.motion;
-    cur += (state.m - cur) * (reduce ? 1 : 1 - Math.exp(-dt * 3));
-    const k = reduce ? 1 : 1 - Math.exp(-dt * 4);
-    pointer.x += (pointer.tx - pointer.x) * k; pointer.y += (pointer.ty - pointer.y) * k;
-    gl.uniform2f(u.res, canvas.width, canvas.height);
-    gl.uniform2f(u.mouse, reduce ? .65 : pointer.x, reduce ? .35 : pointer.y);
-    gl.uniform1f(u.t, t); gl.uniform1f(u.m, cur);
-    gl.uniform1f(u.grain, .034 * DIALS.grain); gl.uniform1f(u.vig, .5 * DIALS.vignette);
-    gl.uniform1f(u.power, level(POWER, cur) * DIALS.glow); gl.uniform1f(u.rays, DIALS.rays);
-    gl.uniform3fv(u.base, level3(BASE, cur)); gl.uniform3fv(u.ca, level3(LIGHT_A, cur));
-    gl.uniform3fv(u.cb, level3(LIGHT_B, cur)); gl.uniform3fv(u.cc, level3(LIGHT_C, cur));
-    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    const diff = state.m - cur;
+    if (Math.abs(diff) > 0.0005 || needsDraw) {
+      cur += diff * (reduce ? 1 : 1 - Math.exp(-dt * 4));
+      needsDraw = false;
+      drawShader();
+    }
   }
   requestAnimationFrame(frame);
 } catch (err) {
