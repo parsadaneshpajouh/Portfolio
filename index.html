@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
 <title>Parsa Danesh Pajouh | Animation &amp; 3D</title>
-<meta name="description" content="Portfolio of Parsa Danesh Pajouh — 3D modeling, character animation, motion graphics, video editing and interactive fiction.">
+<meta name="description" content="Portfolio of Parsa Danesh Pajouh — 3D modeling, texturing, character animation, motion graphics, video editing and interactive fiction.">
 <meta name="theme-color" content="#000000">
 <meta property="og:title" content="Parsa Danesh Pajouh | Animation &amp; 3D">
-<meta property="og:description" content="3D character animation, modeling, motion graphics and interactive media portfolio.">
+<meta property="og:description" content="3D character animation, modeling, texturing, motion graphics and interactive media portfolio.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -196,20 +196,26 @@ html.calm .card:hover .slot img,html.calm .card:hover .slot video{transform:none
 .card .shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.85) 0%,rgba(0,0,0,.55) 38%,rgba(0,0,0,0) 74%)}
 .card-text{position:relative;z-index:2;padding:clamp(1.4rem,3vw,2.2rem);max-width:36rem}
 
-/* Featured first card: full-bleed video + soft dithered shadow behind text (zero seam lines) */
+/* Featured first card: full-height uncropped 16:9 video on right + seamless dithered fade */
 .card.wide{
   grid-column:1 / -1;
-  min-height:clamp(25rem,35vw,31rem);
+  min-height:clamp(22rem,31vw,27rem);
   display:flex;
   align-items:center;
   background:var(--vid-bg,#393939);
 }
 .card.wide .slot{
   position:absolute;
-  inset:0;
-  width:100%;
+  top:0;
+  bottom:0;
+  right:0;
+  left:auto;
+  width:auto;
   height:100%;
+  aspect-ratio:16/9;
   background:var(--vid-bg,#393939);
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 8%,rgba(0,0,0,.85) 16%,#000 24%);
+  mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 8%,rgba(0,0,0,.85) 16%,#000 24%);
 }
 .card.wide .slot video,
 .card.wide .slot img{
@@ -217,8 +223,8 @@ html.calm .card:hover .slot img,html.calm .card:hover .slot video{transform:none
   inset:0;
   width:100%;
   height:100%;
-  object-fit:cover;
-  object-position:68% center;
+  object-fit:contain;
+  object-position:center;
 }
 .card.wide .shade{
   display:block;
@@ -230,9 +236,9 @@ html.calm .card:hover .slot img,html.calm .card:hover .slot video{transform:none
 .card.wide .card-text{
   position:relative;
   z-index:2;
-  width:52%;
-  max-width:34rem;
-  padding:clamp(2rem,4vw,3.2rem);
+  width:48%;
+  max-width:32rem;
+  padding:clamp(2rem,4vw,3rem);
   text-shadow:0 2px 20px rgba(0,0,0,.45);
 }
 
@@ -326,8 +332,7 @@ footer{margin-top:2.5rem;padding-bottom:5.5rem;text-align:center;color:var(--mut
   .cards{grid-template-columns:1fr}
   .card{min-height:28rem}
   .card.wide{min-height:0;display:block;background:#0e1014}
-  .card.wide .slot{position:relative;width:100%;height:auto;aspect-ratio:16/9}
-  .card.wide .slot video,.card.wide .slot img{object-position:center}
+  .card.wide .slot{position:relative;width:100%;height:auto;aspect-ratio:16/9;-webkit-mask-image:none;mask-image:none}
   .card.wide .shade{display:none}
   .card.wide .card-text{width:100%;max-width:none;padding:1.4rem 1.4rem 4.5rem}
   .card .empty{right:10rem}
@@ -384,7 +389,7 @@ footer{margin-top:2.5rem;padding-bottom:5.5rem;text-align:center;color:var(--mut
   <section class="about" id="about" aria-labelledby="about-h">
     <div class="wrap">
       <div class="head rv"><p class="sec-num">About</p><h2 id="about-h">Digital media student at the University of Canberra.</h2></div>
-      <p class="lede rv">I have a design background and hands-on experience across 3D modeling, character rigging and animation, 2D motion graphics, video editing, and interactive game design. I'm looking for roles in animation, game design, video editing, motion graphics, and 3D design.</p>
+      <p class="lede rv">I have a design background and hands-on experience across 3D modeling, texturing, character rigging and animation, 2D motion graphics, video editing, and interactive game design. I'm looking for roles in animation, game design, video editing, motion graphics, and 3D design.</p>
       <dl class="about-facts rv">
         <div class="tools-row"><dt>Tools</dt><dd><ul class="tool-logos" id="toolLogos" aria-label="Tools"></ul></dd></div>
         <div><dt>Education</dt><dd>Bachelor of Digital Media<br>University of Canberra (WAM: 83)</dd></div>
@@ -407,7 +412,7 @@ footer{margin-top:2.5rem;padding-bottom:5.5rem;text-align:center;color:var(--mut
       <p class="scroll-quote" data-word-reveal>Every frame is built with intent, from clean topology and expressive rigging to final composite, light and grade.</p>
       <ol class="steps">
         <li class="surface rv"><h3>Design &amp; Model</h3><p>Block out 3D characters and environments in Blender, or design 2D assets and branching narrative worlds.</p></li>
-        <li class="surface rv" style="--d:.08s"><h3>Rig</h3><p>Build armatures, controls and clean weight painting in Blender, or set up 2D character puppets.</p></li>
+        <li class="surface rv" style="--d:.08s"><h3>Texture &amp; Rig</h3><p>Paint PBR materials in Substance Painter and build armatures, controls and clean weights in Blender.</p></li>
         <li class="surface rv" style="--d:.16s"><h3>Animate</h3><p>Key body mechanics, seamless locomotion cycles and expressive character performance frame by frame.</p></li>
         <li class="surface rv" style="--d:.24s"><h3>Composite &amp; Finish</h3><p>Light and render 3D shots, composite in After Effects, and finish the cut and sound in Premiere Pro.</p></li>
       </ol>
@@ -425,7 +430,7 @@ footer{margin-top:2.5rem;padding-bottom:5.5rem;text-align:center;color:var(--mut
           <ul class="links" id="socials"></ul>
         </div>
       </div>
-      <p class="credit">Modeled, animated and edited by Parsa Danesh Pajouh. Pre-made rigs credited in project notes.</p>
+      <p class="credit">Modeled, textured, animated and edited by Parsa Danesh Pajouh. Pre-made rigs credited in project notes.</p>
       <footer>&copy; <span id="year"></span> Parsa Danesh Pajouh</footer>
     </div>
   </section>
@@ -474,17 +479,17 @@ const PROJECTS = [
   {
     title: 'Original 3D Character',
     tag: '3D',
-    kind: '3D character model, rig & walk cycle',
+    kind: '3D character model, texture, rig & walk cycle',
     year: '2026',
-    role: '3D Modeler, Texturer, Rigger & Animator (Full Pipeline)',
-    text: 'An original hard-surface 3D robot character modeled, textured, rigged and animated from scratch in Blender, shown in a looping walk cycle.',
+    role: '3D Modeler, Texture Artist, Rigger & Animator (Full Pipeline)',
+    text: 'An original hard-surface 3D robot character modeled, rigged and animated in Blender, and textured in Substance Painter, shown in a looping walk cycle.',
     details: [
       'Modeled the hard-surface robot body, monitor head and articulated fingers from scratch in Blender',
-      'Created worn brushed-steel and red metallic materials paired with an emissive screen face',
+      'Textured worn brushed-steel, red metallic and emissive screen PBR materials in Adobe Substance Painter',
       'Built the armature and control rig in Blender so every mechanical joint and finger deforms cleanly',
       'Keyframed and rendered a seamless looping walk cycle demonstrating weight, balance and mechanical timing'
     ],
-    tools: ['Blender', 'Rigify'],
+    tools: ['Blender', 'Substance Painter', 'Rigify'],
     media: {
       type: 'video',
       sources: [
@@ -545,14 +550,14 @@ const PROJECTS = [
     tag: '3D',
     kind: '3D environment & animation',
     year: '2026',
-    role: '3D Modeler & Animator',
-    text: 'A 3D interior environment modeled, lit and animated in Blender exploring themes of memory and nostalgia.',
+    role: '3D Modeler, Texture Artist & Animator',
+    text: 'A 3D interior environment modeled, textured, lit and animated in Blender and Substance Painter exploring themes of memory and nostalgia.',
     details: [
       'Modeled and dressed the 3D room environment and props in Blender',
-      'Crafted warm lighting, materials and atmosphere around themes of nostalgia',
+      'Textured surface details and crafted warm atmospheric lighting around themes of nostalgia',
       'Animated camera motion and scene elements for the final render'
     ],
-    tools: ['Blender'],
+    tools: ['Blender', 'Substance Painter'],
     media: { type: 'none' }
   },
   {
@@ -609,6 +614,7 @@ const PORTRAIT = { src: 'media/portrait.jpg', alt: 'Portrait of Parsa Danesh Paj
 
 const LOGO = {
   blender: 'data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTI4IDEyOCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNjYuMzMyIDcwLjAzMmMuMjQtNC4yNDIgMi4zMjctNy45ODcgNS40ODUtMTAuNjM0IDMuMDk0LTIuNjAyIDcuMjQ4LTQuMTkzIDExLjgwOS00LjE5MyA0LjUzNyAwIDguNjkgMS41OSAxMS43OCA0LjE5MyAzLjE2MyAyLjY0NyA1LjIzNyA2LjM5MiA1LjQ4NSAxMC42MzQuMjQgNC4zNS0xLjUyMyA4LjQxLTQuNjA1IDExLjQxNy0zLjE1OCAzLjA1LTcuNjI3IDQuOTc3LTEyLjY2IDQuOTc3LTUuMDM3IDAtOS41MjYtMS45MTUtMTIuNjY0LTQuOTc3LTMuMDk0LTMuMDA2LTQuODUzLTcuMDQ0LTQuNjA2LTExLjM5N3ptMCAwIiBmaWxsPSIjMjM1Nzg1Ii8+PHBhdGggZD0iTTM5LjI0NSA3OS4wMDJjLjAyOCAxLjY2LjU2NCA0Ljg5IDEuMzYgNy40MDQgMS42ODIgNS4zMzYgNC41MzcgMTAuMjczIDguNDkgMTQuNTk5IDQuMDYyIDQuNDY1IDkuMDc0IDguMDU1IDE0Ljg1IDEwLjYxIDYuMDczIDIuNjcgMTIuNjY1IDQuMDM3IDE5LjUwNSA0LjAzNyA2Ljg0LS4wMDkgMTMuNDMyLTEuNCAxOS41MDQtNC4xMDIgNS43NzYtMi41ODIgMTAuNzktNi4xNjggMTQuODUtMTAuNjU3IDMuOTc0LTQuMzc0IDYuODItOS4zMDcgOC40OTEtMTQuNjQ3YTM3IDM3IDAgMDAxLjU5NS04LjE2M2MuMjA4LTIuNjkuMTItNS40MDUtLjI2My04LjEyYTM3LjUzNSAzNy41MzUgMCAwMC01LjQxNy0xNC43MTRjLTIuNTc0LTQuMTUtNS45MTYtNy43Ni05Ljg5LTEwLjgxM2wuMDEyLS4wMDQtMzkuOTU1LTMwLjUwNmMtLjAzNi0uMDI4LS4wNjgtLjA1Ni0uMTA0LS4wOC0yLjYxOS0yLjAwMi03LjA0NC0xLjk5NC05LjkxLjAwOC0yLjkxNCAyLjAzMS0zLjI1IDUuMzg1LS42NTYgNy40OTZsLS4wMTIuMDA4IDE2LjY4MiAxMy40ODQtNTAuNzg5LjA1MWgtLjA2OGMtNC4xOTcuMDA0LTguMjM5IDIuNzM5LTkuMDMgNi4yMTMtLjgyIDMuNTIxIDIuMDM1IDYuNDYgNi40MTIgNi40NmwtLjAwOC4wMTYgMjUuNzM2LS4wNDhMNC41OCA4Mi41MjRjLS4wNTYuMDQ0LS4xMi4wODgtLjE3Ni4xMzJDLjA2OSA4NS45NS0xLjMzIDkxLjQ0NiAxLjQgOTQuOWMyLjc3OCAzLjUyMiA4LjY2NiAzLjU0NiAxMy4wNDcuMDJMMzkuNTA1IDc0LjUxcy0uMzY4IDIuNzU4LS4zMzYgNC4zOTd6bTY0LjU2IDkuMjE5Yy01LjE2OCA1LjIyOC0xMi40MTYgOC4yMS0yMC4yMjcgOC4yMS03LjgzMS4wMTItMTUuMDc5LTIuOTE4LTIwLjI0OC04LjE0Mi0yLjUyNi0yLjU1OS00LjM3Ny01LjQ3My01LjUyOC04LjU5MWEyMi4yMDIgMjIuMjAyIDAgMDEtMS4yNzEtOS42MDIgMjIuNDQ2IDIyLjQ0NiAwIDAxMi43NzgtOS4wMzljMS41MDctMi43MTQgMy41OS01LjE4IDYuMTQtNy4yNjcgNS4wMzMtNC4wNTggMTEuNDItNi4yOCAxOC4xLTYuMjggNi43MDktLjAwOCAxMy4wOTcgMi4xNzQgMTguMTMgNi4yMzYgMi41NSAyLjA3NSA0LjYyNSA0LjUyOSA2LjE0IDcuMjQzYTIyLjMwMiAyMi4zMDIgMCAwMTIuNzc0IDkuMDQzIDIyLjMxMyAyMi4zMTMgMCAwMS0xLjI3MSA5LjU5OGMtMS4xNDcgMy4xNDItMy4wMDIgNi4wNTYtNS41MzMgOC42MTV6bTAgMCIgZmlsbD0iI2U4NzUwMCIvPjwvc3ZnPg==',
+  substancePainter: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><path fill="%23222E13" d="M22.7 1.6h82.7c12.5 0 22.7 10.1 22.7 22.7v79.5c0 12.5-10.1 22.7-22.7 22.7H22.7C10.1 126.4 0 116.3 0 103.7V24.3C0 11.7 10.1 1.6 22.7 1.6z"/><path fill="%238CE232" d="M32 36h19.5c11.8 0 19.5 6.8 19.5 17.8 0 11.2-7.7 18.2-19.8 18.2H42.5v20H32V36zm10.5 8.8v18.4h7.8c6.4 0 10.1-3.4 10.1-9.3 0-5.8-3.7-9.1-10.1-9.1h-7.8zM88.5 41v11h9v8.2h-9v18.5c0 3.6 1.6 5.2 5.1 5.2 1.3 0 2.7-.2 3.9-.5v8.1c-1.8.6-4.1.9-6.4.9-8.3 0-12.8-4.3-12.8-12.6V60.2h-6.1V52h6.1V41h10.2z"/></svg>',
   afterEffects: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48cGF0aCBmaWxsPSIjMUYwNzQwIiBkPSJNNi41IDYuNWgxMTV2MTE1SDYuNXoiLz48cGF0aCBmaWxsPSIjRDQ5MEM1IiBkPSJNMCAwdjEyOGgxMjhWMEgwem0xMjEuNSAxMjEuNUg2LjVWNi41aDExNXYxMTV6Ii8+PHBhdGggZmlsbD0iI0Q0OTBDNSIgZD0iTTEwMy41IDU5LjJzLS42LTE0LjYtMTYuNS0xNC42Yy0xNiAwLTE3LjMgMjItMTcuMyAyMnY0LjdTNzIuNSA4OS42IDg2IDg5LjZzMTQuOC0yLjYgMTQuOC0yLjZ2LTguMXMtMTkuMyA5LjItMjEuMi0xMGgyNHYtOS43em0tOSAyLjRoLTE1czAtOC4zIDcuNS05LjJjOC4yIDAgNy41IDkuMiA3LjUgOS4yek01MC41IDI5LjlIMzguNHYzLjhsLTE2IDU0LjloOS40bDQuNC0xNi4xSDUzbDQuNSAxNi4xaDEwLjNMNTAuNSAyOS45ek0zOC4yIDYzLjFsNi40LTI0LjVMNTEgNjMuMUgzOC4yeiIvPjwvc3ZnPg==',
   premierePro: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48cGF0aCBmaWxsPSIjMkEwNjM0IiBkPSJNMCAwaDEyOHYxMjhIMHoiLz48cGF0aCBmaWxsPSIjRTk3NkI5IiBkPSJNMCAwdjEyOGgxMjhWMEgwem0xMjMgMTIzSDVWNWgxMTh2MTE4eiIvPjxwYXRoIGZpbGw9IiNFOTc2QjkiIGQ9Ik02OSA0Ny4xYy0uMS05LjQtNy44LTE2LjktMTcuMi0xNi44SDMzLjN2NTguNWg5LjZWNjcuNWg4LjNDNjEgNjcuNCA2OSA1OS4zIDY5IDQ5LjR2LTIuM3ptLTkuNiAzYzAgNS00LjEgOS4xLTkuMSA5LjFoLTcuNFYzOC41aDcuNGM1IDAgOS4xIDQuMSA5LjEgOS4xdjIuNXpNNzcuMSA4OC44VjQ4LjlzMTAuMi01LjEgMjAuMi0zLjh2OC4zcy03IDAtMTAuMSAxLjN2MzQuMkg3Ny4xeiIvPjwvc3ZnPg==',
   illustrator: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbDpzcGFjZT0icHJlc2VydmUiIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48cGF0aCBmaWxsPSIjMzAwIiBkPSJNMjIuNyAxLjZoODIuN2MxMi41IDAgMjIuNyAxMC4xIDIyLjcgMjIuN3Y3OS41YzAgMTIuNS0xMC4xIDIyLjctMjIuNyAyMi43SDIyLjdDMTAuMSAxMjYuNCAwIDExNi4zIDAgMTAzLjdWMjQuM0MwIDExLjcgMTAuMSAxLjYgMjIuNyAxLjYiLz48cGF0aCBmaWxsPSIjZmY5YTAwIiBkPSJNNjEuOSA3Ni4zSDQybC00IDEyLjVjLS4xLjUtLjUuOC0xIC43SDI3Yy0uNiAwLS43LS4zLS42LTFsMTcuMi00OS40Yy4yLS41LjMtMS4xLjUtMS44LjItMS4xLjMtMi4zLjMtMy41LS4xLS4zLjItLjUuNC0uNmgxMy44Yy40IDAgLjYuMi43LjRsMTkuNSA1NC45Yy4yLjYgMCAuOS0uNS45SDY3LjFjLS40LjEtLjctLjItLjktLjZ6TTQ1LjEgNjUuNGgxMy41Yy0uMy0xLjEtLjctMi41LTEuMi0zLjgtLjUtMS40LTEtMy0xLjQtNC42LS41LTEuNy0xLTMuMy0xLjUtNC45LS41LTEuNy0xLTMuMi0xLjQtNC43LS40LTEuNS0uOC0yLjktMS4yLTQuMmgtLjFjLS41IDIuMy0xLjEgNC42LTEuOCA2LjktLjggMi42LTEuNiA1LjItMi41IDcuOS0uOCAyLjctMS42IDUuMi0yLjQgNy40bTQ1LjYtMjIuN2MtMS44LjEtMy41LS42LTQuNy0xLjktMS4yLTEuMy0xLjktMy4xLTEuOC00LjktLjEtMS44LjYtMy41IDEuOS00LjcgMS4zLTEuMiAzLTEuOSA0LjctMS45IDIuMSAwIDMuNy42IDQuOSAxLjkgMS4yIDEuMyAxLjggMyAxLjggNC43LjEgMS44LS42IDMuNi0xLjkgNC45LTEuMyAxLjMtMy4xIDItNC45IDEuOW0tNiA0Ni4zVjQ3LjljMC0uNS4yLS43LjctLjdIOTZjLjUgMCAuNy4zLjcuN1Y4OWMwIC42LS4yLjktLjcuOUg4NS41Yy0uNS0uMS0uOC0uNC0uOC0uOSIvPjwvc3ZnPg==',
@@ -618,6 +624,7 @@ const LOGO = {
 };
 const TOOLS = [
   { name: 'Blender',            logo: LOGO.blender },
+  { name: 'Substance Painter',  logo: LOGO.substancePainter },
   { name: 'After Effects',      logo: LOGO.afterEffects },
   { name: 'Premiere Pro',       logo: LOGO.premierePro },
   { name: 'Photoshop',          logo: LOGO.photoshop },
