@@ -1,41 +1,14 @@
 <!doctype html>
-<!--
-  PORTFOLIO: animation and 3D.
-
-  Styled like a product page: a big title, large two-tone headlines, rounded picture cards.
-  One clear order, top to bottom:
-    Parsa Danesh Pajouh + About me (with your photo beside it) > Work > Stills > Process > Contact
-  The top bar reacts to the mouse: a glass highlight follows the pointer, the words near it grow a little,
-  and a soft light shines on the bar.
-  Behind the page: slow cinematic light that changes colour as you scroll, with your pictures fading in
-  underneath. Everything is one sans serif font (the system font on Apple devices, Inter elsewhere).
-  Also here: one small About section under the hero (title, one line, tool logos, location), a project filter, animated placeholder studies for
-  projects that have no picture or video yet, and a Process statement that lights up word by word as you scroll.
-
-  HOW TO EDIT (all in this one file)
-  1. CONFIG in the script at the bottom: email, social links, projects (each has a tag for the filter), stills.
-     Write a real description (alt) for each picture so blind visitors know what it shows.
-  2. Name: search for "Parsa". About: search for "about-facts".
-  3. Put videos and pictures in a folder called media/ next to this file.
-     Pictures with these names appear on their own:
-       backdrop-1.jpg to backdrop-4.jpg   full-screen background
-       project-1.jpg to project-4.jpg     cover for each project (when it has no video)
-       still-1.jpg to still-8.jpg         the Stills gallery
-       portrait.jpg                       your photo, shown beside your name and bio at the top
-     A missing file just shows a labelled empty slot.
-  4. Colours and font: the :root block at the top of the style tag.
-  5. Videos: add captions with a .vtt file (see "captions" in CONFIG).
--->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
-<title>Parsa Danesh Pajouh | Animation and 3D</title>
-<meta name="description" content="Portfolio of Parsa Danesh Pajouh, an animator and 3D modeler.">
+<title>Parsa Danesh Pajouh | Animation &amp; 3D</title>
+<meta name="description" content="Portfolio of Parsa Danesh Pajouh — 3D modeling, character animation, motion graphics, video editing and interactive fiction.">
 <meta name="theme-color" content="#000000">
-<meta property="og:title" content="Parsa Danesh Pajouh | Animation and 3D">
-<meta property="og:description" content="Animation and 3D modeling portfolio.">
+<meta property="og:title" content="Parsa Danesh Pajouh | Animation &amp; 3D">
+<meta property="og:description" content="3D character animation, modeling, motion graphics and interactive media portfolio.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -43,14 +16,14 @@
 <style>
 :root{
   --ink:#000;
-  --paper:#f5f5f7;      /* main text */
-  --soft:#d2d2d7;       /* body text */
-  --muted:#a1a1a6;      /* small print and the grey half of headlines */
-  --accent:#e2ae64;     /* warm light */
-  --link:#2997ff;       /* links */
-  --blue:#0071e3;       /* main button */
-  --focus:#ffd479;      /* keyboard focus ring */
-  --dim:rgba(245,245,247,.24);  /* unlit words in the Process statement */
+  --paper:#f5f5f7;
+  --soft:#d2d2d7;
+  --muted:#a1a1a6;
+  --accent:#e2ae64;
+  --link:#2997ff;
+  --blue:#0071e3;
+  --focus:#ffd479;
+  --dim:rgba(245,245,247,.24);
   --line:rgba(255,255,255,.18);
   --font:-apple-system,BlinkMacSystemFont,"Inter","SF Pro Display","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   --spring:cubic-bezier(.34,1.5,.55,1);
@@ -71,7 +44,7 @@ main:focus{outline:none}
 .skip{position:fixed;left:1rem;top:-6rem;z-index:30;padding:.8rem 1.2rem;border-radius:12px;background:var(--paper);color:#000;font:700 1rem var(--font);text-decoration:none}
 .skip:focus{top:1rem}
 
-/* ---------- BACKGROUND: pictures, light drawn over them, dark edges ---------- */
+/* ---------- BACKGROUND ---------- */
 .backdrops{position:fixed;inset:0;z-index:0;overflow:hidden;background:#05070a}
 .bd{position:absolute;inset:-5%;background-size:cover;background-position:center;opacity:0;
   filter:saturate(.85) contrast(1.05) brightness(.8);transition:opacity 1.8s ease;
@@ -114,7 +87,7 @@ html[data-bg="off"] #bg,html[data-bg="off"] .backdrops{display:none}
 .panel > *,.project > *{position:relative;z-index:1}
 .pill{--r:999px}
 
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:.6rem 1.7rem;--r:999px;border-radius:999px;font:600 1.0625rem var(--font);
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;min-height:48px;padding:.6rem 1.7rem;--r:999px;border-radius:999px;font:600 1.0625rem var(--font);
   text-decoration:none;color:var(--paper);border:0;cursor:pointer;transition:transform .55s var(--spring)}
 .btn:hover{transform:scale(1.04)}
 .btn:active{transform:scale(.97)}
@@ -122,8 +95,7 @@ html[data-bg="off"] #bg,html[data-bg="off"] .backdrops{display:none}
 .btn.primary:hover{background:#0077ed}
 .btn.small{min-height:44px;padding:.4rem 1.2rem;font-size:1rem;font-weight:600}
 
-/* segmented control with a glass thumb that slides to the active item */
-.seg{position:relative;display:flex;gap:2px;padding:4px;--r:999px}
+.seg{position:relative;display:flex;flex-wrap:wrap;gap:2px;padding:4px;--r:999px}
 .seg .thumb{position:absolute;top:4px;bottom:4px;left:0;width:0;border-radius:999px;pointer-events:none;z-index:1;opacity:0;
   background-image:linear-gradient(160deg,rgba(255,255,255,.36),rgba(255,255,255,.12));
   box-shadow:inset 0 1px 0 rgba(255,255,255,.6),inset 0 0 0 1px rgba(255,255,255,.2),0 4px 14px rgba(0,0,0,.3);
@@ -133,9 +105,6 @@ html[data-bg="off"] #bg,html[data-bg="off"] .backdrops{display:none}
 .seg > button:hover,.seg > a:hover{color:#fff}
 .seg > [aria-pressed="true"],.seg > [aria-current="true"]{color:#fff}
 
-/* top bar: a glass pill that reacts to the mouse.
-   .hl is the glass highlight (it follows the pointer, and rests on the current section),
-   links near the pointer grow a little (--s is set by the script), and a soft light follows the cursor. */
 .nav{position:fixed;left:50%;translate:-50% 0;top:14px;z-index:6;display:flex;align-items:center;gap:.1rem;padding:.3rem;--r:999px;
   transition:scale .5s var(--spring);animation:rise .6s .1s backwards}
 .nav:hover{scale:1.03}
@@ -155,10 +124,9 @@ html.calm .nav a{transform:none}
 html.calm .nav .hl{transition:opacity .2s}
 
 @keyframes rise{from{opacity:0;transform:translateY(.8rem)}}
-
 html.calm h1,html.calm .hero-photo,html.calm .eyebrow,html.calm .sub,html.calm .hero-cta,html.calm .nav{animation:none}
 
-/* ---------- TYPE SCALE & HIERARCHY: eyebrow > h1 (Parsa > Danesh Pajouh) > sub > cta > about card ---------- */
+/* ---------- TYPOGRAPHY ---------- */
 h1{font:700 clamp(3.5rem,8vw,6.5rem)/.94 var(--font);letter-spacing:-.045em;margin:0 0 1.15rem;animation:rise .8s .18s backwards}
 h1 .last{display:block;margin-top:.12em;font-size:.58em;line-height:1.04;letter-spacing:-.035em;color:#b0b0b6}
 h2{font:700 clamp(2.3rem,5.2vw,4.25rem)/1.05 var(--font);letter-spacing:-.035em;margin:0}
@@ -178,12 +146,10 @@ h1,h2,.sub{text-shadow:0 0 30px rgba(0,0,0,.55)}
 .surface{background:rgba(18,19,22,.8);-webkit-backdrop-filter:blur(24px) saturate(1.4);backdrop-filter:blur(24px) saturate(1.4);
   border-radius:28px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.09)}
 
-/* scroll reveal: things rise into place as they come into view (only when JavaScript runs) */
 html.js .rv{opacity:0;transform:translateY(26px);transition:opacity .9s ease var(--d,0s),transform .9s cubic-bezier(.16,1,.3,1) var(--d,0s)}
 html.js .rv.in{opacity:1;transform:none}
 html.calm .rv{opacity:1!important;transform:none!important;transition:none!important}
 
-/* hero: two columns with clear 5-step vertical hierarchy on the left, portrait on the right */
 .hero{min-height:100svh;display:flex;align-items:center;padding-block:6.5rem 4.5rem}
 .hero .wrap{display:grid;grid-template-columns:minmax(0,1.32fr) minmax(0,.68fr);align-items:center;gap:clamp(2rem,5.5vw,4.5rem);
   transform:scale(calc(1 - var(--hp,0) * .1));opacity:calc(1 - var(--hp,0) * 1.15);will-change:transform,opacity}
@@ -192,12 +158,10 @@ html.calm .rv{opacity:1!important;transform:none!important;transition:none!impor
 .textlink{display:inline-flex;align-items:center;min-height:48px;color:var(--link);font:500 1.125rem var(--font);text-decoration:none}
 .textlink:hover{text-decoration:underline;text-underline-offset:.2em}
 
-/* structured About + Tools card inside the hero */
-/* about: one short block under the hero. Order of reading: title, one line, details. */
 .about{position:relative;padding-block:clamp(2rem,6vh,4rem) clamp(4rem,10vh,7rem)}
 .about .head{margin-bottom:1.2rem;max-width:44rem}
 .about h2{font-size:clamp(1.9rem,4vw,3.1rem);line-height:1.1}
-.lede{margin:0 0 clamp(2rem,4vw,3rem);max-width:40rem;font:400 clamp(1.1rem,1.7vw,1.3rem)/1.55 var(--font);color:var(--soft)}
+.lede{margin:0 0 clamp(2rem,4vw,3rem);max-width:42rem;font:400 clamp(1.1rem,1.7vw,1.3rem)/1.55 var(--font);color:var(--soft)}
 .about-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.6rem 2.5rem;margin:0;padding-top:1.3rem;border-top:1px solid var(--line)}
 .about-facts dt{margin:0 0 .35rem;font:600 .75rem/1.2 var(--font);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
 .about-facts dd{margin:0;color:var(--soft);font-size:1rem;line-height:1.55}
@@ -207,7 +171,6 @@ html.calm .rv{opacity:1!important;transform:none!important;transition:none!impor
 .tool-logos .mark{display:grid;place-items:center;width:3.6rem;height:3.6rem;border-radius:16px;background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
 .tool-logos .mark img{display:block;width:2.4rem;height:2.4rem;object-fit:contain}
 .tool-logos .name{font-size:.85rem;line-height:1.25;color:var(--soft)}
-/* no logo file yet: the tool shows as a name chip instead */
 .tool-logos li.noimg{width:auto;margin-top:.8rem}
 .tool-logos li.noimg .mark{display:none}
 .tool-logos li.noimg .name{padding:.25rem .85rem;font-size:.925rem;color:var(--paper);border-radius:999px;background:rgba(255,255,255,.09);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
@@ -217,7 +180,7 @@ html.calm .rv{opacity:1!important;transform:none!important;transition:none!impor
 html.calm .hero .wrap{transform:none;opacity:1}
 .portrait{aspect-ratio:4/5;border-radius:22px;background:rgba(5,7,10,.55);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
 
-/* work: big rounded picture cards, text on top, a "Case study +" button at the bottom right */
+/* ---------- WORK CARDS ---------- */
 .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}
 .filter{width:max-content;max-width:100%;margin:0 0 1.4rem}
 .card{position:relative;isolation:isolate;overflow:hidden;border-radius:28px;min-height:clamp(26rem,38vw,34rem);
@@ -226,16 +189,18 @@ html.calm .hero .wrap{transform:none;opacity:1}
 .card.refilter{animation:rise .7s cubic-bezier(.16,1,.3,1) backwards}
 html.calm .card.refilter{animation:none}
 .card .slot{position:absolute;inset:0;z-index:0}
-.card .slot img{transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}
-.card:hover .slot img{transform:scale(1.04)}
-html.calm .card .slot img{transition:none}
-html.calm .card:hover .slot img{transform:none}
+.card .slot img,.card .slot video{transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}
+.card:hover .slot img,.card:hover .slot video{transform:scale(1.04)}
+html.calm .card .slot img,html.calm .card .slot video{transition:none}
+html.calm .card:hover .slot img,html.calm .card:hover .slot video{transform:none}
 .card .empty{position:absolute;left:1.6rem;bottom:1.6rem;right:11rem;font:400 1rem var(--font);color:var(--muted)}
-.card .shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.8) 0%,rgba(0,0,0,.55) 36%,rgba(0,0,0,0) 72%)}
-.card-text{position:relative;z-index:2;padding:clamp(1.4rem,3vw,2.2rem);max-width:34rem}
-.card .kicker{margin:0 0 .5rem;font:600 1rem var(--font);color:var(--soft)}
+.card .shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.82) 0%,rgba(0,0,0,.58) 40%,rgba(0,0,0,0) 76%)}
+.card-text{position:relative;z-index:2;padding:clamp(1.4rem,3vw,2.2rem);max-width:36rem}
+.card .kicker{margin:0 0 .5rem;font:600 1rem var(--font);color:var(--accent)}
 .card h3{font:700 clamp(1.8rem,3.2vw,2.6rem)/1.08 var(--font);letter-spacing:-.025em;margin:0 0 .7rem}
 .card .blurb{margin:0;color:var(--soft)}
+.card-actions{margin-top:1rem;display:flex;flex-wrap:wrap;gap:.6rem}
+.badge{display:inline-flex;align-items:center;padding:.22rem .75rem;border-radius:999px;font:600 .8rem var(--font);color:var(--paper);background:rgba(255,255,255,.12);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
 .more{position:absolute;right:1.1rem;bottom:1.1rem;z-index:3;display:inline-flex;align-items:center;gap:.7rem;min-height:48px;padding:.3rem .4rem .3rem 1.2rem;border:0;border-radius:999px;cursor:pointer;
   font:600 1rem var(--font);color:#fff;background:rgba(28,28,31,.78);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.2);transition:background-color .3s,transform .5s var(--spring)}
@@ -244,20 +209,24 @@ html.calm .card:hover .slot img{transform:none}
 .card:hover .more i,.more:focus-visible i{transform:rotate(90deg) scale(1.08)}
 html.calm .card:hover .more i,html.calm .more:focus-visible i{transform:none}
 
-/* picture slots */
+/* ---------- MEDIA SLOTS & FRAMES ---------- */
 .slot{position:relative;overflow:hidden;display:block}
-.slot img{display:block;width:100%;height:100%;object-fit:cover}
+.slot img,.slot video{display:block;width:100%;height:100%;object-fit:cover}
 .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.3rem;text-align:center;padding:1rem;font:700 1rem var(--font);color:var(--soft)}
 .ph small{font:400 .9rem var(--font);color:var(--muted)}
 .slot.has .ph{display:none}
 .slot canvas.reel-preview{position:absolute;inset:0;width:100%;height:100%;display:block}
-.frame{border-radius:18px;overflow:hidden}
+.frame{border-radius:18px;overflow:hidden;position:relative}
 .frame video,.frame img,.frame iframe{display:block;width:100%;border:0}
 .frame iframe{aspect-ratio:16/9;height:auto}
 .frame .slot.cover{aspect-ratio:16/9;background:#0b0c0f;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
 .frame .empty{position:absolute;left:1.2rem;right:1.2rem;bottom:1rem;font:400 .95rem var(--font);color:var(--muted)}
 
-/* stills: a clean grid, caption underneath */
+/* 9:16 vertical video frame */
+.frame.vertical{max-width:340px;margin-inline:auto;border-radius:22px;background:#0b0c0f;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+.frame.vertical video,.frame.vertical img,.frame.vertical iframe,.frame.vertical .slot.cover{aspect-ratio:9/16;max-height:72vh;width:100%;object-fit:contain;background:#05070a}
+
+/* ---------- STILLS, PROCESS & CONTACT ---------- */
 .gallery{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.1rem}
 .tile{display:block;width:100%;padding:0;border:0;background:none;font:inherit;color:inherit;text-align:left;cursor:zoom-in;border-radius:22px}
 .tile:disabled{cursor:default;color:inherit}
@@ -268,20 +237,17 @@ html.calm .card:hover .more i,html.calm .more:focus-visible i{transform:none}
 html.calm .tile img{transition:none}
 html.calm .tile:not(:disabled):hover img{transform:none}
 
-/* Process statement: words light up as you scroll */
 .scroll-quote{font:600 clamp(1.35rem,2.6vw,2rem)/1.32 var(--font);letter-spacing:-.02em;max-width:46rem;margin:0 0 2.2rem;text-shadow:0 0 30px rgba(0,0,0,.55)}
 .r-word{color:var(--dim);transition:color .25s ease,text-shadow .25s ease;display:inline-block;margin-right:.24em}
 .r-word.lit{color:var(--paper);text-shadow:0 0 20px rgba(226,174,100,.18)}
 .r-word.accent.lit{color:var(--accent)}
 html.calm .r-word{transition:none}
 
-/* process */
 .steps{list-style:none;margin:0;padding:0;counter-reset:s;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.1rem}
 .steps li{counter-increment:s;padding:1.7rem 1.6rem 1.9rem}
 .steps li::before{content:counter(s);content:counter(s) / "";display:block;font:700 3rem/1 var(--font);letter-spacing:-.04em;color:var(--accent);margin-bottom:2rem}
 .steps p{margin:0;color:var(--soft)}
 
-/* contact */
 .contact{text-align:center;padding:clamp(2.2rem,6vw,4.5rem) 1.5rem}
 .contact .lead{margin:0 0 1.2rem;color:var(--soft)}
 .mail{display:inline-block;font:700 clamp(1.5rem,5vw,3.2rem)/1.15 var(--font);letter-spacing:-.03em;color:var(--link);text-decoration:none;word-break:break-word;margin:.2rem 0 1.6rem}
@@ -294,7 +260,7 @@ html.calm .r-word{transition:none}
 .credit + footer{margin-top:.6rem}
 footer{margin-top:2.5rem;padding-bottom:5.5rem;text-align:center;color:var(--muted);font-size:1rem}
 
-/* ---------- DIALOGS (project viewer and picture viewer) ---------- */
+/* ---------- DIALOGS ---------- */
 .modal{border:0;padding:0;background:none;color:var(--paper);width:min(96vw,1200px);max-width:none;max-height:94vh;margin:auto;overflow:visible}
 .modal::backdrop{background:rgba(3,5,8,.8);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
 .sheet{position:relative;background:rgba(9,12,16,.98);border:1px solid rgba(255,255,255,.22);border-radius:28px;padding:clamp(1rem,2.5vw,1.8rem);max-height:94vh;overflow:auto;box-shadow:0 40px 120px rgba(0,0,0,.7)}
@@ -306,37 +272,15 @@ footer{margin-top:2.5rem;padding-bottom:5.5rem;text-align:center;color:var(--mut
 .facts div{border-top:1px solid var(--line);padding-top:.7rem}
 .facts dt{font:700 1rem var(--font);color:var(--muted);margin:0 0 .15rem}
 .facts dd{margin:0}
-.points{margin:0 0 1rem;padding-left:1.2rem;color:var(--soft)}
+.points{margin:0 0 1.2rem;padding-left:1.2rem;color:var(--soft)}
 .points li{margin:.3rem 0}
+.case-cta{margin-top:1.1rem}
 .case-foot{display:flex;justify-content:space-between;gap:1rem;margin-top:1.4rem;padding-top:1.1rem;border-top:1px solid var(--line)}
 .lb-fig{margin:0;text-align:center}
 .lb-fig img{display:block;max-width:100%;max-height:68vh;width:auto;margin:0 auto;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,.16)}
 .lb-fig figcaption{margin-top:.9rem;color:var(--soft)}
 
-/* ---------- ACCESSIBILITY MODES ---------- */
-html[data-contrast="high"]{background:#000;--soft:#fff;--muted:#fff;--line:#fff;--accent:#ffd479;--link:#ffd479}
-html[data-contrast="high"] .backdrops,html[data-contrast="high"] #bg,html[data-contrast="high"] .scrim{display:none}
-html[data-contrast="high"] .glass{background-image:none;background-color:#000;border:2px solid #fff;box-shadow:none;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
-html[data-contrast="high"] .glass::before,html[data-contrast="high"] .glass::after{display:none}
-html[data-contrast="high"] .surface{background:#000;box-shadow:inset 0 0 0 2px #fff;-webkit-backdrop-filter:none;backdrop-filter:none}
-html[data-contrast="high"] .card{background:#000;box-shadow:inset 0 0 0 2px #fff}
-html[data-contrast="high"] .card .shade{background:linear-gradient(180deg,#000 0%,#000 45%,rgba(0,0,0,.2) 85%)}
-html[data-contrast="high"] .more{background:#000;box-shadow:inset 0 0 0 2px #fff;-webkit-backdrop-filter:none;backdrop-filter:none}
-html[data-contrast="high"] .btn.primary{background:#ffd479;color:#000}
-html[data-contrast="high"] .seg .thumb,html[data-contrast="high"] .nav .hl{background:#ffd479;box-shadow:none}
-html[data-contrast="high"] .seg > [aria-pressed="true"],html[data-contrast="high"] .seg > [aria-current="true"],html[data-contrast="high"] .nav a[aria-current="true"]{color:#000}
-html[data-contrast="high"] .nav a,html[data-contrast="high"] .nav a:hover{color:#fff}
-html[data-contrast="high"] .nav a[aria-current="true"]{color:#000}
-html[data-contrast="high"] .frame{box-shadow:inset 0 0 0 2px #fff}
-html[data-contrast="high"] canvas.reel-preview{display:none}
-html[data-contrast="high"] .r-word,html[data-contrast="high"] .r-word.lit{color:#fff;text-shadow:none}
-html[data-contrast="high"] .tool-logos .mark,html[data-contrast="high"] .tool-logos li.noimg .name{background:#000;box-shadow:inset 0 0 0 2px #fff}
-html[data-contrast="high"] .tile .slot,html[data-contrast="high"] .portrait{background:#000;box-shadow:inset 0 0 0 1px #fff}
-html[data-contrast="high"] h1,html[data-contrast="high"] h2,html[data-contrast="high"] .sub{text-shadow:none}
-html[data-contrast="high"] h1 .last,html[data-contrast="high"] h2 .dim{color:#fff}
-html[data-contrast="high"] .sheet{background:#000;border:2px solid #fff}
-html[data-contrast="high"] .modal::backdrop{background:#000;-webkit-backdrop-filter:none;backdrop-filter:none}
-html[data-contrast="high"] a:not(.btn):not(.brand):not(.skip){text-decoration:underline;text-underline-offset:.2em}
+/* ---------- ACCESSIBILITY & RESPONSIVE ---------- */
 @media (prefers-reduced-transparency:reduce){
   .glass,.surface,.more{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
   .glass{background-image:linear-gradient(rgba(14,18,24,.96),rgba(14,18,24,.96))}
@@ -348,8 +292,6 @@ html[data-contrast="high"] a:not(.btn):not(.brand):not(.skip){text-decoration:un
   .seg .thumb,.nav .hl{outline:2px solid Highlight}
   .btn.primary{border:2px solid Highlight}
 }
-
-/* ---------- SMALLER SCREENS ---------- */
 @media (max-width:1000px){
   .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
   .gallery{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -367,8 +309,6 @@ html[data-contrast="high"] a:not(.btn):not(.brand):not(.skip){text-decoration:un
   .nav{width:calc(100% - 1.2rem);justify-content:space-between}
   .nav a{padding:.3rem .5rem;font-size:.95rem}
   .nav .brand{display:none}
-  html[data-size="lg"] .nav a{font-size:.86rem;padding-inline:.4rem}
-  html[data-size="xl"] .nav a{font-size:.78rem;padding-inline:.3rem}
   .gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem}
   .steps{grid-template-columns:1fr}
   .case-foot .btn{flex:1}
@@ -398,7 +338,7 @@ html[data-contrast="high"] a:not(.btn):not(.brand):not(.skip){text-decoration:un
   <header class="stage hero" id="top">
     <div class="wrap">
       <div class="hero-text">
-        <p class="eyebrow">Animator &amp; 3D Modeler</p>
+        <p class="eyebrow">Animator &amp; 3D Artist</p>
         <h1>Parsa <span class="last">Danesh Pajouh</span></h1>
         <p class="sub">Characters, worlds and the motion between them.</p>
         <div class="hero-cta">
@@ -415,9 +355,10 @@ html[data-contrast="high"] a:not(.btn):not(.brand):not(.skip){text-decoration:un
   <section class="about" id="about" aria-labelledby="about-h">
     <div class="wrap">
       <div class="head rv"><p class="sec-num">About</p><h2 id="about-h">Digital media student at the University of Canberra.</h2></div>
-      <p class="lede rv">I have a design background and hands-on experience across animation, 3D modeling, video editing and motion graphics. I'm looking for roles in those areas and in game design.</p>
+      <p class="lede rv">I have a design background and hands-on experience across 3D modeling, character rigging and animation, 2D motion graphics, video editing, and interactive game design. I'm looking for roles in animation, game design, video editing, motion graphics, and 3D design.</p>
       <dl class="about-facts rv">
         <div class="tools-row"><dt>Tools</dt><dd><ul class="tool-logos" id="toolLogos" aria-label="Tools"></ul></dd></div>
+        <div><dt>Education</dt><dd>Bachelor of Digital Media<br>University of Canberra (WAM: 83)</dd></div>
         <div><dt>Based in</dt><dd>Canberra, ACT<br>English and Persian</dd></div>
       </dl>
     </div>
@@ -425,7 +366,7 @@ html[data-contrast="high"] a:not(.btn):not(.brand):not(.skip){text-decoration:un
 
   <section class="stage" id="work" aria-labelledby="work-h">
     <div class="wrap">
-      <div class="head rv"><p class="sec-num">Selected work</p><h2 id="work-h">Selected work. <span class="dim">Short films, rigs and character tests.</span></h2></div>
+      <div class="head rv"><p class="sec-num">Selected work</p><h2 id="work-h">Selected work. <span class="dim">3D characters, animation cycles, short films and interactive fiction.</span></h2></div>
       <div class="seg glass filter rv" id="filter" role="group" aria-label="Filter projects" data-refract="12" data-bezel="14" data-blur="10"><span class="thumb" aria-hidden="true"></span></div>
       <div class="cards" id="projects"></div>
     </div>
@@ -435,7 +376,7 @@ html[data-contrast="high"] a:not(.btn):not(.brand):not(.skip){text-decoration:un
     <div class="wrap">
       <div class="head rv">
         <p class="sec-num">Stills</p>
-        <h2 id="stills-h">A closer look. <span class="dim">Renders, concept art and frames.</span></h2>
+        <h2 id="stills-h">A closer look. <span class="dim">Renders, wireframes, character turnarounds and frames.</span></h2>
         <p class="hint">Select a picture to see it larger.</p>
       </div>
       <ul class="gallery" id="gallery"></ul>
@@ -445,19 +386,19 @@ html[data-contrast="high"] a:not(.btn):not(.brand):not(.skip){text-decoration:un
   <section class="stage" id="process" aria-labelledby="process-h">
     <div class="wrap">
       <div class="head rv"><p class="sec-num">Pipeline</p><h2 id="process-h">How it's made. <span class="dim">Four steps behind every piece.</span></h2></div>
-      <p class="scroll-quote" data-word-reveal>Every frame is built from the ground up, from clean topology and expressive rigging to final light and grade.</p>
+      <p class="scroll-quote" data-word-reveal>Every frame is built with intent, from clean topology and expressive rigging to final composite, light and grade.</p>
       <ol class="steps">
-        <li class="surface rv"><h3>Model</h3><p>Block out the form, then refine it until it deforms cleanly.</p></li>
-        <li class="surface rv" style="--d:.08s"><h3>Rig</h3><p>Build controls and paint weights so the character moves as it should.</p></li>
-        <li class="surface rv" style="--d:.16s"><h3>Animate</h3><p>Pose, time and polish the performance, frame by frame.</p></li>
-        <li class="surface rv" style="--d:.24s"><h3>Render</h3><p>Light and render the shot, then grade and finish it.</p></li>
+        <li class="surface rv"><h3>Design &amp; Model</h3><p>Block out 3D characters and environments in Blender, or design 2D assets and branching narrative worlds.</p></li>
+        <li class="surface rv" style="--d:.08s"><h3>Rig</h3><p>Build armatures, controls and clean weight painting in Blender, or set up 2D character puppets.</p></li>
+        <li class="surface rv" style="--d:.16s"><h3>Animate</h3><p>Key body mechanics, seamless locomotion cycles and expressive character performance frame by frame.</p></li>
+        <li class="surface rv" style="--d:.24s"><h3>Composite &amp; Finish</h3><p>Light and render 3D shots, composite in After Effects, and finish the cut and sound in Premiere Pro.</p></li>
       </ol>
     </div>
   </section>
 
   <section class="stage" id="contact" aria-labelledby="contact-h">
     <div class="wrap">
-      <div class="head rv"><p class="sec-num">Contact</p><h2 id="contact-h">Let's work together. <span class="dim">Commissions, collaboration and enquiries.</span></h2></div>
+      <div class="head rv"><p class="sec-num">Contact</p><h2 id="contact-h">Let's work together. <span class="dim">Roles, collaboration and enquiries.</span></h2></div>
       <div class="surface contact rv">
         <p class="lead">Send me a message</p>
         <a class="mail" id="mailLink" href="mailto:parsadaneshpajouh2@gmail.com">parsadaneshpajouh2@gmail.com</a>
@@ -466,7 +407,7 @@ html[data-contrast="high"] a:not(.btn):not(.brand):not(.skip){text-decoration:un
           <ul class="links" id="socials"></ul>
         </div>
       </div>
-      <p class="credit">Modeled, animated and edited by Parsa Danesh Pajouh.</p>
+      <p class="credit">Modeled, animated and edited by Parsa Danesh Pajouh. Pre-made rigs credited in project notes.</p>
       <footer>&copy; <span id="year"></span> Parsa Danesh Pajouh</footer>
     </div>
   </section>
@@ -510,7 +451,7 @@ html[data-contrast="high"] a:not(.btn):not(.brand):not(.skip){text-decoration:un
 const root = document.documentElement;
 root.classList.add('js');
 const mq = q => matchMedia(q).matches;
-let reduce = false;   /* animations always on */
+let reduce = false;
 const small = matchMedia('(max-width: 800px)');
 const $ = (s, r = document) => r.querySelector(s);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -523,59 +464,166 @@ const say = msg => { live.textContent = ''; setTimeout(() => { live.textContent 
 const EMAIL = 'parsadaneshpajouh2@gmail.com';
 const SOCIALS = [
   { label: 'LinkedIn', url: 'https://www.linkedin.com/in/parsa-d-72b518321/' }
-  /* add more here when you have them, for example: { label: 'ArtStation', url: 'https://...' }, */
 ];
 
-/* tag: the filter group for a project (any word; the filter buttons are made from the tags).
-   media types for a project:
-     { type: 'video',   src: 'media/my-film.mp4', poster: 'media/poster.jpg', captions: 'media/my-film.vtt' }
-     { type: 'vimeo',   id: '123456789' }
-     { type: 'youtube', id: 'abcdEFGhijk' }
-     { type: 'image',   src: 'media/render.jpg', alt: 'Describe the image' }
-     { type: 'none' }   (shows the cover picture media/project-N.jpg if it exists, otherwise an empty frame) */
 const PROJECTS = [
-  { title: 'New Ground', tag: 'Animation', kind: '2D animated short', year: '2026', role: 'Director, animator',
-    text: 'A drawn character narrates what it is like to move abroad to study, placed into real locations.',
-    details: ['Concept, script and character design', 'Character built in Illustrator and animated in Character Animator', 'Composited into live locations in After Effects', 'Edited and finished in Premiere Pro'],
-    tools: ['Illustrator', 'Character Animator', 'After Effects', 'Premiere Pro'], media: { type: 'none' } },
-  { title: 'Rig stress test', tag: '3D', kind: 'Character rig in Blender', year: '2026', role: 'Rigger, animator',
-    text: 'A short test that pushes every joint, from fingers to spine, to check the deformation holds up.',
-    details: ['Rigged with Rigify in Blender', 'Weight painting for hands, knuckles and fists', 'One short animation that moves every part of the body'],
-    tools: ['Blender', 'Rigify'], media: { type: 'none' } },
-  { title: 'Project title', tag: '3D', kind: 'Your role', year: '2026', role: 'Your role',
-    text: 'Replace this with one line on the brief, what you did and the tools you used.',
-    details: ['What you made', 'What you learned or solved'],
-    tools: ['Tool', 'Tool'], media: { type: 'none' } },
-  { title: 'Project title', tag: 'Animation', kind: 'Your role', year: '2026', role: 'Your role',
-    text: 'Replace this with one line on the brief, what you did and the tools you used.',
-    details: ['What you made', 'What you learned or solved'],
-    tools: ['Tool', 'Tool'], media: { type: 'none' } }
+  {
+    title: 'Original 3D Character',
+    tag: '3D',
+    kind: '3D character model, rig & walk cycle',
+    year: '2026',
+    role: '3D Modeler, Texturer, Rigger & Animator (Full Pipeline)',
+    text: 'An original hard-surface 3D robot character modeled, textured, rigged and animated from scratch in Blender, shown in a looping walk cycle.',
+    details: [
+      'Modeled the hard-surface robot body, monitor head and articulated fingers from scratch in Blender',
+      'Created worn brushed-steel and red metallic materials paired with an emissive screen face',
+      'Built the armature and control rig in Blender so every mechanical joint and finger deforms cleanly',
+      'Keyframed and rendered a seamless looping walk cycle demonstrating weight, balance and mechanical timing'
+    ],
+    tools: ['Blender', 'Rigify'],
+    media: {
+      type: 'video',
+      sources: [
+        'media/U3278390_Walking.mp4',
+        'U3278390_Walking.mp4',
+        'media/U3278390_Walking.mkv',
+        'U3278390_Walking.mkv'
+      ]
+    }
+  },
+  {
+    title: '3D Cycle Animation 01',
+    tag: '3D',
+    kind: '3D locomotion cycle · Animation only (Pre-made rig)',
+    year: '2026',
+    role: '3D Animator (Animation Only — Character & Rig Not Mine)',
+    text: 'First looping 3D character cycle keyframed in Blender on a pre-made rig — only the animation is mine, focused on weight, balance and stride timing.',
+    details: [
+      'Credit note: Only the animation is my work; the 3D character model and rig were pre-made',
+      'Keyframed contact poses, passing positions and weight shifts in Blender',
+      'Polished cyclic F-curves in the Graph Editor for a seamless loop'
+    ],
+    tools: ['Blender'],
+    /* When ready, set: media: { type: 'video', src: 'media/cycle-1.mp4' } */
+    media: { type: 'none' }
+  },
+  {
+    title: '3D Cycle Animation 02',
+    tag: '3D',
+    kind: '3D locomotion cycle · Animation only (Pre-made rig)',
+    year: '2026',
+    role: '3D Animator (Animation Only — Character & Rig Not Mine)',
+    text: 'Second looping 3D character cycle in Blender on a pre-made rig — only the animation is mine, exploring higher-energy momentum and follow-through.',
+    details: [
+      'Credit note: Only the animation is my work; the 3D character model and rig were pre-made',
+      'Focused on forward drive, arcs, overlapping action and secondary motion',
+      'Refined spacing and seamless loop tangents in the Blender Graph Editor'
+    ],
+    tools: ['Blender'],
+    /* When ready, set: media: { type: 'video', src: 'media/cycle-2.mp4' } */
+    media: { type: 'none' }
+  },
+  {
+    title: '3D Cycle Animation 03',
+    tag: '3D',
+    kind: '3D action cycle · Animation only (Pre-made rig)',
+    year: '2026',
+    role: '3D Animator (Animation Only — Character & Rig Not Mine)',
+    text: 'Third looping 3D character cycle in Blender on a pre-made rig — only the animation is mine, pushing anticipation, airborne arcs and landing impact.',
+    details: [
+      'Credit note: Only the animation is my work; the 3D character model and rig were pre-made',
+      'Keyframed clear anticipation, expressive silhouette poses and cushioned recovery',
+      'Tuned timing and curve tangents in Blender for a clean, repeatable cycle'
+    ],
+    tools: ['Blender'],
+    /* When ready, set: media: { type: 'video', src: 'media/cycle-3.mp4' } */
+    media: { type: 'none' }
+  },
+  {
+    title: 'Nostalgia Room',
+    tag: '3D',
+    kind: '3D environment & animation',
+    year: '2026',
+    role: '3D Modeler & Animator',
+    text: 'A 3D interior environment modeled, lit and animated in Blender exploring themes of memory and nostalgia.',
+    details: [
+      'Modeled and dressed the 3D room environment and props in Blender',
+      'Crafted warm lighting, materials and atmosphere around themes of nostalgia',
+      'Animated camera motion and scene elements for the final render'
+    ],
+    tools: ['Blender'],
+    media: { type: 'none' }
+  },
+  {
+    title: 'Believe in Yourself',
+    tag: '2D & Motion',
+    kind: 'Mixed-media animated short',
+    year: '2026',
+    role: 'Character Designer, Animator & Editor',
+    text: 'A 2D animated character composited into live-action footage for a motivational monologue about self-belief and trying new things.',
+    details: [
+      'Designed the 2D character artwork in Adobe Illustrator',
+      'Rigged and animated facial lip-sync and performance in Adobe Character Animator',
+      'Composited the 2D character into live-action footage in After Effects and edited in Premiere Pro'
+    ],
+    tools: ['Illustrator', 'Character Animator', 'After Effects', 'Premiere Pro'],
+    media: { type: 'none' }
+  },
+  {
+    title: 'The Evolution of Pixel Art',
+    tag: '2D & Motion',
+    kind: 'Vertical pixel-art animated short (9:16)',
+    year: '2026',
+    role: 'Animator & Video Editor',
+    vertical: true,
+    text: 'A vertical (9:16) pixel-art animated short tracing the history of the art form from its origins to the present day.',
+    details: [
+      'Formatted and framed specifically as a 9:16 vertical video',
+      'Created pixel-art sprites and era-by-era visual scenes in Adobe Photoshop',
+      'Animated and edited pacing, transitions and sound in Adobe Premiere Pro'
+    ],
+    tools: ['Photoshop', 'Premiere Pro'],
+    /* When ready, set: media: { type: 'video', src: 'media/pixel-art.mp4' } */
+    media: { type: 'none' }
+  },
+  {
+    title: 'Last Night',
+    tag: 'Interactive',
+    kind: 'Interactive fiction game (itch.io)',
+    year: '2026',
+    role: 'Narrative & Game Designer',
+    text: 'A narrative-driven interactive fiction mystery game built with branching storylines in Twine and published on itch.io.',
+    details: [
+      'Designed branching storylines, player choices and mystery pacing in Twine',
+      'Built custom interactive logic and atmospheric presentation',
+      'Published as a playable web release on itch.io'
+    ],
+    tools: ['Twine'],
+    /* Replace with your exact itch.io game URL */
+    link: { url: 'https://itch.io/', label: 'Play Last Night on itch.io' },
+    media: { type: 'none' }
+  }
 ];
 
-/* Pictures. Easiest: put files with these names in the media/ folder.
-   alt: a short description for people who cannot see the picture (please write one for each). */
 const BACKDROPS = ['media/backdrop-1.jpg', 'media/backdrop-2.jpg', 'media/backdrop-3.jpg', 'media/backdrop-4.jpg'];
 const PORTRAIT = { src: 'media/portrait.jpg', alt: 'Portrait of Parsa Danesh Pajouh' };
 const STILLS = [
-  { src: 'media/still-1.jpg', caption: 'Character render',      alt: 'Describe this picture' },
-  { src: 'media/still-2.jpg', caption: 'Concept art',           alt: 'Describe this picture' },
-  { src: 'media/still-3.jpg', caption: 'Character turnaround',  alt: 'Describe this picture' },
-  { src: 'media/still-4.jpg', caption: 'Environment',           alt: 'Describe this picture' },
-  { src: 'media/still-5.jpg', caption: 'Frame from New Ground', alt: 'Describe this picture' },
-  { src: 'media/still-6.jpg', caption: 'Lighting test',         alt: 'Describe this picture' },
-  { src: 'media/still-7.jpg', caption: 'Wireframe',             alt: 'Describe this picture' },
-  { src: 'media/still-8.jpg', caption: 'Rig test',              alt: 'Describe this picture' }
+  { src: 'media/still-1.jpg', caption: 'Original 3D character render',   alt: 'Original 3D robot character render' },
+  { src: 'media/still-2.jpg', caption: '3D character wireframe & rig',   alt: '3D character wireframe and rig' },
+  { src: 'media/still-3.jpg', caption: 'Cycle animation 01 pose',        alt: 'Cycle animation 01 pose' },
+  { src: 'media/still-4.jpg', caption: 'Cycle animation 02 pose',        alt: 'Cycle animation 02 pose' },
+  { src: 'media/still-5.jpg', caption: 'Cycle animation 03 pose',        alt: 'Cycle animation 03 pose' },
+  { src: 'media/still-6.jpg', caption: 'Nostalgia Room environment',     alt: 'Nostalgia Room 3D environment' },
+  { src: 'media/still-7.jpg', caption: 'Believe in Yourself frame',      alt: 'Believe in Yourself mixed-media frame' },
+  { src: 'media/still-8.jpg', caption: 'Evolution of Pixel Art (9:16)',  alt: 'The Evolution of Pixel Art vertical frame' }
 ];
-/* Tools shown in the About section. The logos are built into this file, so nothing else needs uploading.
-   To use your own logo file instead, set logo to its path, for example 'media/tools/blender.svg'.
-   A tool with no logo (set logo to '') shows its name only. */
+
 const LOGO = {
   blender: 'data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTI4IDEyOCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNjYuMzMyIDcwLjAzMmMuMjQtNC4yNDIgMi4zMjctNy45ODcgNS40ODUtMTAuNjM0IDMuMDk0LTIuNjAyIDcuMjQ4LTQuMTkzIDExLjgwOS00LjE5MyA0LjUzNyAwIDguNjkgMS41OSAxMS43OCA0LjE5MyAzLjE2MyAyLjY0NyA1LjIzNyA2LjM5MiA1LjQ4NSAxMC42MzQuMjQgNC4zNS0xLjUyMyA4LjQxLTQuNjA1IDExLjQxNy0zLjE1OCAzLjA1LTcuNjI3IDQuOTc3LTEyLjY2IDQuOTc3LTUuMDM3IDAtOS41MjYtMS45MTUtMTIuNjY0LTQuOTc3LTMuMDk0LTMuMDA2LTQuODUzLTcuMDQ0LTQuNjA2LTExLjM5N3ptMCAwIiBmaWxsPSIjMjM1Nzg1Ii8+PHBhdGggZD0iTTM5LjI0NSA3OS4wMDJjLjAyOCAxLjY2LjU2NCA0Ljg5IDEuMzYgNy40MDQgMS42ODIgNS4zMzYgNC41MzcgMTAuMjczIDguNDkgMTQuNTk5IDQuMDYyIDQuNDY1IDkuMDc0IDguMDU1IDE0Ljg1IDEwLjYxIDYuMDczIDIuNjcgMTIuNjY1IDQuMDM3IDE5LjUwNSA0LjAzNyA2Ljg0LS4wMDkgMTMuNDMyLTEuNCAxOS41MDQtNC4xMDIgNS43NzYtMi41ODIgMTAuNzktNi4xNjggMTQuODUtMTAuNjU3IDMuOTc0LTQuMzc0IDYuODItOS4zMDcgOC40OTEtMTQuNjQ3YTM3IDM3IDAgMDAxLjU5NS04LjE2M2MuMjA4LTIuNjkuMTItNS40MDUtLjI2My04LjEyYTM3LjUzNSAzNy41MzUgMCAwMC01LjQxNy0xNC43MTRjLTIuNTc0LTQuMTUtNS45MTYtNy43Ni05Ljg5LTEwLjgxM2wuMDEyLS4wMDQtMzkuOTU1LTMwLjUwNmMtLjAzNi0uMDI4LS4wNjgtLjA1Ni0uMTA0LS4wOC0yLjYxOS0yLjAwMi03LjA0NC0xLjk5NC05LjkxLjAwOC0yLjkxNCAyLjAzMS0zLjI1IDUuMzg1LS42NTYgNy40OTZsLS4wMTIuMDA4IDE2LjY4MiAxMy40ODQtNTAuNzg5LjA1MWgtLjA2OGMtNC4xOTcuMDA0LTguMjM5IDIuNzM5LTkuMDMgNi4yMTMtLjgyIDMuNTIxIDIuMDM1IDYuNDYgNi40MTIgNi40NmwtLjAwOC4wMTYgMjUuNzM2LS4wNDhMNC41OCA4Mi41MjRjLS4wNTYuMDQ0LS4xMi4wODgtLjE3Ni4xMzJDLjA2OSA4NS45NS0xLjMzIDkxLjQ0NiAxLjQgOTQuOWMyLjc3OCAzLjUyMiA4LjY2NiAzLjU0NiAxMy4wNDcuMDJMMzkuNTA1IDc0LjUxcy0uMzY4IDIuNzU4LS4zMzYgNC4zOTd6bTY0LjU2IDkuMjE5Yy01LjE2OCA1LjIyOC0xMi40MTYgOC4yMS0yMC4yMjcgOC4yMS03LjgzMS4wMTItMTUuMDc5LTIuOTE4LTIwLjI0OC04LjE0Mi0yLjUyNi0yLjU1OS00LjM3Ny01LjQ3My01LjUyOC04LjU5MWEyMi4yMDIgMjIuMjAyIDAgMDEtMS4yNzEtOS42MDIgMjIuNDQ2IDIyLjQ0NiAwIDAxMi43NzgtOS4wMzljMS41MDctMi43MTQgMy41OS01LjE4IDYuMTQtNy4yNjcgNS4wMzMtNC4wNTggMTEuNDItNi4yOCAxOC4xLTYuMjggNi43MDktLjAwOCAxMy4wOTcgMi4xNzQgMTguMTMgNi4yMzYgMi41NSAyLjA3NSA0LjYyNSA0LjUyOSA2LjE0IDcuMjQzYTIyLjMwMiAyMi4zMDIgMCAwMTIuNzc0IDkuMDQzIDIyLjMxMyAyMi4zMTMgMCAwMS0xLjI3MSA5LjU5OGMtMS4xNDcgMy4xNDItMy4wMDIgNi4wNTYtNS41MzMgOC42MTV6bTAgMCIgZmlsbD0iI2U4NzUwMCIvPjwvc3ZnPg==',
   afterEffects: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48cGF0aCBmaWxsPSIjMUYwNzQwIiBkPSJNNi41IDYuNWgxMTV2MTE1SDYuNXoiLz48cGF0aCBmaWxsPSIjRDQ5MEM1IiBkPSJNMCAwdjEyOGgxMjhWMEgwem0xMjEuNSAxMjEuNUg2LjVWNi41aDExNXYxMTV6Ii8+PHBhdGggZmlsbD0iI0Q0OTBDNSIgZD0iTTEwMy41IDU5LjJzLS42LTE0LjYtMTYuNS0xNC42Yy0xNiAwLTE3LjMgMjItMTcuMyAyMnY0LjdTNzIuNSA4OS42IDg2IDg5LjZzMTQuOC0yLjYgMTQuOC0yLjZ2LTguMXMtMTkuMyA5LjItMjEuMi0xMGgyNHYtOS43em0tOSAyLjRoLTE1czAtOC4zIDcuNS05LjJjOC4yIDAgNy41IDkuMiA3LjUgOS4yek01MC41IDI5LjlIMzguNHYzLjhsLTE2IDU0LjloOS40bDQuNC0xNi4xSDUzbDQuNSAxNi4xaDEwLjNMNTAuNSAyOS45ek0zOC4yIDYzLjFsNi40LTI0LjVMNTEgNjMuMUgzOC4yeiIvPjwvc3ZnPg==',
   premierePro: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48cGF0aCBmaWxsPSIjMkEwNjM0IiBkPSJNMCAwaDEyOHYxMjhIMHoiLz48cGF0aCBmaWxsPSIjRTk3NkI5IiBkPSJNMCAwdjEyOGgxMjhWMEgwem0xMjMgMTIzSDVWNWgxMTh2MTE4eiIvPjxwYXRoIGZpbGw9IiNFOTc2QjkiIGQ9Ik02OSA0Ny4xYy0uMS05LjQtNy44LTE2LjktMTcuMi0xNi44SDMzLjN2NTguNWg5LjZWNjcuNWg4LjNDNjEgNjcuNCA2OSA1OS4zIDY5IDQ5LjR2LTIuM3ptLTkuNiAzYzAgNS00LjEgOS4xLTkuMSA5LjFoLTcuNFYzOC41aDcuNGM1IDAgOS4xIDQuMSA5LjEgOS4xdjIuNXpNNzcuMSA4OC44VjQ4LjlzMTAuMi01LjEgMjAuMi0zLjh2OC4zcy03IDAtMTAuMSAxLjN2MzQuMkg3Ny4xeiIvPjwvc3ZnPg==',
   illustrator: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbDpzcGFjZT0icHJlc2VydmUiIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48cGF0aCBmaWxsPSIjMzAwIiBkPSJNMjIuNyAxLjZoODIuN2MxMi41IDAgMjIuNyAxMC4xIDIyLjcgMjIuN3Y3OS41YzAgMTIuNS0xMC4xIDIyLjctMjIuNyAyMi43SDIyLjdDMTAuMSAxMjYuNCAwIDExNi4zIDAgMTAzLjdWMjQuM0MwIDExLjcgMTAuMSAxLjYgMjIuNyAxLjYiLz48cGF0aCBmaWxsPSIjZmY5YTAwIiBkPSJNNjEuOSA3Ni4zSDQybC00IDEyLjVjLS4xLjUtLjUuOC0xIC43SDI3Yy0uNiAwLS43LS4zLS42LTFsMTcuMi00OS40Yy4yLS41LjMtMS4xLjUtMS44LjItMS4xLjMtMi4zLjMtMy41LS4xLS4zLjItLjUuNC0uNmgxMy44Yy40IDAgLjYuMi43LjRsMTkuNSA1NC45Yy4yLjYgMCAuOS0uNS45SDY3LjFjLS40LjEtLjctLjItLjktLjZ6TTQ1LjEgNjUuNGgxMy41Yy0uMy0xLjEtLjctMi41LTEuMi0zLjgtLjUtMS40LTEtMy0xLjQtNC42LS41LTEuNy0xLTMuMy0xLjUtNC45LS41LTEuNy0xLTMuMi0xLjQtNC43LS40LTEuNS0uOC0yLjktMS4yLTQuMmgtLjFjLS41IDIuMy0xLjEgNC42LTEuOCA2LjktLjggMi42LTEuNiA1LjItMi41IDcuOS0uOCAyLjctMS42IDUuMi0yLjQgNy40bTQ1LjYtMjIuN2MtMS44LjEtMy41LS42LTQuNy0xLjktMS4yLTEuMy0xLjktMy4xLTEuOC00LjktLjEtMS44LjYtMy41IDEuOS00LjcgMS4zLTEuMiAzLTEuOSA0LjctMS45IDIuMSAwIDMuNy42IDQuOSAxLjkgMS4yIDEuMyAxLjggMyAxLjggNC43LjEgMS44LS42IDMuNi0xLjkgNC45LTEuMyAxLjMtMy4xIDItNC45IDEuOW0tNiA0Ni4zVjQ3LjljMC0uNS4yLS43LjctLjdIOTZjLjUgMCAuNy4zLjcuN1Y4OWMwIC42LS4yLjktLjcuOUg4NS41Yy0uNS0uMS0uOC0uNC0uOC0uOSIvPjwvc3ZnPg==',
   photoshop: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48cGF0aCBmaWxsPSIjMDAxZTM2IiBkPSJNMjIuNjY3IDEuNmg4Mi42NjZDMTE3Ljg2NyAxLjYgMTI4IDExLjczMyAxMjggMjQuMjY3djc5LjQ2NmMwIDEyLjUzNC0xMC4xMzMgMjIuNjY3LTIyLjY2NyAyMi42NjdIMjIuNjY3QzEwLjEzMyAxMjYuNCAwIDExNi4yNjcgMCAxMDMuNzMzVjI0LjI2N0MwIDExLjczMyAxMC4xMzMgMS42IDIyLjY2NyAxLjZaIi8+PHBhdGggZmlsbD0iIzMxYThmZiIgZD0iTTQ1Ljg2NyAzMy4zMzNjLTEuNiAwLTMuMiAwLTQuODUzLjA1NC0xLjY1NC4wNTMtMy4yMDEuMDUzLTQuNjQxLjEwNy0xLjQ0LjA1My0yLjc3My4wNTMtNC4wNTMuMTA2LTEuMjI3LjA1My0yLjA4LjA1My0yLjk4Ny4wNTMtLjM3MyAwLS41MzMuMjEzLS41MzMuNTg3djU0Ljg4YzAgLjQ4LjIxMy42OTQuNjQuNjk0aDEwLjM0N2MuMzczLS4wNTQuNjQtLjM3NC41ODYtLjc0N3YtMTcuMTJjMS4wMTMgMCAxLjc2IDAgMi4yOTQuMDUzLjUzMy4wNTMgMS4zODYuMDUzIDIuNjY2LjA1MyA0LjM3NCAwIDguMzc0LS40OCAxMi0xLjgxMyAzLjQ2Ny0xLjI4IDYuNDU0LTMuNTIgOC41ODctNi41MDcgMi4xMzMtMi45ODYgMy4yLTYuNzczIDMuMi0xMS4zNiAwLTIuNC0uNDI2LTQuNjkzLTEuMjI2LTYuOTMzQTE2Ljk4IDE2Ljk4IDAgMCAwIDY0IDM5LjM2YTE5LjA0OSAxOS4wNDkgMCAwIDAtNy4xNDctNC4zNzRjLTIuOTg3LTEuMTItNi42MTMtMS42NTMtMTAuOTg2LTEuNjUzWm0xLjE5IDEwLjUwNWMxLjkuMDM2IDMuNzUuMzY4IDUuNDc2IDEuMDY4IDEuNTQ3LjU4NyAyLjgyNyAxLjY1NCAzLjczNCAzLjA0YTguNzc5IDguNzc5IDAgMCAxIDEuMjI3IDQuNzQ4YzAgMi4zNDYtLjUzNCA0LjE2LTEuNjU0IDUuNDkzLTEuMTc0IDEuMzMzLTIuNjY3IDIuMzQ3LTQuMzczIDIuODI3LTEuOTc0LjY0LTQuMDU0Ljk1OS02LjEzNC45NTloLTIuODI3Yy0uNjQgMC0xLjMzMi0uMDUzLTIuMDc5LS4xMDZ2LTE3LjkyYy4zNzMtLjA1NCAxLjEyLS4xMDcgMi4xODctLjA1MyAxLjAxMy0uMDU0IDIuMjM5LS4wNTQgMy42MjYtLjA1NC4yNzMtLjAwNy41NDYtLjAwOC44MTctLjAwMnptNDQuNzMgMi43MjNjLTMuNzg3IDAtNi45MzQuNTg2LTkuNDQgMS44NjYtMi4yOTMgMS4wNjctNC4yNjcgMi43NzMtNS42IDQuOTA2LTEuMTczIDEuOTc0LTEuODE0IDQuMTYtMS44MTQgNi40NTRhMTEuNDQ3IDExLjQ0NyAwIDAgMCAxLjIyNyA1LjQ0IDEzLjgwOSAxMy44MDkgMCAwIDAgNC4wNTQgNC41MzMgMzIuNjI5IDMyLjYyOSAwIDAgMCA3LjU3MyAzLjg0YzIuNjEzIDEuMDEzIDQuMzczIDEuODEzIDUuMjI3IDIuNTA2Ljg1My42OTQgMS4yOCAxLjM4NyAxLjI4IDIuMTM0IDAgLjk2LS41ODcgMS44NjctMS40NCAyLjI0LS45Ni40OC0yLjQuNzQ3LTQuNDI3Ljc0Ny0yLjEzMyAwLTQuMjY3LS4yNjctNi4yOTQtLjhhMjIuODM0IDIyLjgzNCAwIDAgMS02LjYxMy0yLjYxM2MtLjE2LS4xMDctLjMyLS4xNi0uNDgtLjA1My0uMTYuMTA2LS4yMTMuMzE5LS4yMTMuNDc5djkuMjhjLS4wNTMuNDI3LjIxMy44LjU4NyAxLjAxM2EyMS40OSAyMS40OSAwIDAgMCA1LjQ0IDEuNzA3YzIuNC40OCA0Ljc5OS42OTMgNy4yNTIuNjkzIDMuODQgMCA3LjA0MS0uNTg2IDkuNjU0LTEuNzA2IDIuNC0uOTYgNC40OC0yLjYxMyA1Ljk3My00Ljc0N2ExMi40MSAxMi40MSAwIDAgMCAyLjA4LTcuMDkzIDExLjUxMiAxMS41MTIgMCAwIDAtMS4yMjYtNS40OTNjLTEuMDE0LTEuODE0LTIuNDU0LTMuMzA3LTQuMjE0LTQuNDI3YTM4LjYyNSAzOC42MjUgMCAwIDAtOC4yMTMtMy44OTQgNDguNzg0IDQ4Ljc4NCAwIDAgMS0zLjc4Ny0xLjc2Yy0uNjkzLS4zNzMtMS4zMzMtLjg1My0xLjgxMy0xLjQ0LS4zMi0uNDI3LS41MzMtLjkwNi0uNTMzLTEuMzg2IDAtLjQ4LjE2LTEuMDEzLjQyNi0xLjQ0LjM3NC0uNTMzLjk2LS45MDcgMS42NTMtMS4wNjcgMS4wMTQtLjI2NiAyLjEzNC0uNDI3IDMuMi0uMzc0IDIuMDI3IDAgNCAuMjY3IDUuOTc0LjY5NCAxLjgxNC4zNzMgMy41Mi45NiA1LjEyIDEuODE0LjIxMy4xMDYuNDguMTA2Ljk2IDBhLjY1Ni42NTYgMCAwIDAgLjI2Ny0uNTM0di04LjY5M2MwLS4yMTQtLjA1NC0uNDI3LS4xMDctLjY0LS4xMDctLjIxMy0uMzItLjQyNy0uNTMzLS40OEExOC43NjIgMTguNzYyIDAgMCAwIDk4LjQgNDcuMDRhNDUuOTggNDUuOTggMCAwIDAtNi42MTMtLjQ4eiIvPjwvc3ZnPg==',
-  figma: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48cGF0aCBmaWxsPSIjMGFjZjgzIiBkPSJNNDUuNSAxMjljMTEuOSAwIDIxLjUtOS42IDIxLjUtMjEuNVY4Nkg0NS41QzMzLjYgODYgMjQgOTUuNiAyNCAxMDcuNVMzMy42IDEyOSA0NS41IDEyOXptMCAwIi8+PHBhdGggZmlsbD0iI2EyNTlmZiIgZD0iTTI0IDY0LjVDMjQgNTIuNiAzMy42IDQzIDQ1LjUgNDNINjd2NDNINDUuNUMzMy42IDg2IDI0IDc2LjQgMjQgNjQuNXptMCAwIi8+PHBhdGggZmlsbD0iI2YyNGUxZSIgZD0iTTI0IDIxLjVDMjQgOS42IDMzLjYgMCA0NS41IDBINjd2NDNINDUuNUMzMy42IDQzIDI0IDMzLjQgMjQgMjEuNXptMCAwIi8+PHBhdGggZmlsbD0iI2ZmNzI2MiIgZD0iTTY3IDBoMjEuNUMxMDAuNCAwIDExMCA5LjYgMTEwIDIxLjVTMTAwLjQgNDMgODguNSA0M0g2N3ptMCAwIi8+PHBhdGggZmlsbD0iIzFhYmNmZSIgZD0iTTExMCA2NC41YzAgMTEuOS05LjYgMjEuNS0yMS41IDIxLjVTNjcgNzYuNCA2NyA2NC41IDc2LjYgNDMgODguNSA0MyAxMTAgNTIuNiAxMTAgNjQuNXptMCAwIi8+PC9zdmc+',
   characterAnimator: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGcgZmlsbD0ibm9uZSI+PGcgY2xpcC1wYXRoPSJ1cmwoI1NWR21BaHgyZEhPKSI+PHBhdGggZmlsbD0iIzAwMDA1YiIgZD0iTTI2LjMzMyAwSDUuNjY3QTUuNjY3IDUuNjY3IDAgMCAwIDAgNS42Njd2MTkuODY2QTUuNjY3IDUuNjY3IDAgMCAwIDUuNjY3IDMxLjJoMjAuNjY2QTUuNjY3IDUuNjY3IDAgMCAwIDMyIDI1LjUzM1Y1LjY2N0E1LjY2NyA1LjY2NyAwIDAgMCAyNi4zMzMgMCIvPjxwYXRoIGZpbGw9IiM5OWYiIGQ9Ik0xNS4zMTEgMTkuMzY4djIuMjFhLjI4LjI4IDAgMCAxLS4xNzIuMzAxYTUuNCA1LjQgMCAwIDEtMS4yNjQuMjlxLS44NC4xLTEuNjg1LjA5N2E5LjUgOS41IDAgMCAxLTIuMzcyLS4yOWE3IDcgMCAwIDEtMi4wNS0uODhhNi4zIDYuMyAwIDAgMS0xLjU4OS0xLjQ1YTYuNCA2LjQgMCAwIDEtMS4wMy0xLjk5NWE4LjQgOC40IDAgMCAxLS4zNjUtMi41NzZxMC0yLjE2OS45NDQtMy44MUE2LjUgNi41IDAgMCAxIDguNDEyIDguNzFhOC44IDguOCAwIDAgMSA0LjE0My0uOTY2cS44MzQtLjAwNyAxLjY2NC4wODZhNSA1IDAgMCAxIDEuMTI3LjI1OGEuMjguMjggMCAwIDEgLjEwNy4yNTh2Mi40MTRxMCAuMTkyLS4xNS4xMjhhNC44IDQuOCAwIDAgMC0xLjI4Mi0uMzlhMTAgMTAgMCAwIDAtMS41NjctLjExOGE0LjkgNC45IDAgMCAwLTIuNDU0LjU5NGE0IDQgMCAwIDAtMS41ODggMS42YTQuOTUgNC45NSAwIDAgMC0uNTU4IDIuNDE1YTUuMiA1LjIgMCAwIDAgLjI2OCAxLjc2Yy4xNjYuNDc4LjQxNi45MjEuNzQgMS4zMWMuMy4zNTguNjYzLjY1NyAxLjA3NC44OGMuNDAzLjIxNS44MzIuMzc3IDEuMjc3LjQ4M2MuNDMxLjExNy44NzQuMTg0IDEuMzIuMnEuNzI3LjAwNSAxLjQ1LS4wNjRhNSA1IDAgMCAwIDEuMTU2LS4yOTdxLjA4NS0uMDY0LjEzLS4wMzNhLjE3LjE3IDAgMCAxIC4wNDIuMTRtNC45MjktNS4wNjZ2Ny41MjZxMCAuMTcyLS4xNS4xNzJoLTIuNjhhLjE3LjE3IDAgMCAxLS4xOTMtLjE5M1Y2Ljk4MnEwLS4xNS4xNzItLjE1aDIuN2EuMTMzLjEzMyAwIDAgMSAuMTUuMTVsLjAxNiA1LjA2NnEuNTg0LS4zODcgMS4yNC0uNjM0Yy40NS0uMTY0Ljk3Ny0uMjAzIDEuNTc4LS4yMDNjLjQyNS4wMDIuODQ5LjA2NyAxLjI1NS4xOTNjLjQzMy4xMi44MzMuMzM3IDEuMTcuNjMzYy4zNTguMzIyLjYwOS43NTkuODIzIDEuMzFxLjMyMi44MjUuMzIyIDIuMTM1djYuMzI1cTAgLjE5My0uMTcxLjE5M2gtMi41MTRhLjE5LjE5IDAgMCAxLS4yMTUtLjIxNXYtNi4wMDJhMi43IDIuNyAwIDAgMC0uMjAzLTEuMTI3YTEuNiAxLjYgMCAwIDAtLjU1OS0uNjc2YTEuODMgMS44MyAwIDAgMC0uOTgyLS4yMzdhMy4yIDMuMiAwIDAgMC0uOTQ0LjE0YTIuNiAyLjYgMCAwIDAtLjgxNi40MTkiLz48L2c+PGRlZnM+PGNsaXBQYXRoIGlkPSJTVkdtQWh4MmRITyI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGgzMnYzMS4ySDB6Ii8+PC9jbGlwUGF0aD48L2RlZnM+PC9nPjwvc3ZnPg==',
   twine: 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhLS0gQ3JlYXRlZCB3aXRoIElua3NjYXBlIChodHRwOi8vd3d3Lmlua3NjYXBlLm9yZy8pIC0tPgoKPHN2ZyB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOmNjPSJodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9ucyMiCgl4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCgl4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIgoJeG1sbnM6c29kaXBvZGk9Imh0dHA6Ly9zb2RpcG9kaS5zb3VyY2Vmb3JnZS5uZXQvRFREL3NvZGlwb2RpLTAuZHRkIgoJeG1sbnM6aW5rc2NhcGU9Imh0dHA6Ly93d3cuaW5rc2NhcGUub3JnL25hbWVzcGFjZXMvaW5rc2NhcGUiIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjEyMDAiIHZpZXdCb3g9IjAgMCAxMjAwIDEyMDAiCglpZD0ic3ZnMiIgdmVyc2lvbj0iMS4xIiBpbmtzY2FwZTp2ZXJzaW9uPSIwLjkxK2RldmVsK29zeG1lbnUgcjEyODk3IiBzb2RpcG9kaTpkb2NuYW1lPSJsb2dvLW9zeC5zdmciCglpbmtzY2FwZTpleHBvcnQtZmlsZW5hbWU9IkM6XFVzZXJzXGNocmlzXERlc2t0b3BcdHdpbmUucG5nIiBpbmtzY2FwZTpleHBvcnQteGRwaT0iMjIuNSIgaW5rc2NhcGU6ZXhwb3J0LXlkcGk9IjIyLjUiPgoJPGRlZnMgaWQ9ImRlZnM0Ij4KCQk8bGluZWFyR3JhZGllbnQgaWQ9ImxpbmVhckdyYWRpZW50Mzc2MSI+CgkJCTxzdG9wIHN0eWxlPSJzdG9wLWNvbG9yOiMxMjdhZWU7c3RvcC1vcGFjaXR5OjE7IiBvZmZzZXQ9IjAiIGlkPSJzdG9wMzc2MyIgLz4KCQkJPHN0b3Agc3R5bGU9InN0b3AtY29sb3I6IzExN2FlZjtzdG9wLW9wYWNpdHk6MC4yNTA5ODA0MTsiIG9mZnNldD0iMSIgaWQ9InN0b3AzNzY1IiAvPgoJCTwvbGluZWFyR3JhZGllbnQ+CgkJPGxpbmVhckdyYWRpZW50IGlkPSJsaW5lYXJHcmFkaWVudDM3NTMiPgoJCQk8c3RvcCBzdHlsZT0ic3RvcC1jb2xvcjojMTBmMDVlO3N0b3Atb3BhY2l0eTowLjI1MDk4MDQxOyIgb2Zmc2V0PSIwIiBpZD0ic3RvcDM3NTUiIC8+CgkJCTxzdG9wIHN0eWxlPSJzdG9wLWNvbG9yOiMxMGYwNWU7c3RvcC1vcGFjaXR5OjE7IiBvZmZzZXQ9IjEiIGlkPSJzdG9wMzc1NyIgLz4KCQk8L2xpbmVhckdyYWRpZW50PgoJCTxsaW5lYXJHcmFkaWVudCBpbmtzY2FwZTpjb2xsZWN0PSJhbHdheXMiIHhsaW5rOmhyZWY9IiNsaW5lYXJHcmFkaWVudDM3NTMiIGlkPSJsaW5lYXJHcmFkaWVudDM3NTkiIHgxPSI1MiIKCQkJeTE9IjYwNC4zNjIxOCIgeDI9Ijk3MiIgeTI9IjYwNC4zNjIxOCIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIC8+CgkJPGxpbmVhckdyYWRpZW50IGlua3NjYXBlOmNvbGxlY3Q9ImFsd2F5cyIgeGxpbms6aHJlZj0iI2xpbmVhckdyYWRpZW50Mzc2MSIgaWQ9ImxpbmVhckdyYWRpZW50Mzc2NyIgeDE9IjI1NiIgeTE9IjAiCgkJCXgyPSIyMzEuOTg2NiIgeTI9IjcyNS41NDc3MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIGdyYWRpZW50VHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCwyOC4zNjIxNjgpIiAvPgoJPC9kZWZzPgoJPHNvZGlwb2RpOm5hbWVkdmlldyBpZD0iYmFzZSIgcGFnZWNvbG9yPSIjZmZmZmZmIiBib3JkZXJjb2xvcj0iIzY2NjY2NiIgYm9yZGVyb3BhY2l0eT0iMS4wIiBpbmtzY2FwZTpwYWdlb3BhY2l0eT0iMC4wIgoJCWlua3NjYXBlOnBhZ2VzaGFkb3c9IjIiIGlua3NjYXBlOnpvb209IjAuMzUzNTUzMzkiIGlua3NjYXBlOmN4PSI0MjkuNzk2NTkiIGlua3NjYXBlOmN5PSI0ODEuMjkwOCIKCQlpbmtzY2FwZTpkb2N1bWVudC11bml0cz0icHgiIGlua3NjYXBlOmN1cnJlbnQtbGF5ZXI9ImxheWVyMSIgc2hvd2dyaWQ9ImZhbHNlIiBpbmtzY2FwZTpzbmFwLWdsb2JhbD0idHJ1ZSIKCQlpbmtzY2FwZTpzbmFwLWdyaWRzPSJ0cnVlIiBpbmtzY2FwZTp3aW5kb3ctd2lkdGg9IjEzMDQiIGlua3NjYXBlOndpbmRvdy1oZWlnaHQ9Ijc0NiIgaW5rc2NhcGU6d2luZG93LXg9Ii04IgoJCWlua3NjYXBlOndpbmRvdy15PSItOCIgaW5rc2NhcGU6d2luZG93LW1heGltaXplZD0iMSIgc2hvd2d1aWRlcz0idHJ1ZSIgaW5rc2NhcGU6Z3VpZGUtYmJveD0idHJ1ZSI+CgkJPGlua3NjYXBlOmdyaWQgdHlwZT0ieHlncmlkIiBpZD0iZ3JpZDI5ODUiIGVtcHNwYWNpbmc9IjgiIHZpc2libGU9InRydWUiIGVuYWJsZWQ9InRydWUiCgkJCXNuYXB2aXNpYmxlZ3JpZGxpbmVzb25seT0iZmFsc2UiIHVuaXRzPSJweCIgc3BhY2luZ3g9IjY0cHgiIHNwYWNpbmd5PSI2NHB4IiBvcmlnaW54PSIwcHgiIGRvdHRlZD0iZmFsc2UiIC8+Cgk8L3NvZGlwb2RpOm5hbWVkdmlldz4KCTxtZXRhZGF0YSBpZD0ibWV0YWRhdGE3Ij4KCQk8cmRmOlJERj4KCQkJPGNjOldvcmsgcmRmOmFib3V0PSIiPgoJCQkJPGRjOmZvcm1hdD5pbWFnZS9zdmcreG1sPC9kYzpmb3JtYXQ+CgkJCQk8ZGM6dHlwZSByZGY6cmVzb3VyY2U9Imh0dHA6Ly9wdXJsLm9yZy9kYy9kY21pdHlwZS9TdGlsbEltYWdlIiAvPgoJCQkJPGRjOnRpdGxlPjwvZGM6dGl0bGU+CgkJCTwvY2M6V29yaz4KCQk8L3JkZjpSREY+Cgk8L21ldGFkYXRhPgoJPGcgaW5rc2NhcGU6bGFiZWw9IkxheWVyIDEiIGlua3NjYXBlOmdyb3VwbW9kZT0ibGF5ZXIiIGlkPSJsYXllcjEiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsMTQ3LjYzNzgzKSI+CgkJPGcgaWQ9Imc0NTMwIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg4OCwtODguMDAwMDE0KSI+CgkJCTxyZWN0IHk9IjI4LjM2MjE2NyIgeD0iNjQiIGhlaWdodD0iMTAyNCIgd2lkdGg9IjM4NCIgaWQ9InJlY3QzMDA5IgoJCQkJc3R5bGU9ImZpbGw6dXJsKCNsaW5lYXJHcmFkaWVudDM3NjcpO2ZpbGwtb3BhY2l0eToxO3N0cm9rZTpub25lIiAvPgoJCQk8cGF0aCBzb2RpcG9kaTpub2RldHlwZXM9ImNjY2NjY2MiIGlua3NjYXBlOmNvbm5lY3Rvci1jdXJ2YXR1cmU9IjAiIGlkPSJwYXRoMzc4NSIKCQkJCWQ9Im0gNjQsODYwLjM2MjE3IGMgMCwtNzA0IDg5NiwtNzA0IDg5NiwtNzA0IGwgMCwzODQgYyAwLDAgLTUxMiwwIC01MTIsMzIwIGwgMCwxOTIuMDAwMDMgLTM4NCwwIHoiCgkJCQlzdHlsZT0iZmlsbDp1cmwoI2xpbmVhckdyYWRpZW50Mzc1OSk7ZmlsbC1vcGFjaXR5OjE7ZmlsbC1ydWxlOm5vbnplcm87c3Ryb2tlOm5vbmU7c3Ryb2tlLXdpZHRoOjI0O3N0cm9rZS1taXRlcmxpbWl0OjQ7c3Ryb2tlLWRhc2hhcnJheTpub25lO3N0cm9rZS1vcGFjaXR5OjAuOTQxMTc2NDciIC8+CgkJPC9nPgoJPC9nPgo8L3N2Zz4='
 };
@@ -583,15 +631,13 @@ const TOOLS = [
   { name: 'Blender',            logo: LOGO.blender },
   { name: 'After Effects',      logo: LOGO.afterEffects },
   { name: 'Premiere Pro',       logo: LOGO.premierePro },
-  { name: 'Illustrator',        logo: LOGO.illustrator },
   { name: 'Photoshop',          logo: LOGO.photoshop },
+  { name: 'Illustrator',        logo: LOGO.illustrator },
   { name: 'Character Animator', logo: LOGO.characterAnimator },
-  { name: 'Figma',              logo: LOGO.figma },
   { name: 'Twine',              logo: LOGO.twine }
 ];
-/* ================================================================== */
 
-/* ---------- build the page from CONFIG ---------- */
+/* ---------- BUILD PAGE FROM CONFIG ---------- */
 $('#mailLink').href = 'mailto:' + EMAIL; $('#mailLink').textContent = EMAIL;
 $('#socials').innerHTML = SOCIALS.map(s => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}<span class="sr-only"> (opens in a new tab)</span></a></li>`).join('');
 $('#year').textContent = new Date().getFullYear();
@@ -603,23 +649,64 @@ toolList.innerHTML = TOOLS.map(t => `<li class="noimg"><span class="mark" aria-h
   if (TOOLS[i].logo) img.src = TOOLS[i].logo;
 });
 
+function getVideoSources(m) {
+  if (!m || m.type !== 'video') return [];
+  if (Array.isArray(m.sources) && m.sources.length) return m.sources;
+  return m.src ? [m.src] : [];
+}
+
 function fillSlot(el, src, alt, onLoad) {
   if (!el || !src) return;
   const img = new Image(); img.alt = alt || ''; img.decoding = 'async';
   img.onload = () => { el.appendChild(img); el.classList.add('has'); onLoad && onLoad(img); };
   img.src = src;
 }
+
+function fillVideoSlot(el, sources, poster, onLoad) {
+  if (!el || !sources || !sources.length) return;
+  const v = document.createElement('video');
+  if (poster) v.poster = poster;
+  v.muted = true; v.loop = true; v.playsInline = true; v.autoplay = true; v.preload = 'metadata';
+  v.setAttribute('aria-hidden', 'true');
+  sources.forEach(src => {
+    const s = document.createElement('source');
+    s.src = src;
+    v.appendChild(s);
+  });
+  v.addEventListener('loadeddata', () => {
+    el.appendChild(v); el.classList.add('has');
+    v.play().catch(() => {});
+    onLoad && onLoad(v);
+  }, { once: true });
+  v.load();
+}
+
 function mediaHTML(p, i) {
   const m = p.media || {}, t = esc(p.title);
-  if (m.type === 'video') return `<video src="${esc(m.src)}" ${m.poster ? `poster="${esc(m.poster)}"` : ''} controls playsinline preload="metadata" aria-label="${t}">${m.captions ? `<track kind="captions" src="${esc(m.captions)}" srclang="en" label="English" default>` : ''}</video>`;
+  if (m.type === 'video') {
+    const srcs = getVideoSources(m);
+    const sourceTags = srcs.map(s => `<source src="${esc(s)}">`).join('');
+    return `<video ${m.poster ? `poster="${esc(m.poster)}"` : ''} controls autoplay loop playsinline preload="metadata" aria-label="${t}">${sourceTags}${m.captions ? `<track kind="captions" src="${esc(m.captions)}" srclang="en" label="English" default>` : ''}</video>`;
+  }
   if (m.type === 'vimeo') return `<iframe src="https://player.vimeo.com/video/${esc(m.id)}" loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen title="${t}"></iframe>`;
   if (m.type === 'youtube') return `<iframe src="https://www.youtube-nocookie.com/embed/${esc(m.id)}" loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen title="${t}"></iframe>`;
   if (m.type === 'image') return `<img src="${esc(m.src)}" alt="${esc(m.alt || p.title)}" loading="lazy">`;
   const cover = p.cover || `media/project-${i + 1}.jpg`;
-  return `<div class="slot cover" data-src="${esc(cover)}" data-alt="${t}"><canvas class="reel-preview" data-idx="${i}" aria-hidden="true"></canvas><div class="empty" aria-hidden="true"><b>${t}</b> <span>Add ${esc(cover)} or a video</span></div></div>`;
+  const hint = p.link ? `Add ${esc(cover)} (or use the link to play)` : p.vertical ? `Add 9:16 vertical video or ${esc(cover)}` : `Add ${esc(cover)} or a video`;
+  return `<div class="slot cover" data-src="${esc(cover)}" data-alt="${t}"><canvas class="reel-preview" data-idx="${i}" aria-hidden="true"></canvas><div class="empty" aria-hidden="true"><b>${t}</b> <span>${hint}</span></div></div>`;
 }
+
 function initCovers(scope) {
-  scope.querySelectorAll('.slot.cover').forEach(el => fillSlot(el, el.dataset.src, el.dataset.alt, () => { const e = el.querySelector('.empty'); e && e.remove(); const c = el.querySelector('canvas.reel-preview'); c && c.remove(); }));
+  scope.querySelectorAll('.slot.cover').forEach(el => {
+    const cleanUp = () => {
+      const e = el.querySelector('.empty'); e && e.remove();
+      const c = el.querySelector('canvas.reel-preview'); c && c.remove();
+    };
+    if (el.dataset.videos) {
+      fillVideoSlot(el, el.dataset.videos.split('|').filter(Boolean), el.dataset.src, cleanUp);
+    }
+    fillSlot(el, el.dataset.src, el.dataset.alt, cleanUp);
+  });
 }
 
 const projectsEl = $('#projects');
@@ -627,24 +714,35 @@ function coverFor(p, i) {
   const m = p.media || {};
   return p.cover || (m.type === 'image' ? m.src : m.poster) || `media/project-${i + 1}.jpg`;
 }
-projectsEl.innerHTML = PROJECTS.map((p, i) => `
+projectsEl.innerHTML = PROJECTS.map((p, i) => {
+  const m = p.media || {};
+  const srcs = getVideoSources(m);
+  const vAttr = srcs.length ? ` data-videos="${esc(srcs.join('|'))}"` : '';
+  const emptyLabel = srcs.length ? srcs[0] : coverFor(p, i);
+  return `
   <article class="card rv" style="--d:${(i % 2) * .08}s" data-tag="${esc(p.tag || '')}" aria-labelledby="proj-${i}">
-    <div class="slot cover" data-src="${esc(coverFor(p, i))}" data-alt=""><canvas class="reel-preview" data-idx="${i}" aria-hidden="true"></canvas><div class="empty" aria-hidden="true">Add ${esc(coverFor(p, i))}</div></div>
+    <div class="slot cover" data-src="${esc(coverFor(p, i))}"${vAttr} data-alt=""><canvas class="reel-preview" data-idx="${i}" aria-hidden="true"></canvas><div class="empty" aria-hidden="true">Add ${esc(emptyLabel)}</div></div>
     <div class="shade" aria-hidden="true"></div>
     <div class="card-text">
-      <p class="kicker">${esc(p.kind)}, ${esc(p.year)}</p>
+      <p class="kicker">${esc(p.kind)} &middot; ${esc(p.year)}</p>
       <h3 id="proj-${i}">${esc(p.title)}</h3>
       <p class="blurb">${esc(p.text)}</p>
+      ${p.vertical || p.link ? `<div class="card-actions">
+        ${p.vertical ? `<span class="badge">9:16 Vertical Video</span>` : ''}
+        ${p.link ? `<a class="btn primary small" href="${esc(p.link.url)}" target="_blank" rel="noopener">${esc(p.link.label)}<span aria-hidden="true">&nbsp;&nearr;</span></a>` : ''}
+      </div>` : ''}
     </div>
     <button class="more" type="button" data-case="${i}">Case study<span class="sr-only">: ${esc(p.title)}</span><i aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" focusable="false"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg></i></button>
-  </article>`).join('');
-projectsEl.addEventListener('click', e => {            /* the whole card opens the case study */
+  </article>`;
+}).join('');
+projectsEl.addEventListener('click', e => {
+  if (e.target.closest('a')) return;
   const card = e.target.closest('.card');
   if (card && !e.target.closest('button')) card.querySelector('.more').click();
 });
 initCovers(projectsEl);
 
-/* project filter: the buttons are made from the tags in PROJECTS */
+/* ---------- PROJECT FILTER ---------- */
 const filterEl = $('#filter');
 const tags = [...new Set(PROJECTS.map(p => p.tag).filter(Boolean))];
 function applyFilter(tag, announce) {
@@ -652,7 +750,7 @@ function applyFilter(tag, announce) {
   projectsEl.querySelectorAll('.card').forEach(card => {
     const show = tag === 'All' || card.dataset.tag === tag;
     card.hidden = !show;
-    card.classList.toggle('wide', show && first);     /* the first visible card is the big one */
+    card.classList.toggle('wide', show && first);
     if (!show) return;
     first = false; n++;
     if (announce) { card.classList.remove('refilter'); void card.offsetWidth; card.classList.add('refilter'); }
@@ -675,7 +773,7 @@ applyFilter('All');
 
 fillSlot($('#heroPortrait'), PORTRAIT.src, PORTRAIT.alt);
 
-/* ---------- dialogs ---------- */
+/* ---------- DIALOGS ---------- */
 let opener = null;
 function openDialog(dlg, from) { opener = from || document.activeElement; dlg.showModal(); }
 document.querySelectorAll('dialog.modal').forEach(dlg => {
@@ -683,22 +781,27 @@ document.querySelectorAll('dialog.modal').forEach(dlg => {
   dlg.addEventListener('close', () => { if (opener && opener.focus) opener.focus(); });
 });
 
-/* project viewer */
 const caseDlg = $('#caseDlg'), caseBody = $('#caseBody');
 let caseIndex = 0;
 function renderCase(i) {
   caseIndex = (i + PROJECTS.length) % PROJECTS.length;
   const p = PROJECTS[caseIndex];
-  const facts = [['Role', p.role], ['Year', p.year], ['Tools', (p.tools || []).join(', ')]].filter(f => f[1]);
+  const facts = [
+    ['Role', p.role],
+    ['Year', p.year],
+    ['Format', p.vertical ? '9:16 Vertical Video' : ''],
+    ['Tools', (p.tools || []).join(', ')]
+  ].filter(f => f[1]);
   caseBody.innerHTML = `
     <div class="case-grid">
-      <div class="frame">${mediaHTML(p, caseIndex)}</div>
+      <div class="frame${p.vertical ? ' vertical' : ''}">${mediaHTML(p, caseIndex)}</div>
       <div>
         <p class="small">${esc(p.kind)}</p>
         <h2 id="caseTitle">${esc(p.title)}</h2>
         <p>${esc(p.text)}</p>
         <dl class="facts">${facts.map(f => `<div><dt>${esc(f[0])}</dt><dd>${esc(f[1])}</dd></div>`).join('')}</dl>
         ${p.details && p.details.length ? `<ul class="points">${p.details.map(d => `<li>${esc(d)}</li>`).join('')}</ul>` : ''}
+        ${p.link ? `<div class="case-cta"><a class="btn primary small" href="${esc(p.link.url)}" target="_blank" rel="noopener">${esc(p.link.label)}<span aria-hidden="true">&nbsp;&nearr;</span></a></div>` : ''}
       </div>
     </div>`;
   initCovers(caseBody);
@@ -710,14 +813,14 @@ document.addEventListener('click', e => {
 });
 $('#casePrev').addEventListener('click', () => { renderCase(caseIndex - 1); say(PROJECTS[caseIndex].title); });
 $('#caseNext').addEventListener('click', () => { renderCase(caseIndex + 1); say(PROJECTS[caseIndex].title); });
-caseDlg.addEventListener('close', () => { caseBody.innerHTML = ''; });   /* also stops any playing video */
+caseDlg.addEventListener('close', () => { caseBody.innerHTML = ''; });
 caseDlg.addEventListener('keydown', e => {
   if (e.target.closest('video,iframe')) return;
   if (e.key === 'ArrowRight') { renderCase(caseIndex + 1); say(PROJECTS[caseIndex].title); }
   if (e.key === 'ArrowLeft') { renderCase(caseIndex - 1); say(PROJECTS[caseIndex].title); }
 });
 
-/* stills gallery and picture viewer */
+/* ---------- STILLS GALLERY ---------- */
 const galleryEl = $('#gallery'), lb = $('#lightbox'), lbImg = $('#lbImg'), lbCap = $('#lbCap');
 let lbItems = [], lbIndex = 0;
 STILLS.forEach(st => {
@@ -750,7 +853,6 @@ $('#lbPrev').addEventListener('click', () => lbShow(lbIndex - 1));
 $('#lbNext').addEventListener('click', () => lbShow(lbIndex + 1));
 lb.addEventListener('keydown', e => { if (e.key === 'ArrowRight') lbShow(lbIndex + 1); if (e.key === 'ArrowLeft') lbShow(lbIndex - 1); });
 
-/* copy email */
 $('#copyMail').addEventListener('click', async e => {
   const b = e.currentTarget;
   try { await navigator.clipboard.writeText(EMAIL); b.textContent = 'Copied'; say('Email address copied'); }
@@ -758,7 +860,6 @@ $('#copyMail').addEventListener('click', async e => {
   setTimeout(() => { b.textContent = 'Copy email address'; }, 2500);
 });
 
-/* things rise into place when they scroll into view */
 {
   const rvs = [...document.querySelectorAll('.rv')];
   if ('IntersectionObserver' in window) {
@@ -768,7 +869,7 @@ $('#copyMail').addEventListener('click', async e => {
   } else rvs.forEach(el => el.classList.add('in'));
 }
 
-/* animated placeholder studies: shown for a project until you add a cover picture or a video */
+/* ---------- ANIMATED PLACEHOLDER STUDIES ---------- */
 function drawReelPreview(c, idx, t) {
   const r = c.getBoundingClientRect();
   if (r.width < 4 || r.height < 4) return;
@@ -778,26 +879,31 @@ function drawReelPreview(c, idx, t) {
   const ctx = c.getContext('2d'), k = idx % 4;
   ctx.clearRect(0, 0, w, h);
 
-  /* dark cinema backdrop with a soft coloured glow */
   const g = ctx.createRadialGradient(w * .65, h * .35, 10, w * .5, h * .5, w * .65);
   g.addColorStop(0, k % 2 === 0 ? 'rgba(242,166,90,.16)' : 'rgba(111,183,201,.16)');
   g.addColorStop(1, '#05070a');
   ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
 
-  /* thin frame guide */
-  ctx.strokeStyle = 'rgba(255,255,255,.06)'; ctx.lineWidth = dpr;
-  ctx.strokeRect(w * .08, h * .14, w * .84, h * .72);
+  const isVert = PROJECTS[idx] && PROJECTS[idx].vertical;
+  ctx.strokeStyle = 'rgba(255,255,255,.08)'; ctx.lineWidth = dpr;
+  if (isVert && w > h) {
+    const vh = h * .76, vw = vh * (9 / 16);
+    ctx.strokeRect((w - vw) * .5, (h - vh) * .5, vw, vh);
+  } else {
+    ctx.strokeRect(w * .08, h * .14, w * .84, h * .72);
+  }
 
   const cx = w * .5, cy = h * .48;
-  if (k === 0) {            /* layered 2D planes with a character dot */
-    for (let j = -2; j <= 2; j++) {
-      const shift = Math.sin(t * .7 + j * .5) * w * .025;
-      ctx.strokeStyle = j === 0 ? 'rgba(242,166,90,.65)' : 'rgba(111,183,201,.22)';
-      ctx.strokeRect(cx + j * w * .09 + shift - w * .06, cy - h * .18, w * .12, h * .36);
+  if (k === 0) {
+    const rad = Math.min(w, h) * .22;
+    ctx.strokeStyle = 'rgba(242,166,90,.55)'; ctx.lineWidth = 1.3 * dpr;
+    for (let a = 0; a < 3; a++) {
+      const rx = rad * Math.abs(Math.cos(t * .6 + a * 1.05));
+      ctx.beginPath(); ctx.ellipse(cx, cy, Math.max(rx, 2), rad, 0, 0, Math.PI * 2); ctx.stroke();
     }
-    ctx.fillStyle = '#f0ebe3';
-    ctx.beginPath(); ctx.arc(cx + Math.sin(t * 1.4) * w * .03, cy - h * .04, h * .045, 0, Math.PI * 2); ctx.fill();
-  } else if (k === 1) {     /* a moving chain of rig bones */
+    ctx.strokeStyle = 'rgba(111,183,201,.45)';
+    ctx.beginPath(); ctx.ellipse(cx, cy, rad, rad * .32, 0, 0, Math.PI * 2); ctx.stroke();
+  } else if (k === 1) {
     ctx.strokeStyle = '#6fb7c9'; ctx.lineWidth = 1.6 * dpr;
     let px = cx, py = cy + h * .22;
     for (let b = 0; b < 4; b++) {
@@ -808,16 +914,15 @@ function drawReelPreview(c, idx, t) {
       ctx.beginPath(); ctx.arc(nx, ny, 3.5 * dpr, 0, Math.PI * 2); ctx.fill();
       px = nx; py = ny;
     }
-  } else if (k === 2) {     /* a wireframe turntable */
-    const rad = Math.min(w, h) * .22;
-    ctx.strokeStyle = 'rgba(242,166,90,.55)'; ctx.lineWidth = 1.3 * dpr;
-    for (let a = 0; a < 3; a++) {
-      const rx = rad * Math.abs(Math.cos(t * .6 + a * 1.05));
-      ctx.beginPath(); ctx.ellipse(cx, cy, Math.max(rx, 2), rad, 0, 0, Math.PI * 2); ctx.stroke();
+  } else if (k === 2) {
+    for (let j = -2; j <= 2; j++) {
+      const shift = Math.sin(t * .7 + j * .5) * w * .025;
+      ctx.strokeStyle = j === 0 ? 'rgba(242,166,90,.65)' : 'rgba(111,183,201,.22)';
+      ctx.strokeRect(cx + j * w * .09 + shift - w * .06, cy - h * .18, w * .12, h * .36);
     }
-    ctx.strokeStyle = 'rgba(111,183,201,.45)';
-    ctx.beginPath(); ctx.ellipse(cx, cy, rad, rad * .32, 0, 0, Math.PI * 2); ctx.stroke();
-  } else {                  /* a ball riding a motion arc */
+    ctx.fillStyle = '#f0ebe3';
+    ctx.beginPath(); ctx.arc(cx + Math.sin(t * 1.4) * w * .03, cy - h * .04, h * .045, 0, Math.PI * 2); ctx.fill();
+  } else {
     ctx.strokeStyle = 'rgba(111,183,201,.4)'; ctx.lineWidth = 1.5 * dpr;
     ctx.beginPath(); ctx.moveTo(w * .2, cy + h * .12); ctx.quadraticCurveTo(cx, cy - h * .28, w * .8, cy + h * .12); ctx.stroke();
     const u = Math.sin(t * 1.8) * .5 + .5;
@@ -835,16 +940,15 @@ function reelLoop(now) {
   if (!reduce) reelT += dt;
   document.querySelectorAll('canvas.reel-preview').forEach(c => {
     const r = c.getBoundingClientRect();
-    if (r.bottom < 0 || r.top > innerHeight || r.width < 4) return;       /* only draw what is on screen */
+    if (r.bottom < 0 || r.top > innerHeight || r.width < 4) return;
     const sig = Math.round(r.width) + 'x' + Math.round(r.height);
-    if (reduce && c.__sig === sig) return;                                /* reduced motion: one still frame */
+    if (reduce && c.__sig === sig) return;
     c.__sig = sig;
     drawReelPreview(c, +c.dataset.idx || 0, reelT);
   });
 }
 requestAnimationFrame(reelLoop);
 
-/* backdrop pictures: faded in as you scroll */
 const bdEl = $('#backdrops');
 const bds = BACKDROPS.map(src => {
   const d = document.createElement('div'); d.className = 'bd'; bdEl.appendChild(d);
@@ -858,9 +962,7 @@ function setBackdrop(i) {
   bds.forEach((d, j) => d.classList.toggle('on', j === i && d.dataset.ready === '1'));
 }
 
-/* ------------------------------------------------------------------
-   GLASS: sliding thumb, pointer glow, and edge bending (Chromium only)
-------------------------------------------------------------------- */
+/* ---------- GLASS & NAV INTERACTION ---------- */
 const segs = [...document.querySelectorAll('.seg')];
 function place(seg, instant) {
   const th = seg.querySelector('.thumb');
@@ -872,10 +974,6 @@ function place(seg, instant) {
 }
 const placeAll = instant => { segs.forEach(s => place(s, instant)); hlTo(null, 1, instant); };
 
-/* ------------------------------------------------------------------
-   TOP BAR + MOUSE: the glass highlight follows the pointer, nearby links grow a little,
-   and everything settles back when the pointer leaves. Keyboard focus moves the highlight too.
-------------------------------------------------------------------- */
 const nav = $('#nav'), navHl = $('#navHl');
 const navAll = [...nav.querySelectorAll('a')];
 const navLinks = [...nav.querySelectorAll('a:not(.brand)')];
@@ -928,7 +1026,6 @@ const NS = 'http://www.w3.org/2000/svg', defs = $('#lg-defs defs');
 const mk = (n, a) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); return e; };
 let lgCount = 0;
 
-/* displacement map: pixels near the edge push the backdrop inward, like thick glass bending light */
 function bendMap(w, h, radius, bezel) {
   const sc = .5, cw = Math.max(2, Math.round(w * sc)), ch = Math.max(2, Math.round(h * sc));
   const c = document.createElement('canvas'); c.width = cw; c.height = ch;
@@ -980,20 +1077,16 @@ function refractAll() {
 }
 if (wantRefract) new ResizeObserver(refractAll).observe(document.body);
 
-/* ------------------------------------------------------------------
-   SCROLL: which section you are in (0 = top/about, then work, stills, process, contact)
-   sets the colour of the light, the backdrop picture and the menu highlight.
-------------------------------------------------------------------- */
-/* the Process statement lights up word by word as you scroll */
+/* ---------- SCROLL & WORD REVEAL ---------- */
 const quoteEl = $('[data-word-reveal]');
 if (quoteEl) {
-  const accentSet = new Set(['clean', 'topology', 'expressive', 'rigging', 'light', 'grade.']);
+  const accentSet = new Set(['clean', 'topology', 'expressive', 'rigging', 'composite,', 'light', 'grade.']);
   quoteEl.innerHTML = quoteEl.textContent.trim().split(/\s+/).map(w =>
     `<span class="r-word${accentSet.has(w.toLowerCase()) ? ' accent' : ''}">${esc(w)}</span>`).join(' ');
 }
 
 const state = { m: 0 };
-const stages = [...document.querySelectorAll('.stage')];   /* top/about, work, stills, process, contact */
+const stages = [...document.querySelectorAll('.stage')];
 const BACKDROP_FOR = [0, 1, 1, 2, 3];
 let spans = [], navActive = -2;
 
@@ -1006,12 +1099,12 @@ function onScroll() {
   const y = scrollY + innerHeight * .5;
   let idx = 0;
   for (let i = 0; i < spans.length; i++) if (y >= spans[i].top) idx = i;
-  if (scrollY + innerHeight >= document.documentElement.scrollHeight - 4) idx = spans.length - 1;   /* at the very bottom, we are in Contact */
+  if (scrollY + innerHeight >= document.documentElement.scrollHeight - 4) idx = spans.length - 1;
   const local = Math.min(Math.max((y - spans[idx].top) / spans[idx].h, 0), 1);
   state.m = idx + local;
   setBackdrop(Math.min(BACKDROP_FOR[idx], bds.length - 1));
-  root.style.setProperty('--hp', reduce ? 0 : Math.min(scrollY / (innerHeight * .8), 1).toFixed(3));   /* hero fades as you scroll */
-  const na = idx;   /* menu item n matches stage n */
+  root.style.setProperty('--hp', reduce ? 0 : Math.min(scrollY / (innerHeight * .8), 1).toFixed(3));
+  const na = idx;
   if (na !== navActive) {
     navActive = na;
     navLinks.forEach((l, j) => j === na ? l.setAttribute('aria-current', 'true') : l.removeAttribute('aria-current'));
@@ -1029,25 +1122,18 @@ addEventListener('resize', () => { measure(); refractAll(); });
 new ResizeObserver(measure).observe(document.body);
 document.fonts && document.fonts.ready.then(() => { measure(); refractAll(); });
 measure(); refractAll();
+placeAll(true);
 
-placeAll(true); refractAll();
-
-/* ------------------------------------------------------------------
-   THE LIGHT. Soft studio haze, rays from the top right, drifting dust and film grain.
-   The colour moves from cool steel blue (top) to warm amber (bottom).
-   Turn these up or down (1 = as designed, 0 = off).
-------------------------------------------------------------------- */
+/* ---------- WEBGL BACKGROUND SHADER ---------- */
 const DIALS = { grain: 1, vignette: 1, motion: 1, glow: 1, rays: 1 };
-
 const sm = (a, b, x) => { const t = Math.min(Math.max((x - a) / (b - a), 0), 1); return t * t * (3 - 2 * t); };
-/* one value per section [Top/About, Work, Stills, Process, Contact], blended as you scroll between them */
 const level = (arr, m) => { let v = arr[0]; for (let k = 1; k < arr.length; k++) v += (arr[k] - arr[k - 1]) * sm(k - .35, k + .35, m); return v; };
 const level3 = (arr, m) => [0, 1, 2].map(c => level(arr.map(v => v[c]), m));
 
 const BASE    = [[.018,.026,.042], [.016,.032,.046], [.022,.030,.044], [.028,.026,.038], [.038,.022,.020]];
-const LIGHT_A = [[.26,.44,.68],    [.18,.56,.66],    [.30,.48,.62],    [.74,.48,.28],    [.94,.52,.18]];   /* main light */
-const LIGHT_B = [[.10,.22,.42],    [.28,.20,.46],    [.20,.30,.48],    [.16,.44,.52],    [.16,.42,.50]];   /* fill, lower left */
-const LIGHT_C = [[.32,.46,.62],    [.28,.50,.56],    [.30,.48,.58],    [.84,.44,.20],    [.70,.28,.12]];   /* haze highlight */
+const LIGHT_A = [[.26,.44,.68],    [.18,.56,.66],    [.30,.48,.62],    [.74,.48,.28],    [.94,.52,.18]];
+const LIGHT_B = [[.10,.22,.42],    [.28,.20,.46],    [.20,.30,.48],    [.16,.44,.52],    [.16,.42,.50]];
+const LIGHT_C = [[.32,.46,.62],    [.28,.50,.56],    [.30,.48,.58],    [.84,.44,.20],    [.70,.28,.12]];
 const POWER   = [.50, .54, .52, .62, .72];
 
 const VS = 'attribute vec2 p; void main(){ gl_Position = vec4(p, 0., 1.); }';
@@ -1110,7 +1196,6 @@ void main(){
   col += ca * keyBlob * power;
   col += cb * rimBlob * power * 0.85;
   col += cc * topBlob * power;
-  /* rays from a light above the top right */
   vec2 toLight = p - vec2(0.92 * asp + mp.x * 0.8, 1.08 + mp.y * 0.5);
   float dist = length(toLight);
   float ang = atan(toLight.y, toLight.x);
@@ -1118,15 +1203,12 @@ void main(){
   float cone = smoothstep(2.1, 0.15, dist) * smoothstep(-3.05, -2.05, ang) * smoothstep(-1.15, -1.85, ang);
   float godRays = pow(rayPattern, 1.4) * cone * (0.55 + 0.65 * fog);
   col += mix(ca, cc, 0.35) * godRays * power * rays * 1.2;
-  /* faint horizontal lens streak */
   float streak = exp(-abs(uv.y - (c1.y * 0.85)) * 11.0) * exp(-abs(uv.x - 0.72) * 2.2);
   col += mix(ca, vec3(1.0, 0.95, 0.88), 0.3) * streak * power * 0.12;
-  /* dust in the light */
   float dustNear = bokeh(p, 4.2, 0.035, 1.7);
   float dustFar  = bokeh(p, 8.5, 0.020, 9.3) * 0.55;
   float lightMask = 0.25 + 1.25 * (keyBlob + godRays * 0.8);
   col += mix(ca, vec3(1.0, 0.96, 0.90), 0.45) * (dustNear + dustFar) * lightMask * power * 0.5;
-  /* film curve, vignette, grain */
   col = col / (1.0 + col * 0.18);
   vec2 vUv = (uv - 0.5) * vec2(1.15, 1.45);
   col *= 1.0 - vig * smoothstep(0.22, 1.05, length(vUv));
@@ -1168,7 +1250,7 @@ try {
   function frame(now) {
     requestAnimationFrame(frame);
     const dt = Math.min((now - last) / 1000, .05); last = now;
-    if (root.dataset.bg === 'off' || root.dataset.contrast === 'high') return;   /* nothing is visible, so do no work */
+    if (root.dataset.bg === 'off' || root.dataset.contrast === 'high') return;
     if (!reduce) t += dt * DIALS.motion;
     cur += (state.m - cur) * (reduce ? 1 : 1 - Math.exp(-dt * 3));
     const k = reduce ? 1 : 1 - Math.exp(-dt * 4);
