@@ -196,12 +196,49 @@ html.calm .card:hover .slot img,html.calm .card:hover .slot video{transform:none
 .card .shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.85) 0%,rgba(0,0,0,.55) 38%,rgba(0,0,0,0) 74%)}
 .card-text{position:relative;z-index:2;padding:clamp(1.4rem,3vw,2.2rem);max-width:36rem}
 
-/* Featured first card: clean side-by-side split with edge-to-edge 16:9 video (no black bars) */
-.card.wide{grid-column:1 / -1;min-height:0;display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.25fr);align-items:stretch}
-.card.wide .slot{position:relative;inset:auto;order:2;width:100%;height:100%;aspect-ratio:16/9;background:#373737}
-.card.wide .slot video,.card.wide .slot img{width:100%;height:100%;object-fit:cover;object-position:center}
-.card.wide .shade{display:none}
-.card.wide .card-text{order:1;display:flex;flex-direction:column;justify-content:center;max-width:none;padding:clamp(1.8rem,3.5vw,2.8rem)}
+/* Featured first card: full-height video locked to top/right/bottom edges with zero black bars */
+.card.wide{
+  grid-column:1 / -1;
+  min-height:clamp(24rem,34vw,30rem);
+  display:flex;
+  align-items:center;
+  background:linear-gradient(90deg,#14161b 0%,#14161b 38%,#3b3b3b 56%,#3b3b3b 100%);
+}
+.card.wide .slot{
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:38%;
+  width:auto;
+  height:100%;
+  background:#3b3b3b;
+}
+.card.wide .slot::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background:linear-gradient(90deg,#14161b 0%,rgba(20,22,27,0) 22%);
+}
+.card.wide .slot video,
+.card.wide .slot img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+}
+.card.wide .shade{display:none!important}
+.card.wide .card-text{
+  position:relative;
+  z-index:2;
+  width:44%;
+  max-width:30rem;
+  padding:clamp(1.8rem,3.5vw,2.8rem);
+}
 
 .card .kicker{margin:0 0 .5rem;font:600 1rem var(--font);color:var(--accent)}
 .card h3{font:700 clamp(1.8rem,3.2vw,2.6rem)/1.08 var(--font);letter-spacing:-.025em;margin:0 0 .7rem}
@@ -305,9 +342,11 @@ footer{margin-top:2.5rem;padding-bottom:5.5rem;text-align:center;color:var(--mut
 }
 @media (max-width:800px){
   .cards{grid-template-columns:1fr}
-  .card,.card.wide{min-height:28rem;display:block}
-  .card.wide .slot{position:relative;aspect-ratio:16/9;height:auto}
-  .card.wide .card-text{padding:1.4rem 1.4rem 4.5rem}
+  .card{min-height:28rem}
+  .card.wide{min-height:0;display:block;background:#14161b}
+  .card.wide .slot{position:relative;left:0;width:100%;height:auto;aspect-ratio:16/9}
+  .card.wide .slot::after{display:none}
+  .card.wide .card-text{width:100%;max-width:none;padding:1.4rem 1.4rem 4.5rem}
   .card .empty{right:10rem}
   .case-grid{grid-template-columns:1fr}
   .hero .wrap{grid-template-columns:1fr;gap:2rem}
@@ -707,7 +746,7 @@ function initCovers(scope) {
       const c = el.querySelector('canvas.reel-preview'); c && c.remove();
     };
     if (el.dataset.videos) {
-      fillVideoSlot(el, el.dataset.videos.split('|').filter(Boolean), el.dataset.src, cleanUp);
+      fillVideoSlot(el, el.dataset.videos.split('|').filter(Boolean), '', cleanUp);
     }
     fillSlot(el, el.dataset.src, el.dataset.alt, cleanUp);
   });
