@@ -196,13 +196,13 @@ html.calm .card:hover .slot img,html.calm .card:hover .slot video{transform:none
 .card .shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.85) 0%,rgba(0,0,0,.55) 38%,rgba(0,0,0,0) 74%)}
 .card-text{position:relative;z-index:2;padding:clamp(1.4rem,3vw,2.2rem);max-width:36rem}
 
-/* Featured first card: full-height uncropped 16:9 video on right + seamless dithered fade */
+/* Featured first card: full-height uncropped 16:9 media on right + seamless dithered fade */
 .card.wide{
   grid-column:1 / -1;
   min-height:clamp(22rem,31vw,27rem);
   display:flex;
   align-items:center;
-  background:var(--vid-bg,#393939);
+  background:var(--vid-bg,#0e1014);
 }
 .card.wide .slot{
   position:absolute;
@@ -213,7 +213,7 @@ html.calm .card:hover .slot img,html.calm .card:hover .slot video{transform:none
   width:auto;
   height:100%;
   aspect-ratio:16/9;
-  background:var(--vid-bg,#393939);
+  background:var(--vid-bg,#0e1014);
   -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 8%,rgba(0,0,0,.85) 16%,#000 24%);
   mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 8%,rgba(0,0,0,.85) 16%,#000 24%);
 }
@@ -597,15 +597,21 @@ const PROJECTS = [
     kind: 'Interactive fiction game (itch.io)',
     year: '2026',
     role: 'Narrative & Game Designer',
-    text: 'A narrative-driven interactive fiction mystery game built with branching storylines in Twine and published on itch.io.',
+    text: 'A noir interactive fiction mystery game built with branching storylines in Twine and published on itch.io.',
     details: [
       'Designed branching storylines, player choices and mystery pacing in Twine',
-      'Built custom interactive logic and atmospheric presentation',
+      'Built custom interactive logic, audio cues and atmospheric presentation',
       'Published as a playable web release on itch.io'
     ],
     tools: ['Twine'],
-    link: { url: 'https://itch.io/', label: 'Play Last Night on itch.io' },
-    media: { type: 'none' }
+    link: { url: 'https://rufolatio.itch.io/last-night', label: 'Play Last Night on itch.io' },
+    cover: 'Cover.png',
+    media: {
+      type: 'image',
+      src: 'Cover.png',
+      fallbacks: ['media/Cover.png', 'cover.png', 'media/cover.png'],
+      alt: 'Cover artwork for Last Night showing a figure collapsed on a rain-slicked harbor dock at sunset beside Hangyun Warehouse'
+    }
   }
 ];
 
@@ -684,11 +690,17 @@ function makeDitheredShadowURL() {
 }
 const DITHERED_SHADOW_URL = makeDitheredShadowURL();
 
-function fillSlot(el, src, alt, onLoad) {
-  if (!el || !src) return;
-  const img = new Image(); img.alt = alt || ''; img.decoding = 'async';
+function fillSlot(el, srcs, alt, onLoad) {
+  if (!el || !srcs) return;
+  const list = Array.isArray(srcs) ? srcs.filter(Boolean) : [srcs];
+  if (!list.length) return;
+  let idx = 0;
+  const img = new Image();
+  img.alt = alt || '';
+  img.decoding = 'async';
   img.onload = () => { el.appendChild(img); el.classList.add('has'); onLoad && onLoad(img); };
-  img.src = src;
+  img.onerror = () => { if (++idx < list.length) img.src = list[idx]; };
+  img.src = list[0];
 }
 
 function fillVideoSlot(el, sources, poster, onLoad) {
@@ -732,7 +744,10 @@ function mediaHTML(p, i) {
   }
   if (m.type === 'vimeo') return `<iframe src="https://player.vimeo.com/video/${esc(m.id)}" loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen title="${t}"></iframe>`;
   if (m.type === 'youtube') return `<iframe src="https://www.youtube-nocookie.com/embed/${esc(m.id)}" loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen title="${t}"></iframe>`;
-  if (m.type === 'image') return `<img src="${esc(m.src)}" alt="${esc(m.alt || p.title)}" loading="lazy">`;
+  if (m.type === 'image') {
+    const fb = Array.isArray(m.fallbacks) && m.fallbacks.length ? ` onerror="this.onerror=null;this.src='${esc(m.fallbacks[0])}'"` : '';
+    return `<img src="${esc(m.src)}" alt="${esc(m.alt || p.title)}" loading="lazy"${fb}>`;
+  }
   const cover = p.cover || `media/project-${i + 1}.jpg`;
   const hint = p.link ? `Add ${esc(cover)} (or use the link to play)` : p.vertical ? `Add 9:16 vertical video or ${esc(cover)}` : `Add ${esc(cover)} or a video`;
   return `<div class="slot cover" data-src="${esc(cover)}" data-alt="${t}"><canvas class="reel-preview" data-idx="${i}" aria-hidden="true"></canvas><div class="empty" aria-hidden="true"><b>${t}</b> <span>${hint}</span></div></div>`;
@@ -747,23 +762,31 @@ function initCovers(scope) {
     if (el.dataset.videos) {
       fillVideoSlot(el, el.dataset.videos.split('|').filter(Boolean), '', cleanUp);
     }
-    fillSlot(el, el.dataset.src, el.dataset.alt, cleanUp);
+    const imgSrcs = el.dataset.srcs ? el.dataset.srcs.split('|').filter(Boolean) : el.dataset.src;
+    fillSlot(el, imgSrcs, el.dataset.alt, cleanUp);
   });
 }
 
 const projectsEl = $('#projects');
-function coverFor(p, i) {
+function coversFor(p, i) {
   const m = p.media || {};
-  return p.cover || (m.type === 'image' ? m.src : m.poster) || `media/project-${i + 1}.jpg`;
+  const list = [];
+  if (p.cover) list.push(p.cover);
+  if (m.type === 'image' && m.src) list.push(m.src);
+  if (m.poster) list.push(m.poster);
+  if (Array.isArray(m.fallbacks)) list.push(...m.fallbacks);
+  list.push(`media/project-${i + 1}.jpg`);
+  return [...new Set(list)];
 }
 projectsEl.innerHTML = PROJECTS.map((p, i) => {
   const m = p.media || {};
   const srcs = getVideoSources(m);
+  const cList = coversFor(p, i);
   const vAttr = srcs.length ? ` data-videos="${esc(srcs.join('|'))}"` : '';
-  const emptyLabel = srcs.length ? srcs[0] : coverFor(p, i);
+  const emptyLabel = srcs.length ? srcs[0] : cList[0];
   return `
   <article class="card rv" style="--d:${(i % 2) * .08}s" data-tag="${esc(p.tag || '')}" aria-labelledby="proj-${i}">
-    <div class="slot cover" data-src="${esc(coverFor(p, i))}"${vAttr} data-alt=""><canvas class="reel-preview" data-idx="${i}" aria-hidden="true"></canvas><div class="empty" aria-hidden="true">Add ${esc(emptyLabel)}</div></div>
+    <div class="slot cover" data-srcs="${esc(cList.join('|'))}"${vAttr} data-alt=""><canvas class="reel-preview" data-idx="${i}" aria-hidden="true"></canvas><div class="empty" aria-hidden="true">Add ${esc(emptyLabel)}</div></div>
     <div class="shade" aria-hidden="true"></div>
     <div class="card-text">
       <p class="kicker">${esc(p.kind)} &middot; ${esc(p.year)}</p>
@@ -1162,7 +1185,6 @@ uniform vec2 res, mouse;
 uniform float t, m, grain, vig, power, rays;
 uniform vec3 base, ca, cb, cc;
 
-/* Precision-safe hash (avoids sin(43758.5453) GPU stripe artifacts) */
 float hash(vec2 p){
   vec3 p3 = fract(vec3(p.xyx) * 0.1031);
   p3 += dot(p3, p3.yzx + 33.33);
@@ -1220,7 +1242,6 @@ void main(){
   col += cb * rimBlob * power * 0.85;
   col += cc * topBlob * power;
 
-  /* Original top-right volumetric rays */
   vec2 toLight = p - vec2(0.92 * asp + mp.x * 0.8, 1.08 + mp.y * 0.5);
   float dist = length(toLight);
   float ang = atan(toLight.y, toLight.x);
@@ -1229,17 +1250,14 @@ void main(){
   float godRays = pow(rayPattern, 1.4) * cone * (0.55 + 0.65 * fog);
   col += mix(ca, cc, 0.35) * godRays * power * rays * 1.2;
 
-  /* Faint horizontal lens streak */
   float streak = exp(-abs(uv.y - (c1.y * 0.85)) * 11.0) * exp(-abs(uv.x - 0.72) * 2.2);
   col += mix(ca, vec3(1.0, 0.95, 0.88), 0.3) * streak * power * 0.12;
 
-  /* Dust in the light */
   float dustNear = bokeh(p, 4.2, 0.035, 1.7);
   float dustFar  = bokeh(p, 8.5, 0.020, 9.3) * 0.55;
   float lightMask = 0.25 + 1.25 * (keyBlob + godRays * 0.8);
   col += mix(ca, vec3(1.0, 0.96, 0.90), 0.45) * (dustNear + dustFar) * lightMask * power * 0.5;
 
-  /* Film curve, vignette, and line-free dither */
   col = col / (1.0 + col * 0.18);
   vec2 vUv = (uv - 0.5) * vec2(1.15, 1.45);
   col *= 1.0 - vig * smoothstep(0.22, 1.05, length(vUv));
