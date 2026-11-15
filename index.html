@@ -177,6 +177,7 @@ html.calm .rv{opacity:1!important;transform:none!important;transition:none!impor
 
 .hero-photo{position:relative;justify-self:center;width:min(100%,25rem);animation:rise .9s .28s backwards}
 .hero-photo .portrait{border-radius:32px;min-height:0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.16),0 30px 70px rgba(0,0,0,.5)}
+.hero-photo .portrait img{object-fit:cover;object-position:center top}
 html.calm .hero .wrap{transform:none;opacity:1}
 .portrait{aspect-ratio:4/5;border-radius:22px;background:rgba(5,7,10,.55);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
 
@@ -213,6 +214,10 @@ html.calm .card.refilter{animation:none}
   transition:transform 1.4s cubic-bezier(.2,.7,.2,1);
   pointer-events:none;
 }
+.card .slot video.interactive-video{
+  pointer-events:auto;
+  cursor:pointer;
+}
 .card .slot iframe{
   position:absolute;
   inset:0;
@@ -225,7 +230,7 @@ html.calm .card.refilter{animation:none}
 .card[data-fit="contain"] .slot video{
   object-fit:contain;
 }
-.card:hover .slot img,.card:hover .slot video{transform:scale(1.03)}
+.card:hover .slot img,.card:hover .slot video:not(.interactive-video){transform:scale(1.03)}
 html.calm .card .slot img,html.calm .card .slot video{transition:none}
 html.calm .card:hover .slot img,html.calm .card:hover .slot video{transform:none}
 .card .empty{position:absolute;left:1.2rem;bottom:1rem;right:1.2rem;font:400 .95rem var(--font);color:var(--muted)}
@@ -236,6 +241,44 @@ html.calm .card:hover .slot img,html.calm .card:hover .slot video{transform:none
   flex:1;
   padding:clamp(1.4rem,2.6vw,1.9rem);
   padding-bottom:4.6rem;
+}
+
+/* Click-to-play overlay button for videos with audio */
+.play-gate{
+  position:absolute;
+  inset:0;
+  z-index:4;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:radial-gradient(circle at center,rgba(0,0,0,.22) 0%,rgba(0,0,0,.52) 100%);
+  border:0;
+  padding:0;
+  cursor:pointer;
+  color:#fff;
+  font:600 .95rem var(--font);
+  transition:background-color .25s ease,opacity .25s ease;
+}
+.play-gate span{
+  display:inline-flex;
+  align-items:center;
+  gap:.6rem;
+  padding:.65rem 1.25rem;
+  border-radius:999px;
+  background:rgba(20,22,28,.82);
+  -webkit-backdrop-filter:blur(14px);
+  backdrop-filter:blur(14px);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.26),0 12px 30px rgba(0,0,0,.45);
+  transition:transform .45s var(--spring),background-color .25s ease;
+}
+.play-gate:hover span{
+  transform:scale(1.06);
+  background:rgba(0,113,227,.92);
+}
+.play-gate svg{
+  width:18px;
+  height:18px;
+  fill:currentColor;
 }
 
 .card.wide{
@@ -429,7 +472,7 @@ footer{margin-top:2.5rem;padding-bottom:5.5rem;text-align:center;color:var(--mut
         </div>
       </div>
       <div class="hero-photo">
-        <div class="slot portrait" id="heroPortrait"><div class="ph" aria-hidden="true"><b>Your photo</b><small>PARSA.png</small></div></div>
+        <div class="slot portrait" id="heroPortrait"><div class="ph" aria-hidden="true"><b>Your photo</b><small>PARSA - Copy.png</small></div></div>
       </div>
     </div>
   </header>
@@ -523,12 +566,12 @@ function extractYouTubeId(input) {
   return /^[A-Za-z0-9_-]{11}$/.test(s) ? s : '';
 }
 
-function youtubeEmbedSrc(input, cardMode = false) {
+function youtubeEmbedSrc(input, autoPlay = false) {
   const id = extractYouTubeId(input);
   if (!id) return '';
-  const params = cardMode
-    ? `autoplay=1&mute=1&loop=1&playlist=${id}&controls=1&playsinline=1&rel=0&modestbranding=1`
-    : `autoplay=1&rel=0&playsinline=1&modestbranding=1`;
+  const params = autoPlay
+    ? `autoplay=1&controls=1&playsinline=1&rel=0&modestbranding=1`
+    : `autoplay=0&controls=1&playsinline=1&rel=0&modestbranding=1`;
   return `https://www.youtube.com/embed/${id}?${params}`;
 }
 
@@ -550,8 +593,15 @@ function imageCandidates(names) {
   const exts = ['.png', '.jpg', '.jpeg', '.webp'];
   for (const f of folders) {
     for (const n of names) {
-      if (/\.[a-z0-9]+$/i.test(n)) out.push(f + n);
-      else for (const e of exts) out.push(f + n + e);
+      if (/\.[a-z0-9]+$/i.test(n)) {
+        out.push(f + n);
+        if (n.includes(' ')) out.push(f + n.replace(/ /g, '%20'));
+      } else {
+        for (const e of exts) {
+          out.push(f + n + e);
+          if (n.includes(' ')) out.push(f + n.replace(/ /g, '%20') + e);
+        }
+      }
     }
   }
   return [...new Set(out)];
@@ -578,6 +628,7 @@ const PROJECTS = [
     year: '2026',
     role: '3D Modeler, Texture Artist, Rigger and Animator',
     fit: 'contain',
+    sampleBg: true,
     text: 'An original hard surface 3D robot character modeled, rigged and animated from scratch in Blender and textured in Substance Painter, shown in a looping walk cycle.',
     details: [
       'Modeled the hard surface robot body, monitor head and articulated fingers from scratch in Blender',
@@ -672,6 +723,7 @@ const PROJECTS = [
     kind: 'Mixed media animated short',
     year: '2026',
     role: 'Character Designer, Animator and Editor',
+    clickToPlay: true,
     text: 'A 2D animated character composited into live action footage for a motivational monologue about self belief and trying new things.',
     details: [
       'Designed the 2D character artwork in Adobe Illustrator',
@@ -693,6 +745,7 @@ const PROJECTS = [
     role: 'Animator and Video Editor',
     vertical: true,
     fit: 'contain',
+    clickToPlay: true,
     text: 'A vertical 9:16 pixel art animated short tracing the history of the art form from its origins to the present day, narrated with an AI voice over.',
     details: [
       'Formatted and framed specifically as a 9:16 vertical video',
@@ -822,7 +875,8 @@ function fillSlot(el, srcs, alt, onLoad) {
 
 function fillYouTubeSlot(el, ytId, title, onLoad) {
   if (!el || !ytId) return;
-  const src = youtubeEmbedSrc(ytId, true);
+  /* Click-to-play: autoplay=0 so it waits for the viewer to click and plays with sound */
+  const src = youtubeEmbedSrc(ytId, false);
   if (!src) return;
   const ifr = document.createElement('iframe');
   ifr.src = src;
@@ -837,34 +891,76 @@ function fillYouTubeSlot(el, ytId, title, onLoad) {
 
 function fillVideoSlot(el, sources, poster, onLoad, projIdx) {
   if (!el || !sources || !sources.length) return;
+  const proj = projIdx != null ? PROJECTS[projIdx] : null;
+  const isClickToPlay = !!(proj && proj.clickToPlay);
   const v = document.createElement('video');
   if (poster) v.poster = poster;
-  v.muted = true; v.loop = true; v.playsInline = true; v.autoplay = true; v.preload = 'metadata';
+  v.playsInline = true;
+  v.preload = 'metadata';
   v.disablePictureInPicture = true;
-  v.setAttribute('controlsList', 'nodownload nofullscreen noremoteplayback');
-  v.setAttribute('aria-hidden', 'true');
+  v.setAttribute('controlsList', 'nodownload noremoteplayback');
+
+  if (isClickToPlay) {
+    v.muted = false;
+    v.loop = false;
+    v.autoplay = false;
+    v.classList.add('interactive-video');
+    v.setAttribute('aria-label', proj ? proj.title : 'Project video');
+  } else {
+    v.muted = true;
+    v.loop = true;
+    v.autoplay = true;
+    v.setAttribute('aria-hidden', 'true');
+  }
+
   sources.forEach(src => {
     const s = document.createElement('source');
     s.src = src;
     v.appendChild(s);
   });
+
   v.addEventListener('loadeddata', () => {
-    if (projIdx != null && PROJECTS[projIdx] && v.currentSrc) {
-      PROJECTS[projIdx].resolvedVideo = v.currentSrc;
+    if (proj && v.currentSrc) {
+      proj.resolvedVideo = v.currentSrc;
     }
-    try {
-      const sc = document.createElement('canvas');
-      sc.width = 4; sc.height = 4;
-      const sctx = sc.getContext('2d');
-      sctx.drawImage(v, 0, 0, 4, 4);
-      const p = sctx.getImageData(1, 1, 1, 1).data;
-      if (p[3] > 200) {
-        const card = el.closest('.card');
-        if (card) card.style.setProperty('--vid-bg', `rgb(${p[0]},${p[1]},${p[2]})`);
-      }
-    } catch (e) {}
-    el.appendChild(v); el.classList.add('has');
-    v.play().catch(() => {});
+    /* Only sample background color when explicitly enabled (Original 3D Character) */
+    if (proj && proj.sampleBg) {
+      try {
+        const sc = document.createElement('canvas');
+        sc.width = 4; sc.height = 4;
+        const sctx = sc.getContext('2d');
+        sctx.drawImage(v, 0, 0, 4, 4);
+        const p = sctx.getImageData(1, 1, 1, 1).data;
+        if (p[3] > 200) {
+          const card = el.closest('.card');
+          if (card) card.style.setProperty('--vid-bg', `rgb(${p[0]},${p[1]},${p[2]})`);
+        }
+      } catch (e) {}
+    }
+
+    el.appendChild(v);
+    el.classList.add('has');
+
+    if (isClickToPlay) {
+      /* Seek slightly forward so a clear preview frame is shown while paused */
+      try { v.currentTime = 0.8; } catch (e) {}
+      const gate = document.createElement('button');
+      gate.type = 'button';
+      gate.className = 'play-gate';
+      gate.setAttribute('aria-label', `Play ${proj ? proj.title : 'video'} with audio`);
+      gate.innerHTML = `<span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5-9-5.5z"/></svg>Click to play with audio</span>`;
+      gate.addEventListener('click', e => {
+        e.stopPropagation();
+        gate.remove();
+        v.controls = true;
+        v.muted = false;
+        try { v.currentTime = 0; } catch (err) {}
+        v.play().catch(() => {});
+      });
+      el.appendChild(gate);
+    } else {
+      v.play().catch(() => {});
+    }
     onLoad && onLoad(v);
   }, { once: true });
   v.load();
@@ -880,7 +976,8 @@ function mediaHTML(p, i) {
     const srcs = p.resolvedVideo ? [p.resolvedVideo, ...getVideoSources(m)] : getVideoSources(m);
     const uniqueSrcs = [...new Set(srcs)];
     const sourceTags = uniqueSrcs.map(s => `<source src="${esc(s)}">`).join('');
-    return `<video ${m.poster ? `poster="${esc(m.poster)}"` : ''} controls autoplay loop playsinline preload="metadata" aria-label="${t}">${sourceTags}${m.captions ? `<track kind="captions" src="${esc(m.captions)}" srclang="en" label="English" default>` : ''}</video>`;
+    const autoAttr = p.clickToPlay ? '' : 'autoplay loop ';
+    return `<video ${m.poster ? `poster="${esc(m.poster)}"` : ''} controls ${autoAttr}playsinline preload="metadata" aria-label="${t}">${sourceTags}${m.captions ? `<track kind="captions" src="${esc(m.captions)}" srclang="en" label="English" default>` : ''}</video>`;
   }
   if (m.type === 'vimeo') return `<iframe src="https://player.vimeo.com/video/${esc(m.id)}" loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen title="${t}"></iframe>`;
   if (m.type === 'image') {
@@ -950,7 +1047,7 @@ projectsEl.innerHTML = PROJECTS.map((p, i) => {
   </article>`;
 }).join('');
 projectsEl.addEventListener('click', e => {
-  if (e.target.closest('a,iframe')) return;
+  if (e.target.closest('a,iframe,.play-gate,video.interactive-video')) return;
   const card = e.target.closest('.card');
   if (card && !e.target.closest('button')) card.querySelector('.more').click();
 });
