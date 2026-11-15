@@ -581,7 +581,15 @@ function videoCandidates(names, extra = []) {
   const exts = ['.mp4', '.mkv', '.webm', '.mov'];
   for (const f of folders) {
     for (const n of names) {
-      for (const e of exts) out.push(f + n + e);
+      if (/\.[a-z0-9]+$/i.test(n)) {
+        out.push(f + n);
+        if (n.includes(' ')) out.push(f + n.replace(/ /g, '%20'));
+      } else {
+        for (const e of exts) {
+          out.push(f + n + e);
+          if (n.includes(' ')) out.push(f + n.replace(/ /g, '%20') + e);
+        }
+      }
     }
   }
   return [...new Set([...out, ...extra])];
@@ -639,7 +647,7 @@ const PROJECTS = [
     tools: ['Blender', 'Substance Painter', 'Rigify'],
     media: {
       type: 'video',
-      sources: videoCandidates(['ROBOT', 'robot', 'Robot', 'U3278390_Walking'])
+      sources: videoCandidates(['ROBOT.mp4', 'U3278390_Walking.mp4', 'robot', 'Robot', 'ROBOT'])
     }
   },
   {
@@ -658,7 +666,7 @@ const PROJECTS = [
     tools: ['Blender'],
     media: {
       type: 'video',
-      sources: videoCandidates(['JUMP', 'Jump', 'jump'])
+      sources: videoCandidates(['JUMP.mp4', 'JUMP', 'Jump', 'jump'])
     }
   },
   {
@@ -677,7 +685,7 @@ const PROJECTS = [
     tools: ['Blender'],
     media: {
       type: 'video',
-      sources: videoCandidates(['RUN', 'Run', 'run'])
+      sources: videoCandidates(['run 2.mp4', 'run2.mp4', 'RUN 2.mp4', 'RUN2.mp4', 'run 2', 'run2', 'RUN', 'Run', 'run'])
     }
   },
   {
@@ -696,7 +704,7 @@ const PROJECTS = [
     tools: ['Blender'],
     media: {
       type: 'video',
-      sources: videoCandidates(['Walk', 'WALK', 'walk'])
+      sources: videoCandidates(['Walk.mp4', 'Walk', 'WALK', 'walk'])
     }
   },
   {
@@ -714,7 +722,7 @@ const PROJECTS = [
     tools: ['Blender', 'Substance Painter'],
     media: {
       type: 'video',
-      sources: videoCandidates(['Nostalgia Room', 'NOSTALGIA ROOM', 'nostalgia room'])
+      sources: videoCandidates(['Nostalgia Room.mp4', 'Nostalgia Room', 'NOSTALGIA ROOM', 'nostalgia room'])
     }
   },
   {
@@ -755,7 +763,7 @@ const PROJECTS = [
     tools: ['Photoshop', 'Premiere Pro'],
     media: {
       type: 'video',
-      sources: videoCandidates(['PIXEL ART', 'Pixel Art', 'pixel art'])
+      sources: videoCandidates(['PIXEL ART.mp4', 'PIXEL ART', 'Pixel Art', 'pixel art'])
     }
   },
   {
@@ -875,7 +883,6 @@ function fillSlot(el, srcs, alt, onLoad) {
 
 function fillYouTubeSlot(el, ytId, title, onLoad) {
   if (!el || !ytId) return;
-  /* Click-to-play: autoplay=0 so it waits for the viewer to click and plays with sound */
   const src = youtubeEmbedSrc(ytId, false);
   if (!src) return;
   const ifr = document.createElement('iframe');
@@ -923,7 +930,6 @@ function fillVideoSlot(el, sources, poster, onLoad, projIdx) {
     if (proj && v.currentSrc) {
       proj.resolvedVideo = v.currentSrc;
     }
-    /* Only sample background color when explicitly enabled (Original 3D Character) */
     if (proj && proj.sampleBg) {
       try {
         const sc = document.createElement('canvas');
@@ -942,7 +948,6 @@ function fillVideoSlot(el, sources, poster, onLoad, projIdx) {
     el.classList.add('has');
 
     if (isClickToPlay) {
-      /* Seek slightly forward so a clear preview frame is shown while paused */
       try { v.currentTime = 0.8; } catch (e) {}
       const gate = document.createElement('button');
       gate.type = 'button';
