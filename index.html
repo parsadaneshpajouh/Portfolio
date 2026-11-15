@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
 <title>Parsa Danesh Pajouh | Animation &amp; 3D</title>
-<meta name="description" content="Portfolio of Parsa Danesh Pajouh — 3D modeling, texturing, character animation, motion graphics, video editing and interactive fiction.">
+<meta name="description" content="Portfolio of Parsa Danesh Pajouh covering 3D modeling, texturing, character animation, motion graphics, video editing and interactive fiction.">
 <meta name="theme-color" content="#000000">
 <meta property="og:title" content="Parsa Danesh Pajouh | Animation &amp; 3D">
 <meta property="og:description" content="3D character animation, modeling, texturing, motion graphics and interactive media portfolio.">
@@ -177,30 +177,115 @@ html.calm .rv{opacity:1!important;transform:none!important;transition:none!impor
 
 .hero-photo{position:relative;justify-self:center;width:min(100%,25rem);animation:rise .9s .28s backwards}
 .hero-photo .portrait{border-radius:32px;min-height:0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.16),0 30px 70px rgba(0,0,0,.5)}
+.hero-photo .portrait img{object-fit:cover;object-position:center top}
 html.calm .hero .wrap{transform:none;opacity:1}
 .portrait{aspect-ratio:4/5;border-radius:22px;background:rgba(5,7,10,.55);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
 
 /* ---------- WORK CARDS ---------- */
 .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}
 .filter{width:max-content;max-width:100%;margin:0 0 1.4rem}
-.card{position:relative;isolation:isolate;overflow:hidden;border-radius:28px;min-height:clamp(26rem,38vw,34rem);
-  background:radial-gradient(120% 90% at 80% 100%,#1d2026,#0e0f12 70%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.09);cursor:pointer}
+
+.card{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  border-radius:28px;
+  display:flex;
+  flex-direction:column;
+  background:rgba(16,18,23,.88);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.09);
+  cursor:pointer;
+}
 .card.refilter{animation:rise .7s cubic-bezier(.16,1,.3,1) backwards}
 html.calm .card.refilter{animation:none}
-.card .slot{position:absolute;inset:0;z-index:0}
-.card .slot img,.card .slot video{transition:transform 1.4s cubic-bezier(.2,.7,.2,1);pointer-events:none}
-.card:hover .slot img,.card:hover .slot video{transform:scale(1.03)}
+.card .slot{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  background:var(--vid-bg,#090b0f);
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.card .slot img,.card .slot video{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  transition:transform 1.4s cubic-bezier(.2,.7,.2,1);
+  pointer-events:none;
+}
+.card .slot video.interactive-video{
+  pointer-events:auto;
+  cursor:pointer;
+}
+.card .slot iframe{
+  position:absolute;
+  inset:0;
+  display:block;
+  width:100%;
+  height:100%;
+  border:0;
+}
+.card[data-fit="contain"] .slot img,
+.card[data-fit="contain"] .slot video{
+  object-fit:contain;
+}
+.card:hover .slot img,.card:hover .slot video:not(.interactive-video){transform:scale(1.03)}
 html.calm .card .slot img,html.calm .card .slot video{transition:none}
 html.calm .card:hover .slot img,html.calm .card:hover .slot video{transform:none}
-.card .empty{position:absolute;left:1.6rem;bottom:1.6rem;right:11rem;font:400 1rem var(--font);color:var(--muted)}
-.card .shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.85) 0%,rgba(0,0,0,.55) 38%,rgba(0,0,0,0) 74%)}
-.card-text{position:relative;z-index:2;padding:clamp(1.4rem,3vw,2.2rem);max-width:36rem}
+.card .empty{position:absolute;left:1.2rem;bottom:1rem;right:1.2rem;font:400 .95rem var(--font);color:var(--muted)}
+.card .shade{display:none}
+.card-text{
+  position:relative;
+  z-index:2;
+  flex:1;
+  padding:clamp(1.4rem,2.6vw,1.9rem);
+  padding-bottom:4.6rem;
+}
 
-/* Featured first card: full-height uncropped 16:9 media on right + seamless dithered fade */
+/* Click-to-play overlay button for videos with audio */
+.play-gate{
+  position:absolute;
+  inset:0;
+  z-index:4;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:radial-gradient(circle at center,rgba(0,0,0,.22) 0%,rgba(0,0,0,.52) 100%);
+  border:0;
+  padding:0;
+  cursor:pointer;
+  color:#fff;
+  font:600 .95rem var(--font);
+  transition:background-color .25s ease,opacity .25s ease;
+}
+.play-gate span{
+  display:inline-flex;
+  align-items:center;
+  gap:.6rem;
+  padding:.65rem 1.25rem;
+  border-radius:999px;
+  background:rgba(20,22,28,.82);
+  -webkit-backdrop-filter:blur(14px);
+  backdrop-filter:blur(14px);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.26),0 12px 30px rgba(0,0,0,.45);
+  transition:transform .45s var(--spring),background-color .25s ease;
+}
+.play-gate:hover span{
+  transform:scale(1.06);
+  background:rgba(0,113,227,.92);
+}
+.play-gate svg{
+  width:18px;
+  height:18px;
+  fill:currentColor;
+}
+
 .card.wide{
   grid-column:1 / -1;
   min-height:clamp(22rem,31vw,27rem);
   display:flex;
+  flex-direction:row;
   align-items:center;
   background:var(--vid-bg,#0e1014);
 }
@@ -213,12 +298,14 @@ html.calm .card:hover .slot img,html.calm .card:hover .slot video{transform:none
   width:auto;
   height:100%;
   aspect-ratio:16/9;
+  border-bottom:0;
   background:var(--vid-bg,#0e1014);
   -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 8%,rgba(0,0,0,.85) 16%,#000 24%);
   mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 8%,rgba(0,0,0,.85) 16%,#000 24%);
 }
 .card.wide .slot video,
-.card.wide .slot img{
+.card.wide .slot img,
+.card.wide .slot iframe{
   position:absolute;
   inset:0;
   width:100%;
@@ -228,6 +315,10 @@ html.calm .card:hover .slot img,html.calm .card:hover .slot video{transform:none
 }
 .card.wide .shade{
   display:block;
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
   background-color:transparent;
   background-size:100% 100%;
   background-repeat:no-repeat;
@@ -236,15 +327,17 @@ html.calm .card:hover .slot img,html.calm .card:hover .slot video{transform:none
 .card.wide .card-text{
   position:relative;
   z-index:2;
+  flex:0 0 auto;
   width:48%;
   max-width:32rem;
   padding:clamp(2rem,4vw,3rem);
   text-shadow:0 2px 20px rgba(0,0,0,.45);
 }
 
-.card .kicker{margin:0 0 .5rem;font:600 1rem var(--font);color:var(--accent)}
-.card h3{font:700 clamp(1.8rem,3.1vw,2.5rem)/1.08 var(--font);letter-spacing:-.025em;margin:0 0 .7rem}
-.card .blurb{margin:0;color:var(--soft);max-width:28rem}
+.card .kicker{margin:0 0 .45rem;font:600 .95rem var(--font);color:var(--accent)}
+.card h3{font:700 clamp(1.6rem,2.6vw,2.2rem)/1.1 var(--font);letter-spacing:-.025em;margin:0 0 .6rem}
+.card.wide h3{font-size:clamp(1.85rem,3.1vw,2.55rem)}
+.card .blurb{margin:0;color:var(--soft);max-width:30rem}
 .card-actions{margin-top:1rem;display:flex;flex-wrap:wrap;gap:.6rem}
 .badge{display:inline-flex;align-items:center;padding:.22rem .75rem;border-radius:999px;font:600 .8rem var(--font);color:var(--paper);background:rgba(255,255,255,.12);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
 .more{position:absolute;right:1.1rem;bottom:1.1rem;z-index:3;display:inline-flex;align-items:center;gap:.7rem;min-height:48px;padding:.3rem .4rem .3rem 1.2rem;border:0;border-radius:999px;cursor:pointer;
@@ -262,7 +355,7 @@ html.calm .card:hover .more i,html.calm .more:focus-visible i{transform:none}
 .ph small{font:400 .9rem var(--font);color:var(--muted)}
 .slot.has .ph{display:none}
 .slot canvas.reel-preview{position:absolute;inset:0;width:100%;height:100%;display:block}
-.frame{border-radius:18px;overflow:hidden;position:relative}
+.frame{border-radius:18px;overflow:hidden;position:relative;background:#090b0f}
 .frame video,.frame img,.frame iframe{display:block;width:100%;border:0}
 .frame iframe{aspect-ratio:16/9;height:auto}
 .frame .slot.cover{aspect-ratio:16/9;background:#0b0c0f;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
@@ -330,12 +423,10 @@ footer{margin-top:2.5rem;padding-bottom:5.5rem;text-align:center;color:var(--mut
 }
 @media (max-width:800px){
   .cards{grid-template-columns:1fr}
-  .card{min-height:28rem}
-  .card.wide{min-height:0;display:block;background:#0e1014}
+  .card.wide{min-height:0;display:flex;flex-direction:column;background:rgba(16,18,23,.88)}
   .card.wide .slot{position:relative;width:100%;height:auto;aspect-ratio:16/9;-webkit-mask-image:none;mask-image:none}
   .card.wide .shade{display:none}
   .card.wide .card-text{width:100%;max-width:none;padding:1.4rem 1.4rem 4.5rem}
-  .card .empty{right:10rem}
   .case-grid{grid-template-columns:1fr}
   .hero .wrap{grid-template-columns:1fr;gap:2rem}
   .about-facts{grid-template-columns:1fr}
@@ -381,7 +472,7 @@ footer{margin-top:2.5rem;padding-bottom:5.5rem;text-align:center;color:var(--mut
         </div>
       </div>
       <div class="hero-photo">
-        <div class="slot portrait" id="heroPortrait"><div class="ph" aria-hidden="true"><b>Your photo</b><small>media/portrait.jpg</small></div></div>
+        <div class="slot portrait" id="heroPortrait"><div class="ph" aria-hidden="true"><b>Your photo</b><small>PARSA - Copy.png</small></div></div>
       </div>
     </div>
   </header>
@@ -389,7 +480,7 @@ footer{margin-top:2.5rem;padding-bottom:5.5rem;text-align:center;color:var(--mut
   <section class="about" id="about" aria-labelledby="about-h">
     <div class="wrap">
       <div class="head rv"><p class="sec-num">About</p><h2 id="about-h">Digital media student at the University of Canberra.</h2></div>
-      <p class="lede rv">I have a design background and hands-on experience across 3D modeling, texturing, character rigging and animation, 2D motion graphics, video editing, and interactive game design. I'm looking for roles in animation, game design, video editing, motion graphics, and 3D design.</p>
+      <p class="lede rv">I have a design background and practical experience across 3D modeling, texturing, character rigging and animation, 2D motion graphics, video editing, and interactive game design. I am looking for roles in animation, game design, video editing, motion graphics, and 3D design.</p>
       <dl class="about-facts rv">
         <div class="tools-row"><dt>Tools</dt><dd><ul class="tool-logos" id="toolLogos" aria-label="Tools"></ul></dd></div>
         <div><dt>Education</dt><dd>Bachelor of Digital Media<br>University of Canberra (WAM: 83)</dd></div>
@@ -408,7 +499,7 @@ footer{margin-top:2.5rem;padding-bottom:5.5rem;text-align:center;color:var(--mut
 
   <section class="stage" id="process" aria-labelledby="process-h">
     <div class="wrap">
-      <div class="head rv"><p class="sec-num">Pipeline</p><h2 id="process-h">How it's made. <span class="dim">Four steps behind every piece.</span></h2></div>
+      <div class="head rv"><p class="sec-num">Pipeline</p><h2 id="process-h">How it is made. <span class="dim">Four steps behind every piece.</span></h2></div>
       <p class="scroll-quote" data-word-reveal>Every frame is built with intent, from clean topology and expressive rigging to final composite, light and grade.</p>
       <ol class="steps">
         <li class="surface rv"><h3>Design &amp; Model</h3><p>Block out 3D characters and environments in Blender, or design 2D assets and branching narrative worlds.</p></li>
@@ -421,7 +512,7 @@ footer{margin-top:2.5rem;padding-bottom:5.5rem;text-align:center;color:var(--mut
 
   <section class="stage" id="contact" aria-labelledby="contact-h">
     <div class="wrap">
-      <div class="head rv"><p class="sec-num">Contact</p><h2 id="contact-h">Let's work together. <span class="dim">Roles, collaboration and enquiries.</span></h2></div>
+      <div class="head rv"><p class="sec-num">Contact</p><h2 id="contact-h">Let us work together. <span class="dim">Roles, collaboration and enquiries.</span></h2></div>
       <div class="surface contact rv">
         <p class="lead">Send me a message</p>
         <a class="mail" id="mailLink" href="mailto:parsadaneshpajouh2@gmail.com">parsadaneshpajouh2@gmail.com</a>
@@ -430,7 +521,7 @@ footer{margin-top:2.5rem;padding-bottom:5.5rem;text-align:center;color:var(--mut
           <ul class="links" id="socials"></ul>
         </div>
       </div>
-      <p class="credit">Modeled, textured, animated and edited by Parsa Danesh Pajouh. Pre-made rigs credited in project notes.</p>
+      <p class="credit">Modeled, textured, animated and edited by Parsa Danesh Pajouh. Third party rigs credited in project notes.</p>
       <footer>&copy; <span id="year"></span> Parsa Danesh Pajouh</footer>
     </div>
   </section>
@@ -467,140 +558,216 @@ const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&a
 const live = $('#live');
 const say = msg => { live.textContent = ''; setTimeout(() => { live.textContent = msg; }, 60); };
 
+function extractYouTubeId(input) {
+  if (!input) return '';
+  const s = String(input).trim();
+  const m = s.match(/(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/);
+  if (m) return m[1];
+  return /^[A-Za-z0-9_-]{11}$/.test(s) ? s : '';
+}
+
+function youtubeEmbedSrc(input, autoPlay = false) {
+  const id = extractYouTubeId(input);
+  if (!id) return '';
+  const params = autoPlay
+    ? `autoplay=1&controls=1&playsinline=1&rel=0&modestbranding=1`
+    : `autoplay=0&controls=1&playsinline=1&rel=0&modestbranding=1`;
+  return `https://www.youtube.com/embed/${id}?${params}`;
+}
+
+function videoCandidates(names, extra = []) {
+  const out = [];
+  const folders = ['', 'media/'];
+  const exts = ['.mp4', '.mkv', '.webm', '.mov'];
+  for (const f of folders) {
+    for (const n of names) {
+      for (const e of exts) out.push(f + n + e);
+    }
+  }
+  return [...new Set([...out, ...extra])];
+}
+
+function imageCandidates(names) {
+  const out = [];
+  const folders = ['', 'media/'];
+  const exts = ['.png', '.jpg', '.jpeg', '.webp'];
+  for (const f of folders) {
+    for (const n of names) {
+      if (/\.[a-z0-9]+$/i.test(n)) {
+        out.push(f + n);
+        if (n.includes(' ')) out.push(f + n.replace(/ /g, '%20'));
+      } else {
+        for (const e of exts) {
+          out.push(f + n + e);
+          if (n.includes(' ')) out.push(f + n.replace(/ /g, '%20') + e);
+        }
+      }
+    }
+  }
+  return [...new Set(out)];
+}
+
 /* ==================================================================
-   CONFIG: edit this part.
+   CONFIG
    ================================================================== */
 const EMAIL = 'parsadaneshpajouh2@gmail.com';
 const SOCIALS = [
   { label: 'LinkedIn', url: 'https://www.linkedin.com/in/parsa-d-72b518321/' }
 ];
 
+const PORTRAIT = {
+  srcs: imageCandidates(['PARSA - Copy.png', 'PARSA.png', 'Parsa.png', 'parsa.png', 'portrait.jpg']),
+  alt: 'Portrait of Parsa Danesh Pajouh'
+};
+
 const PROJECTS = [
   {
     title: 'Original 3D Character',
     tag: '3D',
-    kind: '3D character model, texture, rig & walk cycle',
+    kind: '3D character model, texture, rig and walk cycle',
     year: '2026',
-    role: '3D Modeler, Texture Artist, Rigger & Animator (Full Pipeline)',
-    text: 'An original hard-surface 3D robot character modeled, rigged and animated in Blender, and textured in Substance Painter, shown in a looping walk cycle.',
+    role: '3D Modeler, Texture Artist, Rigger and Animator',
+    fit: 'contain',
+    sampleBg: true,
+    text: 'An original hard surface 3D robot character modeled, rigged and animated from scratch in Blender and textured in Substance Painter, shown in a looping walk cycle.',
     details: [
-      'Modeled the hard-surface robot body, monitor head and articulated fingers from scratch in Blender',
-      'Textured worn brushed-steel, red metallic and emissive screen PBR materials in Adobe Substance Painter',
+      'Modeled the hard surface robot body, monitor head and articulated fingers from scratch in Blender',
+      'Textured worn brushed steel, red metallic and emissive screen materials in Adobe Substance Painter',
       'Built the armature and control rig in Blender so every mechanical joint and finger deforms cleanly',
       'Keyframed and rendered a seamless looping walk cycle demonstrating weight, balance and mechanical timing'
     ],
     tools: ['Blender', 'Substance Painter', 'Rigify'],
     media: {
       type: 'video',
-      sources: [
-        'media/U3278390_Walking.mp4',
-        'U3278390_Walking.mp4',
-        'media/U3278390_Walking.mkv',
-        'U3278390_Walking.mkv'
-      ]
+      sources: videoCandidates(['ROBOT', 'robot', 'Robot', 'U3278390_Walking'])
     }
   },
   {
-    title: '3D Cycle Animation 01',
+    title: 'Jump Cycle Animation',
     tag: '3D',
-    kind: '3D locomotion cycle · Animation only (Pre-made rig)',
+    kind: '3D action cycle · Animation only',
     year: '2026',
-    role: '3D Animator (Animation Only — Character & Rig Not Mine)',
-    text: 'First looping 3D character cycle keyframed in Blender on a pre-made rig — only the animation is mine, focused on weight, balance and stride timing.',
+    role: '3D Animator (Animation only, character and rig not mine)',
+    fit: 'contain',
+    text: 'A looping 3D jump cycle keyframed in Blender on an existing character rig. Only the animation is mine, focusing on anticipation, airborne arcs and landing impact.',
     details: [
-      'Credit note: Only the animation is my work; the 3D character model and rig were pre-made',
-      'Keyframed contact poses, passing positions and weight shifts in Blender',
-      'Polished cyclic F-curves in the Graph Editor for a seamless loop'
+      'Credit note: Only the animation is my work, while the 3D character model and rig were created by a third party',
+      'Keyframed clear anticipation, crouch compression, airborne extension and cushioned landing recovery',
+      'Polished timing, spacing and animation curve tangents in the Blender Graph Editor for a seamless loop'
     ],
     tools: ['Blender'],
-    media: { type: 'none' }
+    media: {
+      type: 'video',
+      sources: videoCandidates(['JUMP', 'Jump', 'jump'])
+    }
   },
   {
-    title: '3D Cycle Animation 02',
+    title: 'Run Cycle Animation',
     tag: '3D',
-    kind: '3D locomotion cycle · Animation only (Pre-made rig)',
+    kind: '3D locomotion cycle · Animation only',
     year: '2026',
-    role: '3D Animator (Animation Only — Character & Rig Not Mine)',
-    text: 'Second looping 3D character cycle in Blender on a pre-made rig — only the animation is mine, exploring higher-energy momentum and follow-through.',
+    role: '3D Animator (Animation only, character and rig not mine)',
+    fit: 'contain',
+    text: 'A looping 3D run cycle animated in Blender on an existing character rig. Only the animation is mine, exploring forward momentum, arm swing and overlapping action.',
     details: [
-      'Credit note: Only the animation is my work; the 3D character model and rig were pre-made',
-      'Focused on forward drive, arcs, overlapping action and secondary motion',
-      'Refined spacing and seamless loop tangents in the Blender Graph Editor'
+      'Credit note: Only the animation is my work, while the 3D character model and rig were created by a third party',
+      'Focused on forward drive, body lean, stride arcs and secondary motion across the torso and limbs',
+      'Refined spacing and cyclic curve tangents in the Blender Graph Editor for a clean repeatable loop'
     ],
     tools: ['Blender'],
-    media: { type: 'none' }
+    media: {
+      type: 'video',
+      sources: videoCandidates(['RUN', 'Run', 'run'])
+    }
   },
   {
-    title: '3D Cycle Animation 03',
+    title: 'Walk Cycle Animation',
     tag: '3D',
-    kind: '3D action cycle · Animation only (Pre-made rig)',
+    kind: '3D locomotion cycle · Animation only',
     year: '2026',
-    role: '3D Animator (Animation Only — Character & Rig Not Mine)',
-    text: 'Third looping 3D character cycle in Blender on a pre-made rig — only the animation is mine, pushing anticipation, airborne arcs and landing impact.',
+    role: '3D Animator (Animation only, character and rig not mine)',
+    fit: 'contain',
+    text: 'A looping 3D walk cycle keyframed in Blender on an existing character rig. Only the animation is mine, focused on weight shift, balance and natural stride timing.',
     details: [
-      'Credit note: Only the animation is my work; the 3D character model and rig were pre-made',
-      'Keyframed clear anticipation, expressive silhouette poses and cushioned recovery',
-      'Tuned timing and curve tangents in Blender for a clean, repeatable cycle'
+      'Credit note: Only the animation is my work, while the 3D character model and rig were created by a third party',
+      'Keyframed contact poses, down positions, passing poses and high points in Blender',
+      'Balanced hip rotation, shoulder counter rotation and foot roll in the Graph Editor'
     ],
     tools: ['Blender'],
-    media: { type: 'none' }
+    media: {
+      type: 'video',
+      sources: videoCandidates(['Walk', 'WALK', 'walk'])
+    }
   },
   {
     title: 'Nostalgia Room',
     tag: '3D',
-    kind: '3D environment & animation',
+    kind: '3D environment and animation',
     year: '2026',
-    role: '3D Modeler, Texture Artist & Animator',
+    role: '3D Modeler, Texture Artist and Animator',
     text: 'A 3D interior environment modeled, textured, lit and animated in Blender and Substance Painter exploring themes of memory and nostalgia.',
     details: [
-      'Modeled and dressed the 3D room environment and props in Blender',
+      'Modeled and dressed the 3D room environment, retro computer desk, shelves and props in Blender',
       'Textured surface details and crafted warm atmospheric lighting around themes of nostalgia',
-      'Animated camera motion and scene elements for the final render'
+      'Animated camera motion and scene elements for the final rendered sequence'
     ],
     tools: ['Blender', 'Substance Painter'],
-    media: { type: 'none' }
+    media: {
+      type: 'video',
+      sources: videoCandidates(['Nostalgia Room', 'NOSTALGIA ROOM', 'nostalgia room'])
+    }
   },
   {
     title: 'Believe in Yourself',
     tag: '2D & Motion',
-    kind: 'Mixed-media animated short',
+    kind: 'Mixed media animated short',
     year: '2026',
-    role: 'Character Designer, Animator & Editor',
-    text: 'A 2D animated character composited into live-action footage for a motivational monologue about self-belief and trying new things.',
+    role: 'Character Designer, Animator and Editor',
+    clickToPlay: true,
+    text: 'A 2D animated character composited into live action footage for a motivational monologue about self belief and trying new things.',
     details: [
       'Designed the 2D character artwork in Adobe Illustrator',
-      'Rigged and animated facial lip-sync and performance in Adobe Character Animator',
-      'Composited the 2D character into live-action footage in After Effects and edited in Premiere Pro'
+      'Rigged and animated facial lip sync and expressive gestures in Adobe Character Animator',
+      'Composited the 2D character with ground shadows into live action locations in After Effects and edited in Premiere Pro'
     ],
     tools: ['Illustrator', 'Character Animator', 'After Effects', 'Premiere Pro'],
-    media: { type: 'none' }
+    youtube: 'https://youtu.be/9E7lV67mCLU',
+    media: {
+      type: 'youtube',
+      id: 'https://youtu.be/9E7lV67mCLU'
+    }
   },
   {
     title: 'The Evolution of Pixel Art',
     tag: '2D & Motion',
-    kind: 'Vertical pixel-art animated short (9:16)',
+    kind: 'Vertical pixel art animated short (9:16)',
     year: '2026',
-    role: 'Animator & Video Editor',
+    role: 'Animator and Video Editor',
     vertical: true,
-    text: 'A vertical (9:16) pixel-art animated short tracing the history of the art form from its origins to the present day.',
+    fit: 'contain',
+    clickToPlay: true,
+    text: 'A vertical 9:16 pixel art animated short tracing the history of the art form from its origins to the present day, narrated with an AI voice over.',
     details: [
       'Formatted and framed specifically as a 9:16 vertical video',
-      'Created pixel-art sprites and era-by-era visual scenes in Adobe Photoshop',
-      'Animated and edited pacing, transitions and sound in Adobe Premiere Pro'
+      'Created pixel art visuals and era specific scenes in Adobe Photoshop',
+      'Animated and edited pacing, transitions, captions and AI voice over narration in Adobe Premiere Pro'
     ],
     tools: ['Photoshop', 'Premiere Pro'],
-    media: { type: 'none' }
+    media: {
+      type: 'video',
+      sources: videoCandidates(['PIXEL ART', 'Pixel Art', 'pixel art'])
+    }
   },
   {
     title: 'Last Night',
     tag: 'Interactive',
     kind: 'Interactive fiction game (itch.io)',
     year: '2026',
-    role: 'Narrative & Game Designer',
+    role: 'Narrative and Game Designer',
     text: 'A noir interactive fiction mystery game built with branching storylines in Twine and published on itch.io.',
     details: [
       'Designed branching storylines, player choices and mystery pacing in Twine',
-      'Built custom interactive logic, audio cues and atmospheric presentation',
+      'Built custom interactive logic, sound cues and atmospheric presentation',
       'Published as a playable web release on itch.io'
     ],
     tools: ['Twine'],
@@ -609,14 +776,13 @@ const PROJECTS = [
     media: {
       type: 'image',
       src: 'Cover.png',
-      fallbacks: ['media/Cover.png', 'cover.png', 'media/cover.png'],
-      alt: 'Cover artwork for Last Night showing a figure collapsed on a rain-slicked harbor dock at sunset beside Hangyun Warehouse'
+      fallbacks: imageCandidates(['Cover.png', 'Cover_2.png', 'cover.png']),
+      alt: 'Cover artwork for Last Night showing a figure on a harbor dock at sunset beside Hangyun Warehouse'
     }
   }
 ];
 
 const BACKDROPS = ['media/backdrop-1.jpg', 'media/backdrop-2.jpg', 'media/backdrop-3.jpg', 'media/backdrop-4.jpg'];
-const PORTRAIT = { src: 'media/portrait.jpg', alt: 'Portrait of Parsa Danesh Pajouh' };
 
 const LOGO = {
   blender: 'data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTI4IDEyOCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNjYuMzMyIDcwLjAzMmMuMjQtNC4yNDIgMi4zMjctNy45ODcgNS40ODUtMTAuNjM0IDMuMDk0LTIuNjAyIDcuMjQ4LTQuMTkzIDExLjgwOS00LjE5MyA0LjUzNyAwIDguNjkgMS41OSAxMS43OCA0LjE5MyAzLjE2MyAyLjY0NyA1LjIzNyA2LjM5MiA1LjQ4NSAxMC42MzQuMjQgNC4zNS0xLjUyMyA4LjQxLTQuNjA1IDExLjQxNy0zLjE1OCAzLjA1LTcuNjI3IDQuOTc3LTEyLjY2IDQuOTc3LTUuMDM3IDAtOS41MjYtMS45MTUtMTIuNjY0LTQuOTc3LTMuMDk0LTMuMDA2LTQuODUzLTcuMDQ0LTQuNjA2LTExLjM5N3ptMCAwIiBmaWxsPSIjMjM1Nzg1Ii8+PHBhdGggZD0iTTM5LjI0NSA3OS4wMDJjLjAyOCAxLjY2LjU2NCA0Ljg5IDEuMzYgNy40MDQgMS42ODIgNS4zMzYgNC41MzcgMTAuMjczIDguNDkgMTQuNTk5IDQuMDYyIDQuNDY1IDkuMDc0IDguMDU1IDE0Ljg1IDEwLjYxIDYuMDczIDIuNjcgMTIuNjY1IDQuMDM3IDE5LjUwNSA0LjAzNyA2Ljg0LS4wMDkgMTMuNDMyLTEuNCAxOS41MDQtNC4xMDIgNS43NzYtMi41ODIgMTAuNzktNi4xNjggMTQuODUtMTAuNjU3IDMuOTc0LTQuMzc0IDYuODItOS4zMDcgOC40OTEtMTQuNjQ3YTM3IDM3IDAgMDAxLjU5NS04LjE2M2MuMjA4LTIuNjkuMTItNS40MDUtLjI2My04LjEyYTM3LjUzNSAzNy41MzUgMCAwMC01LjQxNy0xNC43MTRjLTIuNTc0LTQuMTUtNS45MTYtNy43Ni05Ljg5LTEwLjgxM2wuMDEyLS4wMDQtMzkuOTU1LTMwLjUwNmMtLjAzNi0uMDI4LS4wNjgtLjA1Ni0uMTA0LS4wOC0yLjYxOS0yLjAwMi03LjA0NC0xLjk5NC05LjkxLjAwOC0yLjkxNCAyLjAzMS0zLjI1IDUuMzg1LS42NTYgNy40OTZsLS4wMTIuMDA4IDE2LjY4MiAxMy40ODQtNTAuNzg5LjA1MWgtLjA2OGMtNC4xOTcuMDA0LTguMjM5IDIuNzM5LTkuMDMgNi4yMTMtLjgyIDMuNTIxIDIuMDM1IDYuNDYgNi40MTIgNi40NmwtLjAwOC4wMTYgMjUuNzM2LS4wNDhMNC41OCA4Mi41MjRjLS4wNTYuMDQ0LS4xMi4wODgtLjE3Ni4xMzJDLjA2OSA4NS45NS0xLjMzIDkxLjQ0NiAxLjQgOTQuOWMyLjc3OCAzLjUyMiA4LjY2NiAzLjU0NiAxMy4wNDcuMDJMMzkuNTA1IDc0LjUxcy0uMzY4IDIuNzU4LS4zMzYgNC4zOTd6bTY0LjU2IDkuMjE5Yy01LjE2OCA1LjIyOC0xMi40MTYgOC4yMS0yMC4yMjcgOC4yMS03LjgzMS4wMTItMTUuMDc5LTIuOTE4LTIwLjI0OC04LjE0Mi0yLjUyNi0yLjU1OS00LjM3Ny01LjQ3My01LjUyOC04LjU5MWEyMi4yMDIgMjIuMjAyIDAgMDEtMS4yNzEtOS42MDIgMjIuNDQ2IDIyLjQ0NiAwIDAxMi43NzgtOS4wMzljMS41MDctMi43MTQgMy41OS01LjE4IDYuMTQtNy4yNjcgNS4wMzMtNC4wNTggMTEuNDItNi4yOCAxOC4xLTYuMjggNi43MDktLjAwOCAxMy4wOTcgMi4xNzQgMTguMTMgNi4yMzYgMi41NSAyLjA3NSA0LjYyNSA0LjUyOSA2LjE0IDcuMjQzYTIyLjMwMiAyMi4zMDIgMCAwMTIuNzc0IDkuMDQzIDIyLjMxMyAyMi4zMTMgMCAwMS0xLjI3MSA5LjU5OGMtMS4xNDcgMy4xNDItMy4wMDIgNi4wNTYtNS41MzMgOC42MTV6bTAgMCIgZmlsbD0iI2U4NzUwMCIvPjwvc3ZnPg==',
@@ -652,12 +818,16 @@ toolList.innerHTML = TOOLS.map(t => `<li class="noimg"><span class="mark" aria-h
 });
 
 function getVideoSources(m) {
-  if (!m || m.type !== 'video') return [];
+  if (!m) return [];
   if (Array.isArray(m.sources) && m.sources.length) return m.sources;
-  return m.src ? [m.src] : [];
+  return m.src && m.type === 'video' ? [m.src] : [];
 }
 
-/* Soft, seamless dithered shadow behind the left text column (zero seam lines) */
+function getYouTubeId(p) {
+  const m = p.media || {};
+  return extractYouTubeId(p.youtube || (m.type === 'youtube' ? m.id : ''));
+}
+
 function makeDitheredShadowURL() {
   const w = 1024, h = 64;
   const c = document.createElement('canvas');
@@ -703,33 +873,94 @@ function fillSlot(el, srcs, alt, onLoad) {
   img.src = list[0];
 }
 
-function fillVideoSlot(el, sources, poster, onLoad) {
+function fillYouTubeSlot(el, ytId, title, onLoad) {
+  if (!el || !ytId) return;
+  /* Click-to-play: autoplay=0 so it waits for the viewer to click and plays with sound */
+  const src = youtubeEmbedSrc(ytId, false);
+  if (!src) return;
+  const ifr = document.createElement('iframe');
+  ifr.src = src;
+  ifr.title = title || 'Project video';
+  ifr.loading = 'lazy';
+  ifr.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+  ifr.allowFullscreen = true;
+  el.appendChild(ifr);
+  el.classList.add('has');
+  onLoad && onLoad(ifr);
+}
+
+function fillVideoSlot(el, sources, poster, onLoad, projIdx) {
   if (!el || !sources || !sources.length) return;
+  const proj = projIdx != null ? PROJECTS[projIdx] : null;
+  const isClickToPlay = !!(proj && proj.clickToPlay);
   const v = document.createElement('video');
   if (poster) v.poster = poster;
-  v.muted = true; v.loop = true; v.playsInline = true; v.autoplay = true; v.preload = 'metadata';
+  v.playsInline = true;
+  v.preload = 'metadata';
   v.disablePictureInPicture = true;
-  v.setAttribute('controlsList', 'nodownload nofullscreen noremoteplayback');
-  v.setAttribute('aria-hidden', 'true');
+  v.setAttribute('controlsList', 'nodownload noremoteplayback');
+
+  if (isClickToPlay) {
+    v.muted = false;
+    v.loop = false;
+    v.autoplay = false;
+    v.classList.add('interactive-video');
+    v.setAttribute('aria-label', proj ? proj.title : 'Project video');
+  } else {
+    v.muted = true;
+    v.loop = true;
+    v.autoplay = true;
+    v.setAttribute('aria-hidden', 'true');
+  }
+
   sources.forEach(src => {
     const s = document.createElement('source');
     s.src = src;
     v.appendChild(s);
   });
+
   v.addEventListener('loadeddata', () => {
-    try {
-      const sc = document.createElement('canvas');
-      sc.width = 4; sc.height = 4;
-      const sctx = sc.getContext('2d');
-      sctx.drawImage(v, 0, 0, 4, 4);
-      const p = sctx.getImageData(1, 1, 1, 1).data;
-      if (p[3] > 200) {
-        const card = el.closest('.card');
-        if (card) card.style.setProperty('--vid-bg', `rgb(${p[0]},${p[1]},${p[2]})`);
-      }
-    } catch (e) {}
-    el.appendChild(v); el.classList.add('has');
-    v.play().catch(() => {});
+    if (proj && v.currentSrc) {
+      proj.resolvedVideo = v.currentSrc;
+    }
+    /* Only sample background color when explicitly enabled (Original 3D Character) */
+    if (proj && proj.sampleBg) {
+      try {
+        const sc = document.createElement('canvas');
+        sc.width = 4; sc.height = 4;
+        const sctx = sc.getContext('2d');
+        sctx.drawImage(v, 0, 0, 4, 4);
+        const p = sctx.getImageData(1, 1, 1, 1).data;
+        if (p[3] > 200) {
+          const card = el.closest('.card');
+          if (card) card.style.setProperty('--vid-bg', `rgb(${p[0]},${p[1]},${p[2]})`);
+        }
+      } catch (e) {}
+    }
+
+    el.appendChild(v);
+    el.classList.add('has');
+
+    if (isClickToPlay) {
+      /* Seek slightly forward so a clear preview frame is shown while paused */
+      try { v.currentTime = 0.8; } catch (e) {}
+      const gate = document.createElement('button');
+      gate.type = 'button';
+      gate.className = 'play-gate';
+      gate.setAttribute('aria-label', `Play ${proj ? proj.title : 'video'} with audio`);
+      gate.innerHTML = `<span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5-9-5.5z"/></svg>Click to play with audio</span>`;
+      gate.addEventListener('click', e => {
+        e.stopPropagation();
+        gate.remove();
+        v.controls = true;
+        v.muted = false;
+        try { v.currentTime = 0; } catch (err) {}
+        v.play().catch(() => {});
+      });
+      el.appendChild(gate);
+    } else {
+      v.play().catch(() => {});
+    }
     onLoad && onLoad(v);
   }, { once: true });
   v.load();
@@ -737,20 +968,24 @@ function fillVideoSlot(el, sources, poster, onLoad) {
 
 function mediaHTML(p, i) {
   const m = p.media || {}, t = esc(p.title);
+  const ytId = getYouTubeId(p);
+  if (ytId) {
+    return `<iframe src="${esc(youtubeEmbedSrc(ytId, false))}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen title="${t}"></iframe>`;
+  }
   if (m.type === 'video') {
-    const srcs = getVideoSources(m);
-    const sourceTags = srcs.map(s => `<source src="${esc(s)}">`).join('');
-    return `<video ${m.poster ? `poster="${esc(m.poster)}"` : ''} controls autoplay loop playsinline preload="metadata" aria-label="${t}">${sourceTags}${m.captions ? `<track kind="captions" src="${esc(m.captions)}" srclang="en" label="English" default>` : ''}</video>`;
+    const srcs = p.resolvedVideo ? [p.resolvedVideo, ...getVideoSources(m)] : getVideoSources(m);
+    const uniqueSrcs = [...new Set(srcs)];
+    const sourceTags = uniqueSrcs.map(s => `<source src="${esc(s)}">`).join('');
+    const autoAttr = p.clickToPlay ? '' : 'autoplay loop ';
+    return `<video ${m.poster ? `poster="${esc(m.poster)}"` : ''} controls ${autoAttr}playsinline preload="metadata" aria-label="${t}">${sourceTags}${m.captions ? `<track kind="captions" src="${esc(m.captions)}" srclang="en" label="English" default>` : ''}</video>`;
   }
   if (m.type === 'vimeo') return `<iframe src="https://player.vimeo.com/video/${esc(m.id)}" loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen title="${t}"></iframe>`;
-  if (m.type === 'youtube') return `<iframe src="https://www.youtube-nocookie.com/embed/${esc(m.id)}" loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen title="${t}"></iframe>`;
   if (m.type === 'image') {
-    const fb = Array.isArray(m.fallbacks) && m.fallbacks.length ? ` onerror="this.onerror=null;this.src='${esc(m.fallbacks[0])}'"` : '';
-    return `<img src="${esc(m.src)}" alt="${esc(m.alt || p.title)}" loading="lazy"${fb}>`;
+    const allImgs = [m.src, ...(m.fallbacks || [])].filter(Boolean);
+    return `<div class="slot cover" data-srcs="${esc(allImgs.join('|'))}" data-alt="${esc(m.alt || p.title)}"></div>`;
   }
   const cover = p.cover || `media/project-${i + 1}.jpg`;
-  const hint = p.link ? `Add ${esc(cover)} (or use the link to play)` : p.vertical ? `Add 9:16 vertical video or ${esc(cover)}` : `Add ${esc(cover)} or a video`;
-  return `<div class="slot cover" data-src="${esc(cover)}" data-alt="${t}"><canvas class="reel-preview" data-idx="${i}" aria-hidden="true"></canvas><div class="empty" aria-hidden="true"><b>${t}</b> <span>${hint}</span></div></div>`;
+  return `<div class="slot cover" data-src="${esc(cover)}" data-alt="${t}"><canvas class="reel-preview" data-idx="${i}" aria-hidden="true"></canvas><div class="empty" aria-hidden="true"><b>${t}</b></div></div>`;
 }
 
 function initCovers(scope) {
@@ -759,11 +994,18 @@ function initCovers(scope) {
       const e = el.querySelector('.empty'); e && e.remove();
       const c = el.querySelector('canvas.reel-preview'); c && c.remove();
     };
+    const pIdx = el.dataset.proj != null ? +el.dataset.proj : null;
+    if (el.dataset.yt) {
+      fillYouTubeSlot(el, el.dataset.yt, el.dataset.alt, cleanUp);
+      return;
+    }
     if (el.dataset.videos) {
-      fillVideoSlot(el, el.dataset.videos.split('|').filter(Boolean), '', cleanUp);
+      fillVideoSlot(el, el.dataset.videos.split('|').filter(Boolean), '', cleanUp, pIdx);
     }
     const imgSrcs = el.dataset.srcs ? el.dataset.srcs.split('|').filter(Boolean) : el.dataset.src;
-    fillSlot(el, imgSrcs, el.dataset.alt, cleanUp);
+    if (imgSrcs && (!el.dataset.videos || el.dataset.hasimg === '1')) {
+      fillSlot(el, imgSrcs, el.dataset.alt, cleanUp);
+    }
   });
 }
 
@@ -780,13 +1022,17 @@ function coversFor(p, i) {
 }
 projectsEl.innerHTML = PROJECTS.map((p, i) => {
   const m = p.media || {};
+  const ytId = getYouTubeId(p);
   const srcs = getVideoSources(m);
   const cList = coversFor(p, i);
+  const ytAttr = ytId ? ` data-yt="${esc(ytId)}"` : '';
   const vAttr = srcs.length ? ` data-videos="${esc(srcs.join('|'))}"` : '';
+  const hasImgAttr = m.type === 'image' || p.cover ? ' data-hasimg="1"' : '';
+  const fitAttr = p.fit ? ` data-fit="${esc(p.fit)}"` : '';
   const emptyLabel = srcs.length ? srcs[0] : cList[0];
   return `
-  <article class="card rv" style="--d:${(i % 2) * .08}s" data-tag="${esc(p.tag || '')}" aria-labelledby="proj-${i}">
-    <div class="slot cover" data-srcs="${esc(cList.join('|'))}"${vAttr} data-alt=""><canvas class="reel-preview" data-idx="${i}" aria-hidden="true"></canvas><div class="empty" aria-hidden="true">Add ${esc(emptyLabel)}</div></div>
+  <article class="card rv"${fitAttr} style="--d:${(i % 2) * .08}s" data-tag="${esc(p.tag || '')}" aria-labelledby="proj-${i}">
+    <div class="slot cover" data-proj="${i}"${ytAttr} data-srcs="${esc(cList.join('|'))}"${vAttr}${hasImgAttr} data-alt="${esc(p.title)}"><canvas class="reel-preview" data-idx="${i}" aria-hidden="true"></canvas><div class="empty" aria-hidden="true">Add ${esc(emptyLabel)}</div></div>
     <div class="shade" aria-hidden="true"></div>
     <div class="card-text">
       <p class="kicker">${esc(p.kind)} &middot; ${esc(p.year)}</p>
@@ -801,7 +1047,7 @@ projectsEl.innerHTML = PROJECTS.map((p, i) => {
   </article>`;
 }).join('');
 projectsEl.addEventListener('click', e => {
-  if (e.target.closest('a')) return;
+  if (e.target.closest('a,iframe,.play-gate,video.interactive-video')) return;
   const card = e.target.closest('.card');
   if (card && !e.target.closest('button')) card.querySelector('.more').click();
 });
@@ -841,7 +1087,7 @@ if (tags.length > 1) {
 } else filterEl.hidden = true;
 applyFilter('All');
 
-fillSlot($('#heroPortrait'), PORTRAIT.src, PORTRAIT.alt);
+fillSlot($('#heroPortrait'), PORTRAIT.srcs, PORTRAIT.alt);
 
 /* ---------- DIALOGS ---------- */
 let opener = null;
@@ -1161,7 +1407,7 @@ document.fonts && document.fonts.ready.then(() => { measure(); refractAll(); });
 measure(); refractAll();
 placeAll(true);
 
-/* ---------- ORIGINAL VOLUMETRIC WEBGL LIGHT (WITH PRECISION-SAFE HASH) ---------- */
+/* ---------- ORIGINAL VOLUMETRIC WEBGL LIGHT ---------- */
 const DIALS = { grain: 1, vignette: 1, motion: 1, glow: 1, rays: 1 };
 
 const sm = (a, b, x) => { const t = Math.min(Math.max((x - a) / (b - a), 0), 1); return t * t * (3 - 2 * t); };
