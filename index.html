@@ -368,53 +368,42 @@ html.calm .card:hover .more i,html.calm .more:focus-visible i{transform:none}
 .frame.vertical{max-width:340px;margin-inline:auto;border-radius:22px;background:#0b0c0f;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
 .frame.vertical video,.frame.vertical img,.frame.vertical iframe,.frame.vertical .slot.cover{aspect-ratio:9/16;max-height:72vh;width:100%;object-fit:contain;background:#05070a}
 
-/* ---------- PROCESS (ALIGNED TO PORTFOLIO) & CONTACT ---------- */
+/* ---------- PROJECT APPROACHES (PROCESS) & CONTACT ---------- */
 .scroll-quote{font:600 clamp(1.3rem,2.4vw,1.85rem)/1.36 var(--font);letter-spacing:-.02em;max-width:58rem;margin:0 0 2.2rem;text-shadow:0 0 30px rgba(0,0,0,.55)}
 .r-word{color:var(--dim);transition:color .25s ease,text-shadow .25s ease;display:inline-block;margin-right:.24em}
 .r-word.lit{color:var(--paper);text-shadow:0 0 20px rgba(226,174,100,.18)}
 .r-word.accent.lit{color:var(--accent)}
 html.calm .r-word{transition:none}
 
-.steps{
+.approaches{
   list-style:none;
   margin:0;
   padding:0;
-  counter-reset:s;
   display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
+  grid-template-columns:repeat(3,minmax(0,1fr));
   gap:1.25rem;
   align-items:stretch;
 }
-.steps li{
-  counter-increment:s;
+.approaches > li{
   display:flex;
   flex-direction:column;
   justify-content:flex-start;
-  padding:1.75rem 1.6rem;
+  padding:1.75rem 1.65rem;
   height:100%;
 }
-.steps li::before{
-  content:"0" counter(s);
-  content:"0" counter(s) / "";
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  width:max-content;
-  padding:.28rem .75rem;
-  border-radius:999px;
-  background:rgba(226,174,100,.14);
-  box-shadow:inset 0 0 0 1px rgba(226,174,100,.32);
-  font:700 .85rem/1.1 var(--font);
+.approach-type{
+  margin:0 0 .45rem;
+  font:600 .8rem/1.2 var(--font);
   letter-spacing:.12em;
+  text-transform:uppercase;
   color:var(--gold);
-  margin-bottom:1.25rem;
 }
-.steps li h3{
+.approaches h3{
   margin:0 0 .65rem;
   font-size:1.35rem;
   line-height:1.2;
 }
-.steps li p{
+.approaches p{
   margin:0 0 1.35rem;
   color:var(--soft);
   font-size:1rem;
@@ -422,19 +411,20 @@ html.calm .r-word{transition:none}
   flex:1;
 }
 .step-tools{
+  list-style:none;
+  padding:1rem 0 0;
+  margin:auto 0 0;
   display:flex;
   flex-wrap:wrap;
-  gap:.4rem;
-  margin-top:auto;
-  padding-top:1rem;
+  gap:.45rem;
   border-top:1px solid rgba(255,255,255,.1);
 }
-.step-tools span{
+.step-tools li{
   display:inline-flex;
   align-items:center;
-  padding:.2rem .65rem;
+  padding:.22rem .7rem;
   border-radius:999px;
-  font:600 .76rem/1.2 var(--font);
+  font:600 .78rem/1.2 var(--font);
   color:var(--paper);
   background:rgba(255,255,255,.08);
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);
@@ -482,7 +472,7 @@ footer{margin-top:2.5rem;padding-bottom:5.5rem;text-align:center;color:var(--mut
   .btn.primary{border:2px solid Highlight}
 }
 @media (max-width:1050px){
-  .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .approaches{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:800px){
   .cards{grid-template-columns:1fr}
@@ -499,7 +489,7 @@ footer{margin-top:2.5rem;padding-bottom:5.5rem;text-align:center;color:var(--mut
   .nav{width:calc(100% - 1.2rem);justify-content:space-between}
   .nav a{padding:.3rem .5rem;font-size:.95rem}
   .nav .brand{padding-inline:.65rem;font-size:1rem}
-  .steps{grid-template-columns:1fr}
+  .approaches{grid-template-columns:1fr}
   .case-foot .btn{flex:1}
 }
 </style>
@@ -562,30 +552,46 @@ footer{margin-top:2.5rem;padding-bottom:5.5rem;text-align:center;color:var(--mut
 
   <section class="stage" id="process" aria-labelledby="process-h">
     <div class="wrap">
-      <div class="head rv"><p class="sec-num">Process</p><h2 id="process-h">How the portfolio is built. <span class="dim">Four workflows behind my 3D, 2D and interactive projects.</span></h2></div>
-      <p class="scroll-quote" data-word-reveal>Every project is built with intent, from hard surface modeling, PBR texturing and rigging to keyframed cycles, compositing and interactive storytelling.</p>
-      <ol class="steps">
+      <div class="head rv"><p class="sec-num">Process &amp; Approaches</p><h2 id="process-h">Different projects, different workflows. <span class="dim">Each piece uses a custom approach tailored to its medium.</span></h2></div>
+      <p class="scroll-quote" data-word-reveal>Every project has its own workflow, from building an original 3D robot from scratch to animating locomotion cycles, compositing 2D characters and designing branching games.</p>
+      <ul class="approaches">
         <li class="surface rv">
-          <h3>3D Modeling &amp; Texturing</h3>
-          <p>Model original hard surface characters and nostalgic 3D interior environments in Blender, then paint worn metallic and PBR surface materials in Substance Painter.</p>
-          <div class="step-tools" aria-label="Step 1 tools"><span>Blender</span><span>Substance Painter</span></div>
+          <p class="approach-type">Full 3D Character Pipeline</p>
+          <h3>Original 3D Character</h3>
+          <p>Built completely from scratch: hard surface modeling in Blender, PBR metallic and emissive texturing in Substance Painter, custom armature and Rigify rigging, and keyframed walk cycle animation.</p>
+          <ul class="step-tools" aria-label="Original 3D Character tools"><li>Blender</li><li>Substance Painter</li><li>Rigify</li></ul>
         </li>
-        <li class="surface rv" style="--d:.08s">
-          <h3>Rigging &amp; 3D Cycles</h3>
-          <p>Build armatures, mechanical joints and control rigs in Blender, then keyframe seamless walk, run and jump locomotion cycles polished in the Graph Editor.</p>
-          <div class="step-tools" aria-label="Step 2 tools"><span>Blender</span><span>Rigify</span></div>
+        <li class="surface rv" style="--d:.06s">
+          <p class="approach-type">3D Body Mechanics</p>
+          <h3>Walk, Run &amp; Jump Cycles</h3>
+          <p>Pure character animation studies on existing third party rigs in Blender, focusing on weight shift, anticipation, stride arcs, overlapping action and seamless Graph Editor curves.</p>
+          <ul class="step-tools" aria-label="Cycle animation tools"><li>Blender</li><li>Graph Editor</li></ul>
         </li>
-        <li class="surface rv" style="--d:.16s">
-          <h3>2D &amp; Motion Composite</h3>
-          <p>Design 2D characters and pixel art scenes in Illustrator and Photoshop, rig lip sync in Character Animator, and composite into live action in After Effects and Premiere Pro.</p>
-          <div class="step-tools" aria-label="Step 3 tools"><span>After Effects</span><span>Premiere Pro</span><span>Illustrator</span><span>Photoshop</span></div>
+        <li class="surface rv" style="--d:.12s">
+          <p class="approach-type">3D Environment &amp; Lighting</p>
+          <h3>Nostalgia Room</h3>
+          <p>3D interior scene creation in Blender, combining custom room and retro prop modeling with warm atmospheric lighting, surface shading and animated camera movement.</p>
+          <ul class="step-tools" aria-label="Nostalgia Room tools"><li>Blender</li></ul>
+        </li>
+        <li class="surface rv" style="--d:.18s">
+          <p class="approach-type">2D &amp; Live Action Composite</p>
+          <h3>Believe in Yourself</h3>
+          <p>Mixed media production: 2D vector character design in Illustrator, facial lip sync and performance rigging in Character Animator, live action tracking and shadow compositing in After Effects, and final edit in Premiere Pro.</p>
+          <ul class="step-tools" aria-label="Believe in Yourself tools"><li>Illustrator</li><li>Character Animator</li><li>After Effects</li><li>Premiere Pro</li></ul>
         </li>
         <li class="surface rv" style="--d:.24s">
-          <h3>Interactive Narrative</h3>
-          <p>Write branching mystery storylines, design player choices and build atmospheric playable web fiction in Twine published directly on itch.io.</p>
-          <div class="step-tools" aria-label="Step 4 tools"><span>Twine</span><span>itch.io</span></div>
+          <p class="approach-type">9:16 Motion &amp; Video Editing</p>
+          <h3>The Evolution of Pixel Art</h3>
+          <p>Vertical short form storytelling: era specific pixel art visuals created in Photoshop, assembled with AI voice over narration, captions, transitions and pacing in Premiere Pro.</p>
+          <ul class="step-tools" aria-label="Evolution of Pixel Art tools"><li>Photoshop</li><li>Premiere Pro</li></ul>
         </li>
-      </ol>
+        <li class="surface rv" style="--d:.30s">
+          <p class="approach-type">Interactive Fiction Game</p>
+          <h3>Last Night</h3>
+          <p>Narrative game design: branching mystery storylines, player choice consequences, custom interactive logic and atmospheric presentation built in Twine and published on itch.io.</p>
+          <ul class="step-tools" aria-label="Last Night tools"><li>Twine</li><li>itch.io</li></ul>
+        </li>
+      </ul>
     </div>
   </section>
 
@@ -791,14 +797,14 @@ const PROJECTS = [
     tag: '3D',
     kind: '3D environment and animation',
     year: '2026',
-    role: '3D Modeler, Texture Artist and Animator',
-    text: 'A 3D interior environment modeled, textured, lit and animated in Blender and Substance Painter exploring themes of memory and nostalgia.',
+    role: '3D Modeler and Animator',
+    text: 'A 3D interior environment modeled, lit and animated in Blender exploring themes of memory and nostalgia.',
     details: [
       'Modeled and dressed the 3D room environment, retro computer desk, shelves and props in Blender',
-      'Textured surface details and crafted warm atmospheric lighting around themes of nostalgia',
+      'Crafted warm atmospheric lighting and surface materials around themes of nostalgia',
       'Animated camera motion and scene elements for the final rendered sequence'
     ],
-    tools: ['Blender', 'Substance Painter'],
+    tools: ['Blender'],
     media: {
       type: 'video',
       sources: videoCandidates(['Nostalgia Room.mp4', 'Nostalgia Room', 'NOSTALGIA ROOM', 'nostalgia room'])
@@ -1447,7 +1453,7 @@ if (wantRefract) new ResizeObserver(refractAll).observe(document.body);
 /* ---------- SCROLL & WORD REVEAL ---------- */
 const quoteEl = $('[data-word-reveal]');
 if (quoteEl) {
-  const accentSet = new Set(['intent,', 'modeling,', 'texturing', 'rigging', 'keyframed', 'cycles,', 'compositing', 'storytelling.']);
+  const accentSet = new Set(['workflow,', 'original', 'robot', 'locomotion', 'cycles,', 'compositing', 'branching', 'games.']);
   quoteEl.innerHTML = quoteEl.textContent.trim().split(/\s+/).map(w =>
     `<span class="r-word${accentSet.has(w.toLowerCase()) ? ' accent' : ''}">${esc(w)}</span>`).join(' ');
 }
