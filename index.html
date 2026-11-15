@@ -20,6 +20,7 @@
   --soft:#d2d2d7;
   --muted:#a1a1a6;
   --accent:#e2ae64;
+  --gold:#f3c16f;
   --link:#2997ff;
   --blue:#0071e3;
   --focus:#ffd479;
@@ -114,7 +115,8 @@ html[data-bg="off"] #bg,html[data-bg="off"] .backdrops{display:none}
   transform:scale(var(--s,1));transition:color .3s,transform .5s var(--spring)}
 .nav.live a{transition:color .3s,transform .16s ease-out}
 .nav a:hover,.nav a[aria-current="true"]{color:#fff}
-.nav .brand{padding-inline:1.15rem;font-size:1.15rem;font-weight:700;color:var(--paper)}
+.nav .brand{padding-inline:1.15rem;font-size:1.15rem;font-weight:700;color:var(--gold);text-shadow:0 0 18px rgba(243,193,111,.28)}
+.nav .brand:hover,.nav .brand[aria-current="true"]{color:var(--focus)}
 .nav .hl{position:absolute;left:0;top:0;width:0;height:0;border-radius:999px;pointer-events:none;z-index:1;opacity:0;
   background-image:linear-gradient(160deg,rgba(255,255,255,.34),rgba(255,255,255,.12));
   box-shadow:inset 0 1px 0 rgba(255,255,255,.6),inset 0 0 0 1px rgba(255,255,255,.2),0 6px 18px rgba(0,0,0,.35);
@@ -128,10 +130,11 @@ html.calm h1,html.calm .hero-photo,html.calm .eyebrow,html.calm .sub,html.calm .
 
 /* ---------- TYPOGRAPHY ---------- */
 h1{font:700 clamp(3.5rem,8vw,6.5rem)/.94 var(--font);letter-spacing:-.045em;margin:0 0 1.15rem;animation:rise .8s .18s backwards}
+h1 .first{color:var(--gold);text-shadow:0 0 34px rgba(226,174,100,.28),0 0 30px rgba(0,0,0,.55)}
 h1 .last{display:block;margin-top:.12em;font-size:.58em;line-height:1.04;letter-spacing:-.035em;color:#b0b0b6}
 h2{font:700 clamp(2.3rem,5.2vw,4.25rem)/1.05 var(--font);letter-spacing:-.035em;margin:0}
 h2 .dim{display:block;margin-top:.25em;color:#b0b0b6}
-h3{font:700 1.5rem/1.2 var(--font);letter-spacing:-.015em;margin:0 0 .6rem}
+h3{font:700 1.35rem/1.22 var(--font);letter-spacing:-.015em;margin:0 0 .55rem}
 .eyebrow{font:600 .85rem/1.2 var(--font);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 .75rem;animation:rise .8s .1s backwards}
 .sub{font:600 clamp(1.3rem,2.2vw,1.65rem)/1.28 var(--font);letter-spacing:-.015em;color:var(--paper);max-width:32rem;margin:0 0 1.5rem;animation:rise .8s .26s backwards}
 h1,h2,.sub{text-shadow:0 0 30px rgba(0,0,0,.55)}
@@ -365,17 +368,77 @@ html.calm .card:hover .more i,html.calm .more:focus-visible i{transform:none}
 .frame.vertical{max-width:340px;margin-inline:auto;border-radius:22px;background:#0b0c0f;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
 .frame.vertical video,.frame.vertical img,.frame.vertical iframe,.frame.vertical .slot.cover{aspect-ratio:9/16;max-height:72vh;width:100%;object-fit:contain;background:#05070a}
 
-/* ---------- PROCESS & CONTACT ---------- */
-.scroll-quote{font:600 clamp(1.35rem,2.6vw,2rem)/1.32 var(--font);letter-spacing:-.02em;max-width:46rem;margin:0 0 2.2rem;text-shadow:0 0 30px rgba(0,0,0,.55)}
+/* ---------- PROCESS (ALIGNED TO PORTFOLIO) & CONTACT ---------- */
+.scroll-quote{font:600 clamp(1.3rem,2.4vw,1.85rem)/1.36 var(--font);letter-spacing:-.02em;max-width:58rem;margin:0 0 2.2rem;text-shadow:0 0 30px rgba(0,0,0,.55)}
 .r-word{color:var(--dim);transition:color .25s ease,text-shadow .25s ease;display:inline-block;margin-right:.24em}
 .r-word.lit{color:var(--paper);text-shadow:0 0 20px rgba(226,174,100,.18)}
 .r-word.accent.lit{color:var(--accent)}
 html.calm .r-word{transition:none}
 
-.steps{list-style:none;margin:0;padding:0;counter-reset:s;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.1rem}
-.steps li{counter-increment:s;padding:1.7rem 1.6rem 1.9rem}
-.steps li::before{content:counter(s);content:counter(s) / "";display:block;font:700 3rem/1 var(--font);letter-spacing:-.04em;color:var(--accent);margin-bottom:2rem}
-.steps p{margin:0;color:var(--soft)}
+.steps{
+  list-style:none;
+  margin:0;
+  padding:0;
+  counter-reset:s;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:1.25rem;
+  align-items:stretch;
+}
+.steps li{
+  counter-increment:s;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  padding:1.75rem 1.6rem;
+  height:100%;
+}
+.steps li::before{
+  content:"0" counter(s);
+  content:"0" counter(s) / "";
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:max-content;
+  padding:.28rem .75rem;
+  border-radius:999px;
+  background:rgba(226,174,100,.14);
+  box-shadow:inset 0 0 0 1px rgba(226,174,100,.32);
+  font:700 .85rem/1.1 var(--font);
+  letter-spacing:.12em;
+  color:var(--gold);
+  margin-bottom:1.25rem;
+}
+.steps li h3{
+  margin:0 0 .65rem;
+  font-size:1.35rem;
+  line-height:1.2;
+}
+.steps li p{
+  margin:0 0 1.35rem;
+  color:var(--soft);
+  font-size:1rem;
+  line-height:1.55;
+  flex:1;
+}
+.step-tools{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.4rem;
+  margin-top:auto;
+  padding-top:1rem;
+  border-top:1px solid rgba(255,255,255,.1);
+}
+.step-tools span{
+  display:inline-flex;
+  align-items:center;
+  padding:.2rem .65rem;
+  border-radius:999px;
+  font:600 .76rem/1.2 var(--font);
+  color:var(--paper);
+  background:rgba(255,255,255,.08);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);
+}
 
 .contact{text-align:center;padding:clamp(2.2rem,6vw,4.5rem) 1.5rem}
 .contact .lead{margin:0 0 1.2rem;color:var(--soft)}
@@ -418,7 +481,7 @@ footer{margin-top:2.5rem;padding-bottom:5.5rem;text-align:center;color:var(--mut
   .seg .thumb,.nav .hl{outline:2px solid Highlight}
   .btn.primary{border:2px solid Highlight}
 }
-@media (max-width:1000px){
+@media (max-width:1050px){
   .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:800px){
@@ -435,7 +498,7 @@ footer{margin-top:2.5rem;padding-bottom:5.5rem;text-align:center;color:var(--mut
   .portrait{max-width:11rem}
   .nav{width:calc(100% - 1.2rem);justify-content:space-between}
   .nav a{padding:.3rem .5rem;font-size:.95rem}
-  .nav .brand{display:none}
+  .nav .brand{padding-inline:.65rem;font-size:1rem}
   .steps{grid-template-columns:1fr}
   .case-foot .btn{flex:1}
 }
@@ -464,7 +527,7 @@ footer{margin-top:2.5rem;padding-bottom:5.5rem;text-align:center;color:var(--mut
     <div class="wrap">
       <div class="hero-text">
         <p class="eyebrow">Animator &amp; 3D Artist</p>
-        <h1>Parsa <span class="last">Danesh Pajouh</span></h1>
+        <h1><span class="first">Parsa</span> <span class="last">Danesh Pajouh</span></h1>
         <p class="sub">Characters, worlds and the motion between them.</p>
         <div class="hero-cta">
           <a class="btn primary" href="#work">View work</a>
@@ -499,13 +562,29 @@ footer{margin-top:2.5rem;padding-bottom:5.5rem;text-align:center;color:var(--mut
 
   <section class="stage" id="process" aria-labelledby="process-h">
     <div class="wrap">
-      <div class="head rv"><p class="sec-num">Pipeline</p><h2 id="process-h">How it is made. <span class="dim">Four steps behind every piece.</span></h2></div>
-      <p class="scroll-quote" data-word-reveal>Every frame is built with intent, from clean topology and expressive rigging to final composite, light and grade.</p>
+      <div class="head rv"><p class="sec-num">Process</p><h2 id="process-h">How the portfolio is built. <span class="dim">Four workflows behind my 3D, 2D and interactive projects.</span></h2></div>
+      <p class="scroll-quote" data-word-reveal>Every project is built with intent, from hard surface modeling, PBR texturing and rigging to keyframed cycles, compositing and interactive storytelling.</p>
       <ol class="steps">
-        <li class="surface rv"><h3>Design &amp; Model</h3><p>Block out 3D characters and environments in Blender, or design 2D assets and branching narrative worlds.</p></li>
-        <li class="surface rv" style="--d:.08s"><h3>Texture &amp; Rig</h3><p>Paint PBR materials in Substance Painter and build armatures, controls and clean weights in Blender.</p></li>
-        <li class="surface rv" style="--d:.16s"><h3>Animate</h3><p>Key body mechanics, seamless locomotion cycles and expressive character performance frame by frame.</p></li>
-        <li class="surface rv" style="--d:.24s"><h3>Composite &amp; Finish</h3><p>Light and render 3D shots, composite in After Effects, and finish the cut and sound in Premiere Pro.</p></li>
+        <li class="surface rv">
+          <h3>3D Modeling &amp; Texturing</h3>
+          <p>Model original hard surface characters and nostalgic 3D interior environments in Blender, then paint worn metallic and PBR surface materials in Substance Painter.</p>
+          <div class="step-tools" aria-label="Step 1 tools"><span>Blender</span><span>Substance Painter</span></div>
+        </li>
+        <li class="surface rv" style="--d:.08s">
+          <h3>Rigging &amp; 3D Cycles</h3>
+          <p>Build armatures, mechanical joints and control rigs in Blender, then keyframe seamless walk, run and jump locomotion cycles polished in the Graph Editor.</p>
+          <div class="step-tools" aria-label="Step 2 tools"><span>Blender</span><span>Rigify</span></div>
+        </li>
+        <li class="surface rv" style="--d:.16s">
+          <h3>2D &amp; Motion Composite</h3>
+          <p>Design 2D characters and pixel art scenes in Illustrator and Photoshop, rig lip sync in Character Animator, and composite into live action in After Effects and Premiere Pro.</p>
+          <div class="step-tools" aria-label="Step 3 tools"><span>After Effects</span><span>Premiere Pro</span><span>Illustrator</span><span>Photoshop</span></div>
+        </li>
+        <li class="surface rv" style="--d:.24s">
+          <h3>Interactive Narrative</h3>
+          <p>Write branching mystery storylines, design player choices and build atmospheric playable web fiction in Twine published directly on itch.io.</p>
+          <div class="step-tools" aria-label="Step 4 tools"><span>Twine</span><span>itch.io</span></div>
+        </li>
       </ol>
     </div>
   </section>
@@ -795,8 +874,8 @@ const BACKDROPS = ['media/backdrop-1.jpg', 'media/backdrop-2.jpg', 'media/backdr
 const LOGO = {
   blender: 'data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTI4IDEyOCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNjYuMzMyIDcwLjAzMmMuMjQtNC4yNDIgMi4zMjctNy45ODcgNS40ODUtMTAuNjM0IDMuMDk0LTIuNjAyIDcuMjQ4LTQuMTkzIDExLjgwOS00LjE5MyA0LjUzNyAwIDguNjkgMS41OSAxMS43OCA0LjE5MyAzLjE2MyAyLjY0NyA1LjIzNyA2LjM5MiA1LjQ4NSAxMC42MzQuMjQgNC4zNS0xLjUyMyA4LjQxLTQuNjA1IDExLjQxNy0zLjE1OCAzLjA1LTcuNjI3IDQuOTc3LTEyLjY2IDQuOTc3LTUuMDM3IDAtOS41MjYtMS45MTUtMTIuNjY0LTQuOTc3LTMuMDk0LTMuMDA2LTQuODUzLTcuMDQ0LTQuNjA2LTExLjM5N3ptMCAwIiBmaWxsPSIjMjM1Nzg1Ii8+PHBhdGggZD0iTTM5LjI0NSA3OS4wMDJjLjAyOCAxLjY2LjU2NCA0Ljg5IDEuMzYgNy40MDQgMS42ODIgNS4zMzYgNC41MzcgMTAuMjczIDguNDkgMTQuNTk5IDQuMDYyIDQuNDY1IDkuMDc0IDguMDU1IDE0Ljg1IDEwLjYxIDYuMDczIDIuNjcgMTIuNjY1IDQuMDM3IDE5LjUwNSA0LjAzNyA2Ljg0LS4wMDkgMTMuNDMyLTEuNCAxOS41MDQtNC4xMDIgNS43NzYtMi41ODIgMTAuNzktNi4xNjggMTQuODUtMTAuNjU3IDMuOTc0LTQuMzc0IDYuODItOS4zMDcgOC40OTEtMTQuNjQ3YTM3IDM3IDAgMDAxLjU5NS04LjE2M2MuMjA4LTIuNjkuMTItNS40MDUtLjI2My04LjEyYTM3LjUzNSAzNy41MzUgMCAwMC01LjQxNy0xNC43MTRjLTIuNTc0LTQuMTUtNS45MTYtNy43Ni05Ljg5LTEwLjgxM2wuMDEyLS4wMDQtMzkuOTU1LTMwLjUwNmMtLjAzNi0uMDI4LS4wNjgtLjA1Ni0uMTA0LS4wOC0yLjYxOS0yLjAwMi03LjA0NC0xLjk5NC05LjkxLjAwOC0yLjkxNCAyLjAzMS0zLjI1IDUuMzg1LS42NTYgNy40OTZsLS4wMTIuMDA4IDE2LjY4MiAxMy40ODQtNTAuNzg5LjA1MWgtLjA2OGMtNC4xOTcuMDA0LTguMjM5IDIuNzM5LTkuMDMgNi4yMTMtLjgyIDMuNTIxIDIuMDM1IDYuNDYgNi40MTIgNi40NmwtLjAwOC4wMTYgMjUuNzM2LS4wNDhMNC41OCA4Mi41MjRjLS4wNTYuMDQ0LS4xMi4wODgtLjE3Ni4xMzJDLjA2OSA4NS45NS0xLjMzIDkxLjQ0NiAxLjQgOTQuOWMyLjc3OCAzLjUyMiA4LjY2NiAzLjU0NiAxMy4wNDcuMDJMMzkuNTA1IDc0LjUxcy0uMzY4IDIuNzU4LS4zMzYgNC4zOTd6bTY0LjU2IDkuMjE5Yy01LjE2OCA1LjIyOC0xMi40MTYgOC4yMS0yMC4yMjcgOC4yMS03LjgzMS4wMTItMTUuMDc5LTIuOTE4LTIwLjI0OC04LjE0Mi0yLjUyNi0yLjU1OS00LjM3Ny01LjQ3My01LjUyOC04LjU5MWEyMi4yMDIgMjIuMjAyIDAgMDEtMS4yNzEtOS42MDIgMjIuNDQ2IDIyLjQ0NiAwIDAxMi43NzgtOS4wMzljMS41MDctMi43MTQgMy41OS01LjE4IDYuMTQtNy4yNjcgNS4wMzMtNC4wNTggMTEuNDItNi4yOCAxOC4xLTYuMjggNi43MDktLjAwOCAxMy4wOTcgMi4xNzQgMTguMTMgNi4yMzYgMi41NSAyLjA3NSA0LjYyNSA0LjUyOSA2LjE0IDcuMjQzYTIyLjMwMiAyMi4zMDIgMCAwMTIuNzc0IDkuMDQzIDIyLjMxMyAyMi4zMTMgMCAwMS0xLjI3MSA5LjU5OGMtMS4xNDcgMy4xNDItMy4wMDIgNi4wNTYtNS41MzMgOC42MTV6bTAgMCIgZmlsbD0iI2U4NzUwMCIvPjwvc3ZnPg==',
   substancePainter: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><path fill="%23222E13" d="M22.7 1.6h82.7c12.5 0 22.7 10.1 22.7 22.7v79.5c0 12.5-10.1 22.7-22.7 22.7H22.7C10.1 126.4 0 116.3 0 103.7V24.3C0 11.7 10.1 1.6 22.7 1.6z"/><path fill="%238CE232" d="M32 36h19.5c11.8 0 19.5 6.8 19.5 17.8 0 11.2-7.7 18.2-19.8 18.2H42.5v20H32V36zm10.5 8.8v18.4h7.8c6.4 0 10.1-3.4 10.1-9.3 0-5.8-3.7-9.1-10.1-9.1h-7.8zM88.5 41v11h9v8.2h-9v18.5c0 3.6 1.6 5.2 5.1 5.2 1.3 0 2.7-.2 3.9-.5v8.1c-1.8.6-4.1.9-6.4.9-8.3 0-12.8-4.3-12.8-12.6V60.2h-6.1V52h6.1V41h10.2z"/></svg>',
-  afterEffects: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48cGF0aCBmaWxsPSIjMUYwNzQwIiBkPSJNNi41IDYuNWgxMTV2MTE1SDYuNXoiLz48cGF0aCBmaWxsPSIjRDQ5MEM1IiBkPSJNMCAwdjEyOGgxMjhWMEgwem0xMjEuNSAxMjEuNUg2LjVWNi41aDExNXYxMTV6Ii8+PHBhdGggZmlsbD0iI0Q0OTBDNSIgZD0iTTEwMy41IDU5LjJzLS42LTE0LjYtMTYuNS0xNC42Yy0xNiAwLTE3LjMgMjItMTcuMyAyMnY0LjdTNzIuNSA4OS42IDg2IDg5LjZzMTQuOC0yLjYgMTQuOC0yLjZ2LTguMXMtMTkuMyA5LjItMjEuMi0xMGgyNHYtOS43em0tOSAyLjRoLTE1czAtOC4zIDcuNS05LjJjOC4yIDAgNy41IDkuMiA3LjUgOS4yek01MC41IDI5LjlIMzguNHYzLjhsLTE2IDU0LjloOS40bDQuNC0xNi4xSDUzbDQuNSAxNi4xaDEwLjNMNTAuNSAyOS45ek0zOC4yIDYzLjFsNi40LTI0LjVMNTEgNjMuMUgzOC4yeiIvPjwvc3ZnPg==',
-  premierePro: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48cGF0aCBmaWxsPSIjMkEwNjM0IiBkPSJNMCAwaDEyOHYxMjhIMHoiLz48cGF0aCBmaWxsPSIjRTk3NkI5IiBkPSJNMCAwdjEyOGgxMjhWMEgwem0xMjMgMTIzSDVWNWgxMTh2MTE4eiIvPjxwYXRoIGZpbGw9IiNFOTc2QjkiIGQ9Ik02OSA0Ny4xYy0uMS05LjQtNy44LTE2LjktMTcuMi0xNi44SDMzLjN2NTguNWg5LjZWNjcuNWg4LjNDNjEgNjcuNCA2OSA1OS4zIDY5IDQ5LjR2LTIuM3ptLTkuNiAzYzAgNS00LjEgOS4xLTkuMSA5LjFoLTcuNFYzOC41aDcuNGM1IDAgOS4xIDQuMSA5LjEgOS4xdjIuNXpNNzcuMSA4OC44VjQ4LjlzMTAuMi01LjEgMjAuMi0zLjh2OC4zcy03IDAtMTAuMSAxLjN2MzQuMkg3Ny4xeiIvPjwvc3ZnPg==',
+  afterEffects: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240"><g transform="translate(0 3)"><rect width="240" height="234" rx="42.5" fill="%2300005B"/><path fill="%239999FF" d="M96.8 141.6H62.2l-7.6 23.6c-.2.9-1 1.5-1.9 1.4H33.9c-1.1 0-1.4-.6-1.1-1.8l32.2-92.6c.3-1 .6-2.1 1-3.3.4-2.1.6-4.3.6-6.5-.1-.5.3-1 .8-1.1h25.9c.8 0 1.2.3 1.3.8l36.5 103c.3 1.1 0 1.6-1 1.6h-20.9c-.7.1-1.4-.4-1.6-1.1l-8.8-24zm-31.4-20.3h25.4c-.6-2.1-1.4-4.6-2.3-7.2-.9-2.7-1.8-5.6-2.7-8.6-1-3.1-1.9-6.1-2.9-9.2-1-3.1-1.9-6-2.7-8.9-.8-2.8-1.5-5.4-2.2-7.8h-.2c-.9 4.3-2 8.6-3.4 12.9-1.5 4.8-3 9.8-4.6 14.8-1.6 5.1-2.9 9.8-4.4 14zm122 8.2h-31.8c.4 3.1 1.4 6.1 3.1 8.7 1.8 2.7 4.4 4.8 7.4 6 3.7 1.5 7.7 2.2 11.7 2.1 3.3-.1 6.5-.5 9.7-1.3 2.7-.6 5.4-1.5 7.9-2.6.6-.4 1-.1 1 .8v15.3c0 .4-.1.9-.3 1.3-.2.4-.5.7-.9.9-2.9 1.4-6.1 2.4-9.3 3-4.5.8-9.1 1.2-13.7 1.1-7.4 0-13.6-1.2-18.6-3.7-4.8-2.3-8.9-5.8-11.9-10.2-2.8-4.2-4.7-8.9-5.6-13.8-.9-4.9-1.4-9.8-1.3-14.8 0-5.4.9-10.7 2.8-15.7 1.8-4.9 4.5-9.4 8.1-13.2 3.5-3.8 7.8-6.8 12.6-8.9 5-2 10.6-3.1 16.9-3.1 5.6-.1 11.1 1 16.2 3.2 4.3 1.9 8 4.8 10.9 8.5 2.7 3.5 4.7 7.6 5.9 11.9 1.1 4.2 1.7 8.5 1.7 12.9 0 2.5-.1 4.8-.3 6.9-.2 1.8-.5 3.1-.8 3.6-.4.8-1.2 1.3-2.1 1.2-.9 0-2.3.1-4.3.2-2 .1-4.3.1-7 0zm-31.9-14.9h21.7c2.7 0 4.6-.1 5.7-.4.8-.2 1.3-.8 1.4-1.6v-1.2c0-2.1-.3-4.2-1-6.2-.6-2-1.6-3.8-3-5.4-1.4-1.6-3.1-2.8-5.1-3.7-2.3-.9-4.7-1.4-7.2-1.3-5.2-.1-10.1 2-13.4 6-2.9 3.9-4.6 8.7-4.9 13.8h5.8z"/></g></svg>',
+  premierePro: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240"><g transform="translate(0 3)"><rect width="240" height="234" rx="42.5" fill="%2300005B"/><path fill="%239999FF" d="M57 62.1c0-.7.2-1.1 1-1.1 3.2-.2 6.8-.3 11.2-.4 4.4-.1 9.2-.2 14.4-.2 8.2 0 15.6.9 22.1 2.8 6.1 1.7 11.6 4.8 16 9.2 3.9 3.9 6.8 8.7 8.4 14 1.5 5 2.3 10.3 2.2 15.5 0 8.6-2 16-6 22.2-4 6.2-9.6 10.9-16.1 13.5-6.8 2.5-14.3 3.4-22.5 3.4-2.4 0-4 0-5-.1-1-.1-2.4-.1-4.3-.1v32.1c.1.7-.4 1.3-1.1 1.4h-19c-.8 0-1.2-.4-1.2-1.3V62.1h-.1zm21.8 59.4c1.4.1 2.5.2 3.6.2 1.1 0 2.7.1 5 .1 3.9 0 7.7-.6 11.4-1.8 3.2-1 6-2.9 8.2-5.4 2.1-2.5 3.1-5.9 3.1-10.3.1-3.1-.7-6.2-2.3-8.9-1.7-2.6-4.1-4.6-7-5.7-3.4-1.3-7.1-2-10.8-1.9-2.6 0-4.9 0-6.8.1-2 .1-3.4.2-4.4.3v33.3zm68.2-32.3c0-.6.4-1.1 1-1.3h16.6c.5 0 1 .2 1.4.5.3.4.5.9.5 1.4.2 1 .4 2.1.5 3.3.1 1.2.2 2.5.2 4 3-3.5 6.6-6.4 10.7-8.4 4.3-2.2 9.1-3.3 13.9-3.2.8-.1 1.5.4 1.6 1.2v19.5c0 .8-.5 1.1-1.6 1.1-3.1-.2-6.2.1-9.3.7-2.9.6-5.7 1.6-8.4 2.9-2 .9-3.7 2.4-5.1 4.2v51c0 .9-.4 1.3-1.3 1.3h-19.5c-.8.1-1.5-.4-1.6-1.2v-55.8c0-3.8-.1-7.7-.2-11.6-.1-3.9-.2-7.1-.4-9.6z"/></g></svg>',
   illustrator: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbDpzcGFjZT0icHJlc2VydmUiIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48cGF0aCBmaWxsPSIjMzAwIiBkPSJNMjIuNyAxLjZoODIuN2MxMi41IDAgMjIuNyAxMC4xIDIyLjcgMjIuN3Y3OS41YzAgMTIuNS0xMC4xIDIyLjctMjIuNyAyMi43SDIyLjdDMTAuMSAxMjYuNCAwIDExNi4zIDAgMTAzLjdWMjQuM0MwIDExLjcgMTAuMSAxLjYgMjIuNyAxLjYiLz48cGF0aCBmaWxsPSIjZmY5YTAwIiBkPSJNNjEuOSA3Ni4zSDQybC00IDEyLjVjLS4xLjUtLjUuOC0xIC43SDI3Yy0uNiAwLS43LS4zLS42LTFsMTcuMi00OS40Yy4yLS41LjMtMS4xLjUtMS44LjItMS4xLjMtMi4zLjMtMy41LS4xLS4zLjItLjUuNC0uNmgxMy44Yy40IDAgLjYuMi43LjRsMTkuNSA1NC45Yy4yLjYgMCAuOS0uNS45SDY3LjFjLS40LjEtLjctLjItLjktLjZ6TTQ1LjEgNjUuNGgxMy41Yy0uMy0xLjEtLjctMi41LTEuMi0zLjgtLjUtMS40LTEtMy0xLjQtNC42LS41LTEuNy0xLTMuMy0xLjUtNC45LS41LTEuNy0xLTMuMi0xLjQtNC43LS40LTEuNS0uOC0yLjktMS4yLTQuMmgtLjFjLS41IDIuMy0xLjEgNC42LTEuOCA2LjktLjggMi42LTEuNiA1LjItMi41IDcuOS0uOCAyLjctMS42IDUuMi0yLjQgNy40bTQ1LjYtMjIuN2MtMS44LjEtMy41LS42LTQuNy0xLjktMS4yLTEuMy0xLjktMy4xLTEuOC00LjktLjEtMS44LjYtMy41IDEuOS00LjcgMS4zLTEuMiAzLTEuOSA0LjctMS45IDIuMSAwIDMuNy42IDQuOSAxLjkgMS4yIDEuMyAxLjggMyAxLjggNC43LjEgMS44LS42IDMuNi0xLjkgNC45LTEuMyAxLjMtMy4xIDItNC45IDEuOW0tNiA0Ni4zVjQ3LjljMC0uNS4yLS43LjctLjdIOTZjLjUgMCAuNy4zLjcuN1Y4OWMwIC42LS4yLjktLjcuOUg4NS41Yy0uNS0uMS0uOC0uNC0uOC0uOSIvPjwvc3ZnPg==',
   photoshop: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48cGF0aCBmaWxsPSIjMDAxZTM2IiBkPSJNMjIuNjY3IDEuNmg4Mi42NjZDMTE3Ljg2NyAxLjYgMTI4IDExLjczMyAxMjggMjQuMjY3djc5LjQ2NmMwIDEyLjUzNC0xMC4xMzMgMjIuNjY3LTIyLjY2NyAyMi42NjdIMjIuNjY3QzEwLjEzMyAxMjYuNCAwIDExNi4yNjcgMCAxMDMuNzMzVjI0LjI2N0MwIDExLjczMyAxMC4xMzMgMS42IDIyLjY2NyAxLjZaIi8+PHBhdGggZmlsbD0iIzMxYThmZiIgZD0iTTQ1Ljg2NyAzMy4zMzNjLTEuNiAwLTMuMiAwLTQuODUzLjA1NC0xLjY1NC4wNTMtMy4yMDEuMDUzLTQuNjQxLjEwNy0xLjQ0LjA1My0yLjc3My4wNTMtNC4wNTMuMTA2LTEuMjI3LjA1My0yLjA4LjA1My0yLjk4Ny4wNTMtLjM3MyAwLS41MzMuMjEzLS41MzMuNTg3djU0Ljg4YzAgLjQ4LjIxMy42OTQuNjQuNjk0aDEwLjM0N2MuMzczLS4wNTQuNjQtLjM3NC41ODYtLjc0N3YtMTcuMTJjMS4wMTMgMCAxLjc2IDAgMi4yOTQuMDUzLjUzMy4wNTMgMS4zODYuMDUzIDIuNjY2LjA1MyA0LjM3NCAwIDguMzc0LS40OCAxMi0xLjgxMyAzLjQ2Ny0xLjI4IDYuNDU0LTMuNTIgOC41ODctNi41MDcgMi4xMzMtMi45ODYgMy4yLTYuNzczIDMuMi0xMS4zNiAwLTIuNC0uNDI2LTQuNjkzLTEuMjI2LTYuOTMzQTE2Ljk4IDE2Ljk4IDAgMCAwIDY0IDM5LjM2YTE5LjA0OSAxOS4wNDkgMCAwIDAtNy4xNDctNC4zNzRjLTIuOTg3LTEuMTItNi42MTMtMS42NTMtMTAuOTg2LTEuNjUzWm0xLjE5IDEwLjUwNWMxLjkuMDM2IDMuNzUuMzY4IDUuNDc2IDEuMDY4IDEuNTQ3LjU4NyAyLjgyNyAxLjY1NCAzLjczNCAzLjA0YTguNzc5IDguNzc5IDAgMCAxIDEuMjI3IDQuNzQ4YzAgMi4zNDYtLjUzNCA0LjE2LTEuNjU0IDUuNDkzLTEuMTc0IDEuMzMzLTIuNjY3IDIuMzQ3LTQuMzczIDIuODI3LTEuOTc0LjY0LTQuMDU0Ljk1OS02LjEzNC45NTloLTIuODI3Yy0uNjQgMC0xLjMzMi0uMDUzLTIuMDc5LS4xMDZ2LTE3LjkyYy4zNzMtLjA1NCAxLjEyLS4xMDcgMi4xODctLjA1MyAxLjAxMy0uMDU0IDIuMjM5LS4wNTQgMy42MjYtLjA1NC4yNzMtLjAwNy41NDYtLjAwOC44MTctLjAwMnptNDQuNzMgMi43MjNjLTMuNzg3IDAtNi45MzQuNTg2LTkuNDQgMS44NjYtMi4yOTMgMS4wNjctNC4yNjcgMi43NzMtNS42IDQuOTA2LTEuMTczIDEuOTc0LTEuODE0IDQuMTYtMS44MTQgNi40NTRhMTEuNDQ3IDExLjQ0NyAwIDAgMCAxLjIyNyA1LjQ0IDEzLjgwOSAxMy44MDkgMCAwIDAgNC4wNTQgNC41MzMgMzIuNjI5IDMyLjYyOSAwIDAgMCA3LjU3MyAzLjg0YzIuNjEzIDEuMDEzIDQuMzczIDEuODEzIDUuMjI3IDIuNTA2Ljg1My42OTQgMS4yOCAxLjM4NyAxLjI4IDIuMTM0IDAgLjk2LS41ODcgMS44NjctMS40NCAyLjI0LS45Ni40OC0yLjQuNzQ3LTQuNDI3Ljc0Ny0yLjEzMyAwLTQuMjY3LS4yNjctNi4yOTQtLjhhMjIuODM0IDIyLjgzNCAwIDAgMS02LjYxMy0yLjYxM2MtLjE2LS4xMDctLjMyLS4xNi0uNDgtLjA1My0uMTYuMTA2LS4yMTMuMzE5LS4yMTMuNDc5djkuMjhjLS4wNTMuNDI3LjIxMy44LjU4NyAxLjAxM2EyMS40OSAyMS40OSAwIDAgMCA1LjQ0IDEuNzA3YzIuNC40OCA0Ljc5OS42OTMgNy4yNTIuNjkzIDMuODQgMCA3LjA0MS0uNTg2IDkuNjU0LTEuNzA2IDIuNC0uOTYgNC40OC0yLjYxMyA1Ljk3My00Ljc0N2ExMi40MSAxMi40MSAwIDAgMCAyLjA4LTcuMDkzIDExLjUxMiAxMS41MTIgMCAwIDAtMS4yMjYtNS40OTNjLTEuMDE0LTEuODE0LTIuNDU0LTMuMzA3LTQuMjE0LTQuNDI3YTM4LjYyNSAzOC42MjUgMCAwIDAtOC4yMTMtMy44OTQgNDguNzg0IDQ4Ljc4NCAwIDAgMS0zLjc4Ny0xLjc2Yy0uNjkzLS4zNzMtMS4zMzMtLjg1My0xLjgxMy0xLjQ0LS4zMi0uNDI3LS41MzMtLjkwNi0uNTMzLTEuMzg2IDAtLjQ4LjE2LTEuMDEzLjQyNi0xLjQ0LjM3NC0uNTMzLjk2LS45MDcgMS42NTMtMS4wNjcgMS4wMTQtLjI2NiAyLjEzNC0uNDI3IDMuMi0uMzc0IDIuMDI3IDAgNCAuMjY3IDUuOTc0LjY5NCAxLjgxNC4zNzMgMy41Mi45NiA1LjEyIDEuODE0LjIxMy4xMDYuNDguMTA2Ljk2IDBhLjY1Ni42NTYgMCAwIDAgLjI2Ny0uNTM0di04LjY5M2MwLS4yMTQtLjA1NC0uNDI3LS4xMDctLjY0LS4xMDctLjIxMy0uMzItLjQyNy0uNTMzLS40OEExOC43NjIgMTguNzYyIDAgMCAwIDk4LjQgNDcuMDRhNDUuOTggNDUuOTggMCAwIDAtNi42MTMtLjQ4eiIvPjwvc3ZnPg==',
   characterAnimator: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGcgZmlsbD0ibm9uZSI+PGcgY2xpcC1wYXRoPSJ1cmwoI1NWR21BaHgyZEhPKSI+PHBhdGggZmlsbD0iIzAwMDA1YiIgZD0iTTI2LjMzMyAwSDUuNjY3QTUuNjY3IDUuNjY3IDAgMCAwIDAgNS42Njd2MTkuODY2QTUuNjY3IDUuNjY3IDAgMCAwIDUuNjY3IDMxLjJoMjAuNjY2QTUuNjY3IDUuNjY3IDAgMCAwIDMyIDI1LjUzM1Y1LjY2N0E1LjY2NyA1LjY2NyAwIDAgMCAyNi4zMzMgMCIvPjxwYXRoIGZpbGw9IiM5OWYiIGQ9Ik0xNS4zMTEgMTkuMzY4djIuMjFhLjI4LjI4IDAgMCAxLS4xNzIuMzAxYTUuNCA1LjQgMCAwIDEtMS4yNjQuMjlxLS44NC4xLTEuNjg1LjA5N2E5LjUgOS41IDAgMCAxLTIuMzcyLS4yOWE3IDcgMCAwIDEtMi4wNS0uODhhNi4zIDYuMyAwIDAgMS0xLjU4OS0xLjQ1YTYuNCA2LjQgMCAwIDEtMS4wMy0xLjk5NWE4LjQgOC40IDAgMCAxLS4zNjUtMi41NzZxMC0yLjE2OS45NDQtMy44MUE2LjUgNi41IDAgMCAxIDguNDEyIDguNzFhOC44IDguOCAwIDAgMSA0LjE0My0uOTY2cS44MzQtLjAwNyAxLjY2NC4wODZhNSA1IDAgMCAxIDEuMTI3LjI1OGEuMjguMjggMCAwIDEgLjEwNy4yNTh2Mi40MTRxMCAuMTkyLS4xNS4xMjhhNC44IDQuOCAwIDAgMC0xLjI4Mi0uMzlhMTAgMTAgMCAwIDAtMS41NjctLjExOGE0LjkgNC45IDAgMCAwLTIuNDU0LjU5NGE0IDQgMCAwIDAtMS41ODggMS42YTQuOTUgNC45NSAwIDAgMC0uNTU4IDIuNDE1YTUuMiA1LjIgMCAwIDAgLjI2OCAxLjc2Yy4xNjYuNDc4LjQxNi45MjEuNzQgMS4zMWMuMy4zNTguNjYzLjY1NyAxLjA3NC44OGMuNDAzLjIxNS44MzIuMzc3IDEuMjc3LjQ4M2MuNDMxLjExNy44NzQuMTg0IDEuMzIuMnEuNzI3LjAwNSAxLjQ1LS4wNjRhNSA1IDAgMCAwIDEuMTU2LS4yOTdxLjA4NS0uMDY0LjEzLS4wMzNhLjE3LjE3IDAgMCAxIC4wNDIuMTRtNC45MjktNS4wNjZ2Ny41MjZxMCAuMTcyLS4xNS4xNzJoLTIuNjhhLjE3LjE3IDAgMCAxLS4xOTMtLjE5M1Y2Ljk4MnEwLS4xNS4xNzItLjE1aDIuN2EuMTMzLjEzMyAwIDAgMSAuMTUuMTVsLjAxNiA1LjA2NnEuNTg0LS4zODcgMS4yNC0uNjM0Yy40NS0uMTY0Ljk3Ny0uMjAzIDEuNTc4LS4yMDNjLjQyNS4wMDIuODQ5LjA2NyAxLjI1NS4xOTNjLjQzMy4xMi44MzMuMzM3IDEuMTcuNjMzYy4zNTguMzIyLjYwOS43NTkuODIzIDEuMzFxLjMyMi44MjUuMzIyIDIuMTM1djYuMzI1cTAgLjE5My0uMTcxLjE5M2gtMi41MTRhLjE5LjE5IDAgMCAxLS4yMTUtLjIxNXYtNi4wMDJhMi43IDIuNyAwIDAgMC0uMjAzLTEuMTI3YTEuNiAxLjYgMCAwIDAtLjU1OS0uNjc2YTEuODMgMS44MyAwIDAgMC0uOTgyLS4yMzdhMy4yIDMuMiAwIDAgMC0uOTQ0LjE0YTIuNiAyLjYgMCAwIDAtLjgxNi40MTkiLz48L2c+PGRlZnM+PGNsaXBQYXRoIGlkPSJTVkdtQWh4MmRITyI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGgzMnYzMS4ySDB6Ii8+PC9jbGlwUGF0aD48L2RlZnM+PC9nPjwvc3ZnPg==',
@@ -1368,7 +1447,7 @@ if (wantRefract) new ResizeObserver(refractAll).observe(document.body);
 /* ---------- SCROLL & WORD REVEAL ---------- */
 const quoteEl = $('[data-word-reveal]');
 if (quoteEl) {
-  const accentSet = new Set(['clean', 'topology', 'expressive', 'rigging', 'composite,', 'light', 'grade.']);
+  const accentSet = new Set(['intent,', 'modeling,', 'texturing', 'rigging', 'keyframed', 'cycles,', 'compositing', 'storytelling.']);
   quoteEl.innerHTML = quoteEl.textContent.trim().split(/\s+/).map(w =>
     `<span class="r-word${accentSet.has(w.toLowerCase()) ? ' accent' : ''}">${esc(w)}</span>`).join(' ');
 }
